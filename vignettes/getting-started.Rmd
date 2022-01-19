@@ -58,7 +58,7 @@ The [forest-plots.R](https://ghe.metrumrg.com/example-projects/bbr-nonmem-poppk-
 By the end of Step 3 above, you will have a dataset similar to the one below. The highlighted columns indicate those that will be used in the **main arguments** of the `plot_forest()` function:
 
 
-![](../assets/forest/forest-data-ex.png)<!-- -->
+![](assets/forest-data-ex.png)<!-- -->
 
 <hr>
 <br>
@@ -135,7 +135,7 @@ clp <- plot_forest(data = data_cl,
                    vline_intercept = 1)
 ```
 
-![](../assets/forest/forestPlot-baseCase.png)<!-- -->
+![](assets/forestPlot-baseCase.png)<!-- -->
 
 <br>
 
@@ -160,12 +160,12 @@ clp <- plot_forest(data = data_cl,
                               You can add multiple lines.")
 ```
 
-![](../assets/forest/forestPlot-labels.png)<!-- -->
+![](assets/forestPlot-labels.png)<!-- -->
 
 <br>
 
 ### Multiple covariates (or facets)
-The `metagroup` argument doesn't necessarily have to facet across multiple covariates. Regardless, you can specify how you want to align the plots using the `nrow` argument or other functions in the `patchwork` R package. You may consider setting `annotate_CI = FALSE` to simplify the plots.
+The `metagroup` argument doesn't necessarily have to facet across multiple covariates. Regardless, you can specify how you want to align the plots using the `nrow` argument or other functions in the `patchwork` R package. Note that in `data_both`, `$param` contains both VC and CL, where the previous example only contained CL. You may also consider setting `annotate_CI = FALSE` to simplify the plots.
 
 ```
 pl_both <- 
@@ -186,7 +186,7 @@ pl_both <-
 
 Multiple rows (`nrow = 2`)           |  Side-by-side (`nrow = 1`, `annotate_CI = FALSE`)
 :-------------------------:|:-------------------------:
-![](../assets/forest/forestPlot-multiple1.png)  |  ![](../assets/forest/forestPlot-multiple2.png)
+![](assets/forestPlot-multiple1.png)  |  ![](assets/forestPlot-multiple2.png)
 
 <br>
 
@@ -206,7 +206,7 @@ clp <- plot_forest(data = data_cl,
 clp + plot_annotation(title = 'CL (L/hr)')
 ```
 
-![](../assets/forest/forestPlot-metagroup.png) 
+![](assets/forestPlot-metagroup.png) 
 
 <br>
 
@@ -243,7 +243,7 @@ wrap_plots(clp, grid::textGrob('Text on right side'), widths = c(4,1)) +
         plot.tag = element_text(size = 8, hjust = 0, vjust = 0))
 ```
 
-![](../assets/forest/forestPlot-annotations.png)<!-- -->
+![](assets/forestPlot-annotations.png)<!-- -->
 
 <br>
 
@@ -267,7 +267,7 @@ clp_fixed <-
 
 Shaded Interval cut off       |  Fixed using `x_breaks` and `x_limit`
 :-------------------------:|:-------------------------:
-![](../assets/forest/forestPlot-shadedInterval1.png)  |  ![](../assets/forest/forestPlot-shadedInterval2.png)
+![](assets/forestPlot-shadedInterval1.png)  |  ![](assets/forestPlot-shadedInterval2.png)
 
 <br>
 
@@ -304,4 +304,4 @@ clp +
 ```
 
 
-![](../assets/forest/forest-plot-ex.png)<!-- -->
+![](assets/forest-plot-ex.png)<!-- -->

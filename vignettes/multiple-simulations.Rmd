@@ -1,0 +1,62 @@
+---
+title: "Multiple Simulations"
+author: "Kyle Barrett"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{getting-started}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, include=FALSE}
+if (interactive()) {
+  devtools::load_all()
+}
+```
+
+```{r load packages, results = 'hide', message=FALSE, warning=FALSE}
+library(tidyverse)
+library(patchwork)
+library(pmforest)
+```
+
+<style> body {text-align: justify} </style>
+
+### Multiple Simulations
+In some instances, it may be useful to present the variability of each summary statistic (ex: median, 5th and 95th percentile). In order to accomplish this you must have a column denoting the run/simulation number. This column is then assigned to the `nsim` argument. An example can be seen below:
+
+![](../assets/forest/forest-data-ex2.png)<!-- -->
+
+<br>
+
+```
+plot_forest(data = data_new , 
+            statistic = "median",
+            CI=0.95,
+            stat = stat,
+            group = GROUP,
+            nsim = nsim,
+            study_labels = LVL,
+            shaded_interval = c(0.8,1.25),
+            summary_label = plot_labels,
+            text_size = 3.5,
+            x_lab = "Fraction and 95% CI \nRelative to Reference",
+            CI_label = "Median [95% CI]",
+            plot_width = 9, # out of 12
+            x_breaks = c(0.4,0.6, 0.8, 1, 1.2, 1.4,1.6),
+            x_limit = c(0.4,1.45),
+            annotate_CI=T,
+            nrow = 1)
+```
+
+![](assets/forestPlot-nsim.png)<!-- -->
+
+
+In cases where the additional confidence intervals overlap, you can vertically jitter them via the `jitter_nsim` argument (logical).
