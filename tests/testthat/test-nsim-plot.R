@@ -18,10 +18,10 @@ describe("Multiple CI's", {
                     statistic = "mean",
                     CI=0.95,
                     stat = stat,
-                    group = GROUP,
+                    covariate = GROUP,
                     # metagroup = param,
                     nsim = nsim,
-                    study_labels = LVL,
+                    cov_level = LVL,
                     shaded_interval = c(0.8,1.25),
                     summary_label = plot_labels,
                     text_size = 3.5,
@@ -44,17 +44,17 @@ describe("Multiple CI's", {
 
 
 describe("Multiple CI's with jitter", {
-  
+
   plotData <- readRDS(file.path(dataDir, "plotDataEXP.RDS")) %>% mutate(stat = stat + (nsim/300))
-  
+
   plt <- plot_forest(data = plotData,
                      statistic = "mean",
                      CI=0.95,
                      stat = stat,
-                     group = GROUP,
+                     covariate = GROUP,
                      # metagroup = param,
                      nsim = nsim,
-                     study_labels = LVL,
+                     cov_level = LVL,
                      shaded_interval = c(0.8,1.25),
                      summary_label = plot_labels,
                      text_size = 3.5,
@@ -68,10 +68,10 @@ describe("Multiple CI's with jitter", {
                      annotate_CI=T,
                      nrow = 1,
                      jitter_nsim = TRUE)
-  
+
   plt
-  
-  
+
+
 })
 
 

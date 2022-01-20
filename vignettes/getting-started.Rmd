@@ -29,51 +29,32 @@ library(pmforest)
 
 <style> body {text-align: justify} </style>
 
-# Scope
-
-This section focuses on the setup and generation of the forest plots. The [forest-plots.R](https://ghe.metrumrg.com/example-projects/bbr-nonmem-poppk-foce/blob/main/script/forest-plots.R) script walks through how to simulate the data to be included in your forest plots and how to use the new `plot_forest` function to generate to plots. Each of the commonly used arguments are defined below along with examples of different formatting options.
-
-<hr>
-<br>
-
-# Setup
-
-You can find a full example at [forest-plots.R](https://ghe.metrumrg.com/example-projects/bbr-nonmem-poppk-foce/blob/main/script/forest-plots.R).
+# Introduction/Scope
+`pmforest` is a package for producing forest plots: graphical summaries of covariate effects in a pharmacometric model. Given a dataset of model responses or model parameters simulated with uncertainty from the model at various covariate levels, the package generates plots of confidence intervals reflecting the predicted impact of the covariates.
 
 
-Before using this code, we assume you have:
-
- 1.  A version of the model that will be used for the forest plot has a corresponding mrgsolve version already developed and reviewed.
- 2.  Covariate values coded into `[PARAM]` of that model that match those of the "reference" patient -- to check that, you can use `see(mod)` or `param(mod)` in the R console to compare the typical reference values were provided (else you will need to update them in the "ref" model run here).
- 3. A listing of parameter values, reflecting uncertainty in the parameter estimates, exists (e.g., either from bootstrap runs, simpar(), or the posteriors from a Bayesian estimation).
-
-The [forest-plots.R](https://ghe.metrumrg.com/example-projects/bbr-nonmem-poppk-foce/blob/main/script/forest-plots.R) script walks you though:
-
- 1. Reading in your bootstrap estimates (this can be swapped out for simpar() results or Bayesian posteriors as needed), your mrgsolve model and original dataset.
- 2. Reviewing the dataset for 10th and 90th percentile values for the covariates of interest (this will change from project to project). 
- 3. Setting up simulations and generating the data to be included in the forest plots. 
- 4. Generating the forest plots - this is expanded on below. 
-
-
-By the end of Step 3 above, you will have a dataset similar to the one below. The highlighted columns indicate those that will be used in the **main arguments** of the `plot_forest()` function:
-
-
-![](assets/forest-data-ex.png)<!-- -->
+This section focuses on the setup and generation of the forest plots. To use the forest plot function you will need input data that conforms to the specifications defined [here](data-spec.html). 
 
 <hr>
 <br>
+
 
 # Plot Generation
+
+In the examples below we will reference the dataset shown in the [data specifications vignette](data-spec.html), pasted again below:
+
+![](assets/forest-data-ex.png)<!-- -->
 
 #### The Main Arguments:
 
  - **`stat`** (stat) is the column you want to perform summary statistics on. In this case, the `stat` column was equivalent to `value/ref` column in the example dataset. This argument defaults to `NULL` and must be specified.
+ - **`covariate`** (GROUP) denotes the covariate/group
+ - **`cov_level`** (LVL) denotes the level within the covariate grouping
  - **`CI`** is the chosen two-tailed confidence interval - defaults to 0.95.
  - **`annotate_CI`** (T/F) denotes whether or not to show the confidence interval values to the right of the plot - default is `TRUE`.
- - **`metagroup`** (param) is the covariate grouping. In many cases you may only plot one covariate at a time. However, this argument is necessary for arguments `summary_label`, `caption`, and `nrow`  to take effect.
- - **`group`** (GROUP) and `study_labels` (LVL) denote the sub categories and values respectively (within the covariate grouping).
  - **`statistic`** is the chosen statistic - options include "mean" or "median". Must be specified as a character string.
  - **`vline_intercept`** is the location of the vertical dotted-line.
+ - **`metagroup`** (param) denotes a column you want to facet by. In many cases you may only plot one covariate at a time. Note that this argument is necessary for creating a facet title via ggplot. You can however add a title via patchwork (shown later).
  
 ```
 clp <- plot_forest(data = data,
@@ -101,7 +82,7 @@ clp <- plot_forest(data = data,
  - **`plot_width`** refers to the width ratio of the plot to CI table. The total width is 12, so specifying a width of 6 would make the plot and table each take up 50% of the total plot area.
  - **`x_breaks`** and **`x_limit`** behave the same as ggplot arguments. The x-axis is determined based on the available data if these parameters are not set. You will likely have to set these if you specified a `shaded_interval`.
  - **`shaded_interval`** can be specified to shade over a specified interval (low end, high end).
- - **`nrow`** is a `...` argument that comes into play when plotting multiple covariates (i.e. the `metagroup` column contains multiple levels (e.g., CL and V2)).
+ - **`nrow`** is a `...` argument that comes into play when plotting multiple covariates, or facets (i.e. the `metagroup` column contains multiple levels (e.g., CL and V2)).
    + Specifying this argument will give you control over whether you facet plots to display side-by-side or on top of each other. 
 
 
@@ -116,7 +97,7 @@ plot_labels <- as_labeller(unlist(all_labels))
 <hr>
 
 # Examples
-Below are a few examples showcasing the uses of some of the function arguments, as well as additional formatting techniques using the [patchwork](https://github.com/thomasp85/patchwork) R package. Most examples will reference the dataset featured above, denoted `data_cl`. However, there are a couple examples that showcase the use of multiple covariates (CL and V2), denoted by the use of `data_both`.
+Below are a few examples showcasing the uses of some of the function arguments, as well as additional formatting techniques using the [patchwork](https://github.com/thomasp85/patchwork) R package. Most examples will reference the dataset featured above, denoted `data_cl`. However, there are a couple examples that showcase the use of multiple covariates (CL and V2), denoted by the use of `data_both`. This is  elaborated on later.
 
 <br>
 
@@ -210,6 +191,30 @@ clp + plot_annotation(title = 'CL (L/hr)')
 
 <br>
 
+### Shaded Interval
+You can add a shaded interval over a specified range. It is important to note that the x-axis is automatically determined based on your input data. The specified interval may therefore be cut off, as the x limits do not adjust based on the specified interval. You can correct for this by specifying the `x_breaks` and `x_limit` arguments.
+```
+clp <- 
+       plot_forest(data = data_cl,
+                   previous arguments...
+                   
+                   shaded_interval = c(0.8,1.25)) 
+
+clp_fixed <- 
+       plot_forest(data = data_cl,
+                   previous arguments...
+                   
+                   shaded_interval = c(0.8,1.25),
+                   x_breaks = c(0.4,0.6, 0.8, 1, 1.2, 1.4,1.6), 
+                   x_limit = c(0.6,1.45)) 
+```
+
+Shaded Interval cut off       |  Fixed using `x_breaks` and `x_limit`
+:-------------------------:|:-------------------------:
+![](assets/forestPlot-shadedInterval1.png)  |  ![](assets/forestPlot-shadedInterval2.png)
+
+<br>
+
 ### Patchwork Annotations
 The individual layers of the returned object are defined using `ggplot`, but the final plot is assembled using `patchwork`.
 Thus you can add additional `patchwork` themes/annotations to the returned object, but cannot alter the ggplot layers. Themes can be added using the `&` operator, and follow the same convention as `ggplot` themes. In this example we change the formatting of the `caption` argument.
@@ -247,29 +252,6 @@ wrap_plots(clp, grid::textGrob('Text on right side'), widths = c(4,1)) +
 
 <br>
 
-### Shaded Interval
-You can add a shaded interval over a specified range. It is important to note that the x-axis is automatically determined based on your input data. The specified interval may therefore be cut off, as the x limits do not adjust based on the specified interval. You can correct for this by specifying the `x_breaks` and `x_limit` arguments.
-```
-clp <- 
-       plot_forest(data = data_cl,
-                   previous arguments...
-                   
-                   shaded_interval = c(0.8,1.25)) 
-
-clp_fixed <- 
-       plot_forest(data = data_cl,
-                   previous arguments...
-                   
-                   shaded_interval = c(0.8,1.25),
-                   x_breaks = c(0.4,0.6, 0.8, 1, 1.2, 1.4,1.6), 
-                   x_limit = c(0.6,1.45)) 
-```
-
-Shaded Interval cut off       |  Fixed using `x_breaks` and `x_limit`
-:-------------------------:|:-------------------------:
-![](assets/forestPlot-shadedInterval1.png)  |  ![](assets/forestPlot-shadedInterval2.png)
-
-<br>
 
 ### Full Forest Plot Example:
 

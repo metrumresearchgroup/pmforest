@@ -8,7 +8,7 @@ classicforest(
   plotdata,
   madata,
   nsim = NULL,
-  study_labels = NULL,
+  cov_level = NULL,
   summary_label = NULL,
   annotate_CI = FALSE,
   shaded_interval = NULL,
@@ -35,7 +35,7 @@ classicforest(
 \item{nsim}{(optional) column name that corresponds to simulation or bootstrap column. If specified, additional CI's of the individual statistics will be drawn.
 If \code{nsim} is specified and no caption is set, a default caption will be set. Set \code{caption} to "" to override this functionality.}
 
-\item{study_labels}{(optional) column name that corresponds to y-axis tick labels. If not specified, y-axis will be numbered.}
+\item{cov_level}{(optional) column name that corresponds to y-axis tick labels. If not specified, y-axis will be numbered.}
 
 \item{annotate_CI}{logical. Default \code{TRUE}. Show a table next to the graph with the numeric values for the confidence interval.}
 

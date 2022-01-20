@@ -6,8 +6,8 @@
 #' @keywords internal
 forest_constructor <- function(data,
                                args,
-                               group = NULL,
-                               study_labels = NULL,
+                               covariate = NULL,
+                               cov_level = NULL,
                                nsim = NULL,
                                summary_label = NULL,
                                vline_intercept = 0,
@@ -36,24 +36,24 @@ forest_constructor <- function(data,
     }
   })
 
-  group <- data %>% dplyr::select({{ group }})
-  if(ncol(group) == 0){
-    group <- NULL
+  covariate <- data %>% dplyr::select({{ covariate }})
+  if(ncol(covariate) == 0){
+    covariate <- NULL
   } else {
-    group <- group %>%
+    covariate <- covariate %>%
       unlist(use.names = FALSE)
   }
 
-  study_labels <- data %>% dplyr::select({{ study_labels }})
-  if(ncol(study_labels) == 0){
-    study_labels <- NULL
+  cov_level <- data %>% dplyr::select({{ cov_level }})
+  if(ncol(cov_level) == 0){
+    cov_level <- NULL
   } else {
-    study_labels <- study_labels %>%
+    cov_level <- cov_level %>%
       unlist(use.names = FALSE)
   }
 
   if(!is.null(summary_label)){
-    summary_label <- summary_label(levels(factor(group))) %>%
+    summary_label <- summary_label(levels(factor(covariate))) %>%
       unlist(use.names = FALSE)
   }
 
@@ -71,8 +71,8 @@ forest_constructor <- function(data,
       warning(
         "The effect sizes or standard errors contain missing values, only complete cases are used."
       )
-      study_labels <-
-        study_labels[stats::complete.cases(forest_data)]
+      cov_level <-
+        cov_level[stats::complete.cases(forest_data)]
 
       forest_data <-
         forest_data[stats::complete.cases(forest_data),]
@@ -91,33 +91,33 @@ forest_constructor <- function(data,
 
   n <- nrow(forest_data)
 
-  if (!is.null(group) && !is.factor(group)) {
-    group <- as.factor(group)
+  if (!is.null(covariate) && !is.factor(covariate)) {
+    covariate <- as.factor(covariate)
   }
-  # check if group vector has the right length
-  if (!is.null(group) && (length(group) != n)) {
+  # check if covariate vector has the right length
+  if (!is.null(covariate) && (length(covariate) != n)) {
     warning(
-      "length of supplied group vector does not correspond to the number of studies; group argument is ignored"
+      "length of supplied covariate vector does not correspond to the number of studies; covariate argument is ignored"
     )
-    group <- NULL
+    covariate <- NULL
   }
 
-  # if no group argument is supplied, use all cases
-  if (is.null(group)) {
-    group <- factor(rep(1, times = n))
+  # if no covariate argument is supplied, use all cases
+  if (is.null(covariate)) {
+    covariate <- factor(rep(1, times = n))
   }
 
-  # drop unused levels of group factor
-  group <- droplevels(group)
-  k <- length(levels(group))
+  # drop unused levels of covariate factor
+  covariate <- droplevels(covariate)
+  k <- length(levels(covariate))
 
-  forest_data$group <- group
+  forest_data$covariate <- covariate
 
-  if (is.null(study_labels) || length(study_labels) != n) {
-    if (!is.null(study_labels) && length(study_labels) != n) {
-      warning("Argument study_labels has wrong length and is ignored.")
+  if (is.null(cov_level) || length(cov_level) != n) {
+    if (!is.null(cov_level) && length(cov_level) != n) {
+      warning("Argument cov_level has wrong length and is ignored.")
     }
-    study_labels <- 1:n
+    cov_level <- 1:n
   }
 
   # if not exactly one name for every subgroup is supplied the default is used
@@ -126,19 +126,19 @@ forest_constructor <- function(data,
       warning("Argument summary_label has wrong length and is ignored.")
     }
     if (k != 1) {
-      summary_label <- levels(group)
+      summary_label <- levels(covariate)
     } else {
       summary_label <- "Summary"
     }
   }
 
-  ids <- function(group, n) {
-    k <- length(levels(group))
-    ki_start <- cumsum(c(3, as.numeric(table(group))[-k] + 2))
-    ki_end <- ki_start + as.numeric(table(group)) - .5
+  ids <- function(covariate, n) {
+    k <- length(levels(covariate))
+    ki_start <- cumsum(c(3, as.numeric(table(covariate))[-k] + 2))
+    ki_end <- ki_start + as.numeric(table(covariate)) - .5
     study_IDs <- numeric(n)
     for (i in 1:k) {
-      study_IDs[group == levels(group)[i]] <- ki_start[i]:ki_end[i]
+      study_IDs[covariate == levels(covariate)[i]] <- ki_start[i]:ki_end[i]
     }
     summary_IDs <- ki_end + 1 #.5
     data.frame("ID" = -((n + 3 * k + 2) - c(study_IDs, summary_IDs)),
@@ -148,7 +148,7 @@ forest_constructor <- function(data,
                )))
   }
 
-  ID <- ids(group, n = n)
+  ID <- ids(covariate, n = n)
 
   madata <- data.frame(
     "summary_es" = rep(0, k),
@@ -168,8 +168,8 @@ forest_constructor <- function(data,
       "x_max" = unlist(hi, use.names = FALSE),
       "se" = rep(1, nrow(forest_data)),
       "ID" = ID$ID[ID$type == "study"],
-      "labels" = study_labels,
-      "group" = group
+      "labels" = cov_level,
+      "covariate" = covariate
     )
   }else{
     med_es <- forest_data[, 1]
@@ -194,8 +194,8 @@ forest_constructor <- function(data,
       "hi_hi" = unlist(hi_hi, use.names = FALSE),
       "se" = rep(1, nrow(forest_data)),
       "ID" = ID$ID[ID$type == "study"],
-      "labels" = study_labels,
-      "group" = group
+      "labels" = cov_level,
+      "covariate" = covariate
     )
   }
 
@@ -205,7 +205,7 @@ forest_constructor <- function(data,
       plotdata = plotdata,
       madata = madata,
       nsim = nsim,
-      study_labels = study_labels,
+      cov_level = cov_level,
       summary_label = summary_label,
       annotate_CI = annotate_CI,
       shaded_interval = shaded_interval,

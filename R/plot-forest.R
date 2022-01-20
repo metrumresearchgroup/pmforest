@@ -7,8 +7,8 @@
 #' @param stat is the column to perform calculations on (i.e. median/mean, lower, and upper CI)
 #' @param statistic is the actual statistic to output (i.e. median/mean)
 #' @param CI is the confidence interval to plot
-#' @param group (optional) column that defines subgroups within the data- all subgroups will be shown on the same plot but grouped together.
-#' @param study_labels (optional) column name that corresponds to y-axis tick labels. If not specified, y-axis will be numbered.
+#' @param covariate (optional) column that defines subgroups within the data- all subgroups will be shown on the same plot but grouped together.
+#' @param cov_level (optional) column name that corresponds to y-axis tick labels. If not specified, y-axis will be numbered.
 #' @param metagroup (optional) column name that corresponds to metagroups. Similar to facet wrap. Will produce independent plots per metagroup.
 #' @param nsim (optional) column name that corresponds to simulation or bootstrap column. If specified, additional CI's of the individual statistics will be drawn.
 #' If `nsim` is specified and no caption is set, a default caption will be set. Set `caption` to "" to override this functionality.
@@ -31,8 +31,8 @@ plot_forest <- function(data,
                         stat = NULL,
                         statistic = "median",
                         CI=0.95,
-                        group = NULL,
-                        study_labels = NULL,
+                        covariate = NULL,
+                        cov_level = NULL,
                         metagroup = NULL,
                         nsim = NULL,
                         summary_label = NULL,
@@ -56,8 +56,8 @@ plot_forest <- function(data,
 
   lst <- summarize_data(data,
                         stat = {{stat}},
-                        group = {{group}},
-                        study_labels = {{study_labels}},
+                        covariate = {{covariate}},
+                        cov_level = {{cov_level}},
                         metagroup = {{metagroup}},
                         nsim = {{nsim}},
                         statistic={{statistic}},
@@ -73,8 +73,8 @@ plot_forest <- function(data,
     plt <- forest_constructor(
       data = data,
       args = {{ args }},
-      group = {{ group }},
-      study_labels = {{ study_labels }},
+      covariate = {{ covariate }},
+      cov_level = {{ cov_level }},
       nsim = {{ nsim }},
       summary_label = summary_label,
       vline_intercept = vline_intercept,
@@ -119,8 +119,8 @@ plot_forest <- function(data,
         forest_constructor(
           data = data,
           args = {{ args }},
-          group = {{ group }},
-          study_labels = {{ study_labels }},
+          covariate = {{ covariate }},
+          cov_level = {{ cov_level }},
           nsim = {{ nsim }},
           summary_label = summary_label,
           vline_intercept = vline_intercept,
