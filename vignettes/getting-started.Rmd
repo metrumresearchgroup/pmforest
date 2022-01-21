@@ -32,18 +32,16 @@ library(pmforest)
 # Introduction/Scope
 `pmforest` is a package for producing forest plots: graphical summaries of covariate effects in a pharmacometric model. Given a dataset of model responses or model parameters simulated with uncertainty from the model at various covariate levels, the package generates plots of confidence intervals reflecting the predicted impact of the covariates.
 
-
-This section focuses on the setup and generation of the forest plots. To use the forest plot function you will need input data that conforms to the specifications defined in the section below. 
-
 <hr>
 <br>
 
 # Data Spec
+To use the forest plot function you will need input data that conforms to the specifications defined below. 
 
 The input dataset is in long format, where 3 main columns are required: the column to plot (often normalized values), a character column denoting the covariate or group you want to separate by, and the specific covariate level the plotting column corresponds to. For instance, one set of values could be **`0.51`, "Renal Function", "Severe"**
 
 
-An example dataset that meets these specifications can be seen below. 
+An example dataset that meets these specifications can be seen here: 
 
 ![](assets/forest-data-ex.png)<!-- -->
 
