@@ -8,8 +8,8 @@ summarize_data <- function(data, stat, covariate, cov_level, metagroup, nsim, CI
 
   stat_func <- function(x,statistic){
     switch(statistic,
-           mean=mean(x),
-           median=median(x))
+           mean=mean(x, na.rm=TRUE),
+           median=median(x, na.rm=TRUE))
   }
 
   stat <- data %>% dplyr::select({{ stat }}) %>% names()

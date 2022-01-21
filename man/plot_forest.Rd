@@ -20,7 +20,7 @@ plot_forest(
   x_lab = "Effect",
   y_lab = NULL,
   CI_label = NULL,
-  text_size = 3,
+  text_size = 3.5,
   plot_width = 8,
   caption = NULL,
   x_breaks = NULL,
