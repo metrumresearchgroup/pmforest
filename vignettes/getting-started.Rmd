@@ -33,26 +33,40 @@ library(pmforest)
 `pmforest` is a package for producing forest plots: graphical summaries of covariate effects in a pharmacometric model. Given a dataset of model responses or model parameters simulated with uncertainty from the model at various covariate levels, the package generates plots of confidence intervals reflecting the predicted impact of the covariates.
 
 
-This section focuses on the setup and generation of the forest plots. To use the forest plot function you will need input data that conforms to the specifications defined [here](data-spec.html). 
+This section focuses on the setup and generation of the forest plots. To use the forest plot function you will need input data that conforms to the specifications defined in the section below. 
 
 <hr>
 <br>
 
+# Data Spec
 
-# Plot Generation
+The input dataset is in long format, where 3 main columns are required: the column to plot (often normalized values), a character column denoting the covariate or group you want to separate by, and the specific covariate level the plotting column corresponds to. For instance, one set of values could be **`0.51`, "Renal Function", "Severe"**
 
-In the examples below we will reference the dataset shown in the [data specifications vignette](data-spec.html), pasted again below:
+
+An example dataset that meets these specifications can be seen below. 
 
 ![](assets/forest-data-ex.png)<!-- -->
 
-#### The Main Arguments:
+<hr>
+<br>
 
+# Plot Generation
+
+In the examples below we will reference the dataset shown above
+
+### The Main Arguments:
+
+#### Core Columns
  - **`stat`** (stat) is the column you want to perform summary statistics on. In this case, the `stat` column was equivalent to `value/ref` column in the example dataset. This argument defaults to `NULL` and must be specified.
  - **`covariate`** (GROUP) denotes the covariate/group
  - **`cov_level`** (LVL) denotes the level within the covariate grouping
+ 
+#### Required Arguments
  - **`CI`** is the chosen two-tailed confidence interval - defaults to 0.95.
  - **`annotate_CI`** (T/F) denotes whether or not to show the confidence interval values to the right of the plot - default is `TRUE`.
  - **`statistic`** is the chosen statistic - options include "mean" or "median". Must be specified as a character string.
+ 
+#### Other Common Specifications
  - **`vline_intercept`** is the location of the vertical dotted-line.
  - **`metagroup`** (param) denotes a column you want to facet by. In many cases you may only plot one covariate at a time. Note that this argument is necessary for creating a facet title via ggplot. You can however add a title via patchwork (shown later).
  
