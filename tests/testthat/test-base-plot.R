@@ -1,3 +1,5 @@
+library(vdiffr)
+
 specDir <- here::here("tests",  "test-data", "spec")
 dataDir <- here::here("tests",  "test-data")
 
@@ -10,7 +12,7 @@ all_labels$V2 <- 'V (L)'
 
 plot_labels <- as_labeller(unlist(all_labels))
 
-describe("Base plot - one metagroup", {
+describe("Base plots", {
 
   plotData <- readRDS(file.path(dataDir, "plotData.RDS"))
 
@@ -28,6 +30,7 @@ describe("Base plot - one metagroup", {
                        nrow = 2
     )
     plt
+    expect_doppelganger("Test metagroup (Cl and V2)", plt)
   })
 
   it("Plot/Table width [PMF-PLOT-008]", {
@@ -42,6 +45,7 @@ describe("Base plot - one metagroup", {
                        plot_width = 6 # not the default value
     )
     plt
+    expect_doppelganger("Plot/Table width", plt)
   })
 
   it("Vertical Intercept [PMF-PLOT-009]", {
@@ -56,6 +60,7 @@ describe("Base plot - one metagroup", {
                        vline_intercept = 1
     )
     plt
+    expect_doppelganger("Vertical Intercept", plt)
   })
 
   it("shaded interval displays over correct range [PMF-PLOT-010]", {
@@ -69,7 +74,7 @@ describe("Base plot - one metagroup", {
                        shaded_interval = c(0.8,1.25),
     )
     plt
-
+    expect_doppelganger("shaded interval", plt)
   })
 
   it("update labels via yaml file [PMF-PLOT-011]", {
@@ -82,7 +87,7 @@ describe("Base plot - one metagroup", {
                        summary_label = plot_labels
     )
     plt
-
+    expect_doppelganger("update labels via yaml file", plt)
   })
 
   it("Axis labels and captions [PMF-PLOT-014]", {
@@ -98,7 +103,7 @@ describe("Base plot - one metagroup", {
                                   to the interval (0.8, 1.25)"
     )
     plt
-
+    expect_doppelganger("Axis labels and captions", plt)
   })
 
   it("Test breaks and limits of x-axis [PMF-PLOT-015]", {
@@ -109,21 +114,11 @@ describe("Base plot - one metagroup", {
                        covariate = GROUP,
                        metagroup = param,
                        cov_level = LVL,
-                       shaded_interval = c(0.8,1.25),
-                       summary_label = plot_labels,
-                       text_size = 3.5,
-                       vline_intercept = 1,
-                       x_lab = "Fraction and 95% CI \nRelative to Reference",
-                       CI_label = "Median [95% CI]",
-                       caption = "The shaded area corresponds
-                   to the interval (0.8, 1.25)",
-                   plot_width = 8, # out of 12
-                   x_breaks = c(0.4,0.6, 0.8, 1, 1.2, 1.4,1.6),
-                   x_limit = c(0.4,1.45),
-                   annotate_CI=T,
-                   nrow = 1) # change nrow to 2 if displaying two parameters
+                       x_breaks = c(0.4,0.6, 0.8, 1, 1.2, 1.4,1.6),
+                       x_limit = c(0.4,1.45),
+    )
     plt
-
+    expect_doppelganger("Test breaks and limits of x-axis", plt)
   })
 
 
@@ -135,32 +130,22 @@ describe("Base plot - one metagroup", {
                        covariate = GROUP,
                        metagroup = param,
                        cov_level = LVL,
-                       shaded_interval = c(0.8,1.25),
-                       summary_label = plot_labels,
-                       text_size = 3.5,
-                       vline_intercept = 1,
-                       x_lab = "Fraction and 95% CI \nRelative to Reference",
-                       CI_label = "Median [95% CI]",
-                       caption = "The shaded area corresponds
-                   to the interval (0.8, 1.25)",
-                   plot_width = 8, # out of 12
-                   x_breaks = c(0.4,0.6, 0.8, 1, 1.2, 1.4,1.6),
-                   x_limit = c(0.4,1.45),
-                   annotate_CI=T,
-                   nrow = 1) # change nrow to 2 if displaying two parameters
+                       text_size = 4
+    )
     plt
-
+    expect_doppelganger("Modify text size", plt)
   })
 
   it("Base plot [PMF-PLOT-0017]", {
     plt <- plot_forest(data = plotData ,
                        statistic = "median",
-                       CI=CI,
+                       CI=0.95,
                        stat = stat,
                        covariate = GROUP,
-                       cov_level = LVL,
-                       annotate_CI=TRUE)
+                       cov_level = LVL
+    )
     plt
+    expect_doppelganger("Base plot", plt)
   })
 
   it("Full Test [PMF-PLOT-0018]", {
@@ -182,9 +167,9 @@ describe("Base plot - one metagroup", {
                    plot_width = 8, # out of 12
                    x_breaks = c(0.4,0.6, 0.8, 1, 1.2, 1.4,1.6),
                    x_limit = c(0.4,1.45),
-                   annotate_CI=T,
-                   nrow = 1) # change nrow to 2 if displaying two parameters
+                   annotate_CI=T
+    )
     plt
-
+    expect_doppelganger("Full Test", plt)
   })
 })
