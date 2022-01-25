@@ -60,6 +60,7 @@ table_plot <-
       value = v,
       stringsAsFactors = FALSE
     )
+    # TODO: consider refactoring to remove data.table dependency
     lab <- lab %>% arrange(desc(y)) %>% as.data.table()
     lab[ , diff := y - shift(y)]
 

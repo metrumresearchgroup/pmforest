@@ -16,7 +16,7 @@ describe("Base plots", {
 
   plotData <- readRDS(file.path(dataDir, "plotData.RDS"))
 
-  it("Test metagroup (Cl and V2) [PMF-PLOT-005]", {
+  it("Test metagroup (Cl and V2) [PMF-PLOT-004]", {
 
     plotData2 <- readRDS(file.path(dataDir, "plotData2.RDS"))
 
@@ -27,10 +27,73 @@ describe("Base plots", {
                        covariate = GROUP,
                        metagroup = param,
                        cov_level = LVL,
-                       nrow = 2
+                       annotate_CI = F
     )
     plt
     expect_doppelganger("Test metagroup (Cl and V2)", plt)
+
+    plt <- plot_forest(data = plotData2 ,
+                       statistic = "median",
+                       CI=0.95,
+                       stat = stat,
+                       covariate = GROUP,
+                       metagroup = param,
+                       cov_level = LVL,
+                       annotate_CI = F,
+                       nrow = 2
+    )
+
+    expect_doppelganger("Test metagroup with nrow (Cl and V2)", plt)
+
+  })
+
+  it("Test metagroup (Cl and V2) with labels [PMF-PLOT-005]", {
+
+    plotData2 <- readRDS(file.path(dataDir, "plotData2.RDS"))
+
+    plt <- plot_forest(data = plotData2 ,
+                       statistic = "median",
+                       CI=0.95,
+                       stat = stat,
+                       covariate = GROUP,
+                       metagroup = param,
+                       cov_level = LVL,
+                       annotate_CI = F,
+                       nrow = 2,
+                       summary_label = plot_labels
+    )
+
+    expect_doppelganger("Test metagroup (Cl and V2)", plt)
+  })
+
+  it("CI Table - mean [PMF-PLOT-006]", {
+
+    plt <- plot_forest(data = plotData ,
+                       statistic = "mean",
+                       CI=0.99,
+                       stat = stat,
+                       covariate = GROUP,
+                       metagroup = param,
+                       cov_level = LVL,
+                       annotate_CI = TRUE
+    )
+
+    expect_doppelganger("CI Table", plt)
+  })
+
+  it("CI Table - median [PMF-PLOT-007]", {
+
+    plt <- plot_forest(data = plotData ,
+                       statistic = "median",
+                       CI=0.99,
+                       stat = stat,
+                       covariate = GROUP,
+                       metagroup = param,
+                       cov_level = LVL,
+                       annotate_CI = TRUE
+    )
+
+    expect_doppelganger("CI Table", plt)
   })
 
   it("Plot/Table width [PMF-PLOT-008]", {
@@ -44,7 +107,7 @@ describe("Base plots", {
                        cov_level = LVL,
                        plot_width = 6 # not the default value
     )
-    plt
+
     expect_doppelganger("Plot/Table width", plt)
   })
 
@@ -59,7 +122,7 @@ describe("Base plots", {
                        cov_level = LVL,
                        vline_intercept = 1
     )
-    plt
+
     expect_doppelganger("Vertical Intercept", plt)
   })
 
@@ -73,7 +136,7 @@ describe("Base plots", {
                        cov_level = LVL,
                        shaded_interval = c(0.8,1.25),
     )
-    plt
+
     expect_doppelganger("shaded interval", plt)
   })
 
@@ -86,7 +149,7 @@ describe("Base plots", {
                        cov_level = LVL,
                        summary_label = plot_labels
     )
-    plt
+
     expect_doppelganger("update labels via yaml file", plt)
   })
 
@@ -102,7 +165,7 @@ describe("Base plots", {
                        caption = "The shaded area corresponds
                                   to the interval (0.8, 1.25)"
     )
-    plt
+
     expect_doppelganger("Axis labels and captions", plt)
   })
 
@@ -117,7 +180,7 @@ describe("Base plots", {
                        x_breaks = c(0.4,0.6, 0.8, 1, 1.2, 1.4,1.6),
                        x_limit = c(0.4,1.45),
     )
-    plt
+
     expect_doppelganger("Test breaks and limits of x-axis", plt)
   })
 
@@ -132,7 +195,7 @@ describe("Base plots", {
                        cov_level = LVL,
                        text_size = 4
     )
-    plt
+
     expect_doppelganger("Modify text size", plt)
   })
 
@@ -144,7 +207,7 @@ describe("Base plots", {
                        covariate = GROUP,
                        cov_level = LVL
     )
-    plt
+
     expect_doppelganger("Base plot", plt)
   })
 
@@ -169,7 +232,7 @@ describe("Base plots", {
                    x_limit = c(0.4,1.45),
                    annotate_CI=T
     )
-    plt
+
     expect_doppelganger("Full Test", plt)
   })
 })
