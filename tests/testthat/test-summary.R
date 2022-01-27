@@ -1,9 +1,9 @@
 library(vdiffr)
 
-dataDir <- here::here("tests",  "test-data")
-plotData <- readRDS(file.path(dataDir, "plotData.RDS"))
-
 describe("Column selection, summary", {
+
+  dataDir <- here::here("tests", "testthat", "test-data")
+  plotData <- readRDS(file.path(dataDir, "plotData.RDS"))
 
   CI <- 0.95
   lci <- (1-CI)/2

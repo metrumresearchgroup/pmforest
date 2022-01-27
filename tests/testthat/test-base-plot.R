@@ -1,18 +1,16 @@
-library(vdiffr)
 
-specDir <- here::here("tests",  "test-data", "spec")
-dataDir <- here::here("tests",  "test-data")
-
-specFile <- yspec::ys_load(file.path(specDir, 'analysis3.yml'))
-
-all_labels <- yspec::ys_get_short(specFile, title_case = TRUE)
-all_labels$EGFR <- 'Renal Function'
-all_labels$CL <- 'CL (L/hr)'
-all_labels$V2 <- 'V (L)'
-
-plot_labels <- ggplot2::as_labeller(unlist(all_labels))
+specDir <- here::here("tests", "testthat", "test-data", "spec")
+dataDir <- here::here("tests", "testthat", "test-data")
 
 describe("Base plots", {
+
+  specFile <- yspec::ys_load(file.path(specDir, 'analysis3.yml'))
+
+  all_labels <- yspec::ys_get_short(specFile, title_case = TRUE)
+  all_labels$EGFR <- 'Renal Function'
+  all_labels$CL <- 'CL (L/hr)'
+  all_labels$V2 <- 'V (L)'
+  plot_labels <- ggplot2::as_labeller(unlist(all_labels))
 
   plotData <- readRDS(file.path(dataDir, "plotData.RDS"))
   plotData2 <- readRDS(file.path(dataDir, "plotData2.RDS"))

@@ -13,6 +13,7 @@
 #' @importFrom stringr str_detect
 #' @importFrom utils write.csv
 #' @importFrom assertthat assert_that
+#' @importFrom yspec ys_load ys_get_short
 #'
 #' @include forest-constructor.R
 #' @include table-plot.R
