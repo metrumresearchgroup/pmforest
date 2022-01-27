@@ -1,0 +1,99 @@
+---
+title: "Validation"
+output: 
+  pdf_document: 
+    number_sections: true
+---
+
+<!-- Note: To not render this document, as all vdiffr tests will fail. Run this document interactively. -->
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  echo = FALSE
+)
+```
+
+# Validation Testing: mrgCompare v0.10.0
+
+## Scope
+
+The purpose of this Validation Testing document is to define the conditions for
+test execution. 
+
+----------------
+
+```{r, message=FALSE, warning = FALSE}
+# devtools::build()
+library(readr)
+library(testthat)
+library(dplyr)
+```
+
+## Test candidate
+
+Showing md5 checksum
+```{r}
+tarball <- "../../pmforest_0.0.0.9000.tar.gz"
+tools::md5sum(tarball)
+```
+
+```{r,output="hide", message=FALSE, warning=FALSE}
+renv::install(tarball, repos=NULL, type = 'source')
+library(pmforest)
+```
+
+```{r}
+run_test <- function(dir,d) {
+ x <- test_dir(dir, reporter="check") %>% as_tibble()
+ x$result <- NULL
+ x$location <- dir
+ x$date <- d
+ x
+}
+```
+
+```{r}
+d  <- Sys.time()
+```
+
+## Run tests
+
+Tests specified in the Requirements Specification-Validation Plan document are
+executed using the `run_test()` function, which calls `testthat::test_dir`.
+
+### tests
+
+```{r, echo=FALSE,  message=FALSE, warning=FALSE}
+df <- run_test("../tests/testthat",d) 
+```
+
+
+## Summary
+
+Summarizes the number of contexts, tests, and expectations and counts number
+of tests and test failures.
+```{r}
+summarise(
+        df,
+        contexts = n_distinct(context),
+        tests = n_distinct(test), 
+        number = sum(nb), 
+        failed = sum(failed)
+)
+```
+
+
+```{r, warning=FALSE}
+readr::write_csv(path="all_tests.csv", df)
+```
+
+## Session
+
+Testing session information is captured.
+
+```{r}
+devtools::session_info()
+```

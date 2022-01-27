@@ -1,12 +1,13 @@
 #' @importFrom glue glue
 #' @importFrom here here
-#' @import data.table
 #' @importFrom readr read_table read_csv
 #' @importFrom tibble as_tibble tibble
 #' @importFrom pmtables sig
 #' @import rlang
 #' @import dplyr
 #' @import ggplot2
+#' @importFrom gridExtra arrangeGrob
+#' @importFrom ggpubr as_ggplot
 #' @import patchwork
 #' @import vdiffr
 #' @importFrom stringr str_detect

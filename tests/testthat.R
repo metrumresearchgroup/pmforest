@@ -1,4 +1,4 @@
 library(testthat)
-library(mrgforest)
+library(pmforest)
 
-test_check("mrgforest")
+test_check("pmforest")

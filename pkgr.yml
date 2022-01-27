@@ -1,0 +1,35 @@
+Version: 1
+
+Packages:
+  - dplyr
+  - testthat
+  - glue
+  - pmtables
+  - yspec
+  - ggplot2
+  - patchwork
+  - readr
+  - stringr
+  - magrittr
+  - assertthat
+  - here
+  - vdiffr
+  - devtools
+  - markdown
+  - gridExtra
+  - ggpubr
+  - shiny
+  - diffviewer
+
+
+Repos:
+  - MPN: https://mpn.metworx.com/snapshots/stable/2021-11-19
+
+Customizations:
+  Packages:
+  - mgrsolve:
+      Suggests: true
+
+Lockfile:
+    Type: renv
+

@@ -8,7 +8,20 @@ Authors@R:
              email = "barrettk@metrumrg.com"))
 License: MIT + file LICENSE
 Imports:
-    magrittr
+    magrittr,
+    assertthat,
+    dplyr,
+    glue,
+    here,
+    patchwork,
+    rlang,
+    stringr,
+    tibble,
+    ggplot2,
+    readr,
+    data.table,
+    pmtables,
+    vdiffr
 Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

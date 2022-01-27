@@ -10,7 +10,7 @@ all_labels$EGFR <- 'Renal Function'
 all_labels$CL <- 'CL (L/hr)'
 all_labels$V2 <- 'V (L)' # uncomment this line if using V2
 
-plot_labels <- as_labeller(unlist(all_labels))
+plot_labels <- ggplot2::as_labeller(unlist(all_labels))
 
 describe("Multiple simulations", {
 
@@ -34,7 +34,7 @@ describe("Multiple simulations", {
                        CI_label = "Median [95% CI]"
     )
     plt
-    expect_doppelganger("Multiple simulations", plt)
+    vdiffr::expect_doppelganger("Multiple simulations", plt)
   })
 
 
@@ -61,7 +61,7 @@ describe("Multiple simulations", {
                        jitter_nsim = TRUE)
 
     plt
-    expect_doppelganger("Multiple CI's with jitter", plt)
+    vdiffr::expect_doppelganger("Multiple CI's with jitter", plt)
   })
 
 })

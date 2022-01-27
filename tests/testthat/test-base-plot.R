@@ -10,17 +10,16 @@ all_labels$EGFR <- 'Renal Function'
 all_labels$CL <- 'CL (L/hr)'
 all_labels$V2 <- 'V (L)'
 
-plot_labels <- as_labeller(unlist(all_labels))
+plot_labels <- ggplot2::as_labeller(unlist(all_labels))
 
 describe("Base plots", {
 
   plotData <- readRDS(file.path(dataDir, "plotData.RDS"))
+  plotData2 <- readRDS(file.path(dataDir, "plotData2.RDS"))
 
   it("Test metagroup (Cl and V2) [PMF-PLOT-004]", {
 
-    plotData2 <- readRDS(file.path(dataDir, "plotData2.RDS"))
-
-    plt <- plot_forest(data = plotData2 ,
+    plt1 <- plot_forest(data = plotData2 ,
                        statistic = "median",
                        CI=0.95,
                        stat = stat,
@@ -29,10 +28,9 @@ describe("Base plots", {
                        cov_level = LVL,
                        annotate_CI = F
     )
-    plt
-    expect_doppelganger("Test metagroup (Cl and V2)", plt)
+    vdiffr::expect_doppelganger("Test metagroup", plt1)
 
-    plt <- plot_forest(data = plotData2 ,
+    plt2 <- plot_forest(data = plotData2 ,
                        statistic = "median",
                        CI=0.95,
                        stat = stat,
@@ -42,14 +40,11 @@ describe("Base plots", {
                        annotate_CI = F,
                        nrow = 2
     )
-
-    expect_doppelganger("Test metagroup with nrow (Cl and V2)", plt)
+    vdiffr::expect_doppelganger("Test metagroup with nrow", plt2)
 
   })
 
   it("Test metagroup (Cl and V2) with labels [PMF-PLOT-005]", {
-
-    plotData2 <- readRDS(file.path(dataDir, "plotData2.RDS"))
 
     plt <- plot_forest(data = plotData2 ,
                        statistic = "median",
@@ -63,7 +58,7 @@ describe("Base plots", {
                        summary_label = plot_labels
     )
 
-    expect_doppelganger("Test metagroup (Cl and V2)", plt)
+    vdiffr::expect_doppelganger("Test metagroup with labels", plt)
   })
 
   it("CI Table - mean [PMF-PLOT-006]", {
@@ -78,7 +73,7 @@ describe("Base plots", {
                        annotate_CI = TRUE
     )
 
-    expect_doppelganger("CI Table", plt)
+    vdiffr::expect_doppelganger("CI Table - mean", plt)
   })
 
   it("CI Table - median [PMF-PLOT-007]", {
@@ -93,7 +88,7 @@ describe("Base plots", {
                        annotate_CI = TRUE
     )
 
-    expect_doppelganger("CI Table", plt)
+    vdiffr::expect_doppelganger("CI Table - median", plt)
   })
 
   it("Plot/Table width [PMF-PLOT-008]", {
@@ -108,7 +103,7 @@ describe("Base plots", {
                        plot_width = 6 # not the default value
     )
 
-    expect_doppelganger("Plot/Table width", plt)
+    vdiffr::expect_doppelganger("Plot/Table width", plt)
   })
 
   it("Vertical Intercept [PMF-PLOT-009]", {
@@ -123,7 +118,7 @@ describe("Base plots", {
                        vline_intercept = 1
     )
 
-    expect_doppelganger("Vertical Intercept", plt)
+    vdiffr::expect_doppelganger("Vertical Intercept", plt)
   })
 
   it("shaded interval displays over correct range [PMF-PLOT-010]", {
@@ -137,7 +132,7 @@ describe("Base plots", {
                        shaded_interval = c(0.8,1.25),
     )
 
-    expect_doppelganger("shaded interval", plt)
+    vdiffr::expect_doppelganger("shaded interval", plt)
   })
 
   it("update labels via yaml file [PMF-PLOT-011]", {
@@ -150,7 +145,7 @@ describe("Base plots", {
                        summary_label = plot_labels
     )
 
-    expect_doppelganger("update labels via yaml file", plt)
+    vdiffr::expect_doppelganger("update labels via yaml file", plt)
   })
 
   it("Axis labels and captions [PMF-PLOT-014]", {
@@ -166,7 +161,7 @@ describe("Base plots", {
                                   to the interval (0.8, 1.25)"
     )
 
-    expect_doppelganger("Axis labels and captions", plt)
+    vdiffr::expect_doppelganger("Axis labels and captions", plt)
   })
 
   it("Test breaks and limits of x-axis [PMF-PLOT-015]", {
@@ -181,7 +176,7 @@ describe("Base plots", {
                        x_limit = c(0.4,1.45),
     )
 
-    expect_doppelganger("Test breaks and limits of x-axis", plt)
+    vdiffr::expect_doppelganger("Test breaks and limits of x-axis", plt)
   })
 
 
@@ -196,7 +191,7 @@ describe("Base plots", {
                        text_size = 4
     )
 
-    expect_doppelganger("Modify text size", plt)
+    vdiffr::expect_doppelganger("Modify text size", plt)
   })
 
   it("Base plot [PMF-PLOT-0017]", {
@@ -208,7 +203,7 @@ describe("Base plots", {
                        cov_level = LVL
     )
 
-    expect_doppelganger("Base plot", plt)
+    vdiffr::expect_doppelganger("Base plot", plt)
   })
 
   it("Full Test [PMF-PLOT-0018]", {
@@ -233,6 +228,6 @@ describe("Base plots", {
                    annotate_CI=T
     )
 
-    expect_doppelganger("Full Test", plt)
+    vdiffr::expect_doppelganger("Full Test", plt)
   })
 })
