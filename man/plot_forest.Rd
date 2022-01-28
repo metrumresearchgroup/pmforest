@@ -7,7 +7,7 @@
 plot_forest(
   data,
   stat = NULL,
-  statistic = "median",
+  statistic = c("median", "mean"),
   CI = 0.95,
   covariate = NULL,
   cov_level = NULL,

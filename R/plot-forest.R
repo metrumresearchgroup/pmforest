@@ -29,7 +29,7 @@
 #' @export
 plot_forest <- function(data,
                         stat = NULL,
-                        statistic = "median",
+                        statistic = c("median","mean"),
                         CI=0.95,
                         covariate = NULL,
                         cov_level = NULL,
@@ -50,6 +50,7 @@ plot_forest <- function(data,
                         jitter_nsim = FALSE,
                         ...){
 
+  statistic <- match.arg(statistic)
   assert_that(text_size >= 3.5, msg = "'text_size' must be at least 3.5")
   assert_that(is_logical(annotate_CI), msg = "'annotate_CI' must be a logical value (T/F)")
   assert_that(is_logical(jitter_nsim), msg = "'jitter_nsim' must be a logical value (T/F)")

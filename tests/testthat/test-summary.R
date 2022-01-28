@@ -43,6 +43,7 @@ describe("Column selection, summary", {
   })
 
   it("CI is properly calculated [PMF-PLOT-003]", {
+    # Add CI guard rail/test
     expect_equal(lci, 0.025)
   })
 
