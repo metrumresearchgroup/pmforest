@@ -15,6 +15,7 @@
 #' @param summary_labels (optional) labeler function created using `ggplot2::as_labeller`. Labels for group and metagroup.
 #' @param vline_intercept (optional) numeric. Default 0.
 #' @param annotate_CI logical. Default `TRUE`. Show a table next to the graph with the numeric values for the confidence interval.
+#' @param sigfig numeric. Number of significant digits to round the table values to.
 #' @param x_lab string. x-axis label.
 #' @param y_lab string. Default is not to label y axis.
 #' @param CI_label string. Ignored if `annotate_CI` is `FALSE`.
@@ -39,6 +40,7 @@ plot_forest <- function(data,
                         vline_intercept = 0,
                         annotate_CI = TRUE,
                         shaded_interval = NULL,
+                        sigfig = 3,
                         x_lab = "Effect",
                         y_lab = NULL,
                         CI_label = NULL,
@@ -51,9 +53,11 @@ plot_forest <- function(data,
                         ...){
 
   statistic <- match.arg(statistic)
-  assert_that(text_size >= 3.5, msg = "'text_size' must be at least 3.5")
-  assert_that(is_logical(annotate_CI), msg = "'annotate_CI' must be a logical value (T/F)")
-  assert_that(is_logical(jitter_nsim), msg = "'jitter_nsim' must be a logical value (T/F)")
+  assert_that(is.numeric(sigfig) & sigfig > 1, msg = "`sigfig` must be a numeric value greater than 1")
+  assert_that(CI > 0 & CI < 1, msg = "`CI` must be between 0 and 1")
+  assert_that(text_size >= 3.5, msg = "`text_size` must be at least 3.5")
+  assert_that(is_logical(annotate_CI), msg = "`annotate_CI` must be a logical value (T/F)")
+  assert_that(is_logical(jitter_nsim), msg = "`jitter_nsim` must be a logical value (T/F)")
 
   lst <- summarize_data(data,
                         stat = {{stat}},
@@ -80,6 +84,7 @@ plot_forest <- function(data,
       summary_label = summary_label,
       vline_intercept = vline_intercept,
       annotate_CI = annotate_CI,
+      sigfig = sigfig,
       confidence_level = CI,
       shaded_interval = shaded_interval,
       statistic = {{ statistic }},
@@ -127,6 +132,7 @@ plot_forest <- function(data,
           vline_intercept = vline_intercept,
           annotate_CI = annotate_CI,
           confidence_level = CI,
+          sigfig = sigfig,
           shaded_interval = shaded_interval,
           statistic = {{ statistic }},
           x_lab = x_lab,
