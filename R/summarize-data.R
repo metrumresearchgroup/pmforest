@@ -4,7 +4,7 @@
 #' @inheritParams plot_forest
 #' @param r,l parameters corresponding to the plot margin for the confidence intervals
 #' @keywords internal
-summarize_data <- function(data, stat, group, study_labels, metagroup, nsim, CI=CI, statistic){
+summarize_data <- function(data, stat, covariate, cov_level, metagroup, nsim, CI=CI, statistic){
 
   stat_func <- function(x,statistic){
     switch(statistic,
@@ -13,17 +13,17 @@ summarize_data <- function(data, stat, group, study_labels, metagroup, nsim, CI=
   }
 
   stat <- data %>% dplyr::select({{ stat }}) %>% names()
-  group <- data %>% dplyr::select({{ group }})
-  if(ncol(group) == 0){
-    group <- NULL
+  covariate <- data %>% dplyr::select({{ covariate }})
+  if(ncol(covariate) == 0){
+    covariate <- NULL
   } else {
-    group <- names(group)
+    covariate <- names(covariate)
   }
-  study_labels <- data %>% dplyr::select({{ study_labels }})
-  if(ncol(study_labels) == 0){
-    study_labels <- NULL
+  cov_level <- data %>% dplyr::select({{ cov_level }})
+  if(ncol(cov_level) == 0){
+    cov_level <- NULL
   } else {
-    study_labels <- names(study_labels)
+    cov_level <- names(cov_level)
   }
   metagroup <- data %>% dplyr::select({{ metagroup }})
   if(ncol(metagroup) == 0){
@@ -38,7 +38,7 @@ summarize_data <- function(data, stat, group, study_labels, metagroup, nsim, CI=
     nsim <- names(nsim)
   }
 
-  groups <- c(group, study_labels, metagroup)
+  groups <- c(covariate, cov_level, metagroup)
   lci <- (1-CI)/2
 
   if(is.null(nsim)){

@@ -1,0 +1,27 @@
+
+--------------------------------------------------- already in vignette
+# Data Spec
+
+The input dataset is in long format, where 3 main columns are required: the column to plot (often normalized values), a character column denoting the covariate or group you want to separate by, and the specific covariate level the plotting column corresponds to. For instance, one set of values could be **`0.51`, "Renal Function", "Severe"**
+
+
+An example dataset that meets these specifications can be seen below.
+
+![](assets/forest-data-ex.png)<!-- -->
+
+---------------------------------------------------
+
+
+### Example dataset creation
+An example of how to create one of these datasets can be found in [forest-plots.R](https://ghe.metrumrg.com/example-projects/bbr-nonmem-poppk-foce/blob/main/script/forest-plots.R). The script walks you though:
+
+ 1. Reading in your bootstrap estimates (this can be swapped out for simpar() results or Bayesian posteriors as needed), your mrgsolve model and original dataset.
+ 2. Reviewing the dataset for 10th and 90th percentile values for the covariates of interest (this will change from project to project).
+ 3. Setting up simulations and generating the data to be included in the forest plots.
+ 4. Generating the forest plots.
+
+Before using this code, we assume you have:
+
+ 1.  A version of the model that will be used for the forest plot has a corresponding mrgsolve version already developed and reviewed.
+ 2.  Covariate values coded into `[PARAM]` of that model that match those of the "reference" patient -- to check that, you can use `see(mod)` or `param(mod)` in the R console to compare the typical reference values were provided (else you will need to update them in the "ref" model run here).
+ 3. A listing of parameter values, reflecting uncertainty in the parameter estimates, exists (e.g., either from bootstrap runs, simpar(), or the posteriors from a Bayesian estimation).

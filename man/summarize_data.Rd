@@ -7,8 +7,8 @@
 summarize_data(
   data,
   stat,
-  group,
-  study_labels,
+  covariate,
+  cov_level,
   metagroup,
   nsim,
   CI = CI,
@@ -20,9 +20,9 @@ summarize_data(
 
 \item{stat}{is the column to perform calculations on (i.e. median/mean, lower, and upper CI)}
 
-\item{group}{(optional) column that defines subgroups within the data- all subgroups will be shown on the same plot but grouped together.}
+\item{covariate}{(optional) column that defines subgroups within the data- all subgroups will be shown on the same plot but grouped together.}
 
-\item{study_labels}{(optional) column name that corresponds to y-axis tick labels. If not specified, y-axis will be numbered.}
+\item{cov_level}{(optional) column name that corresponds to y-axis tick labels. If not specified, y-axis will be numbered.}
 
 \item{metagroup}{(optional) column name that corresponds to metagroups. Similar to facet wrap. Will produce independent plots per metagroup.}
 

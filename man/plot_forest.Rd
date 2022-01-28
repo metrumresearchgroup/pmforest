@@ -9,8 +9,8 @@ plot_forest(
   stat = NULL,
   statistic = "median",
   CI = 0.95,
-  group = NULL,
-  study_labels = NULL,
+  covariate = NULL,
+  cov_level = NULL,
   metagroup = NULL,
   nsim = NULL,
   summary_label = NULL,
@@ -38,9 +38,9 @@ plot_forest(
 
 \item{CI}{is the confidence interval to plot}
 
-\item{group}{(optional) column that defines subgroups within the data- all subgroups will be shown on the same plot but grouped together.}
+\item{covariate}{(optional) column that defines subgroups within the data- all subgroups will be shown on the same plot but grouped together.}
 
-\item{study_labels}{(optional) column name that corresponds to y-axis tick labels. If not specified, y-axis will be numbered.}
+\item{cov_level}{(optional) column name that corresponds to y-axis tick labels. If not specified, y-axis will be numbered.}
 
 \item{metagroup}{(optional) column name that corresponds to metagroups. Similar to facet wrap. Will produce independent plots per metagroup.}
 

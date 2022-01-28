@@ -7,8 +7,8 @@
 forest_constructor(
   data,
   args,
-  group = NULL,
-  study_labels = NULL,
+  covariate = NULL,
+  cov_level = NULL,
   nsim = NULL,
   summary_label = NULL,
   vline_intercept = 0,
@@ -33,9 +33,9 @@ forest_constructor(
 
 \item{args}{mean/median, low CI, upper CI relating to the selected reference column}
 
-\item{group}{(optional) column that defines subgroups within the data- all subgroups will be shown on the same plot but grouped together.}
+\item{covariate}{(optional) column that defines subgroups within the data- all subgroups will be shown on the same plot but grouped together.}
 
-\item{study_labels}{(optional) column name that corresponds to y-axis tick labels. If not specified, y-axis will be numbered.}
+\item{cov_level}{(optional) column name that corresponds to y-axis tick labels. If not specified, y-axis will be numbered.}
 
 \item{nsim}{(optional) column name that corresponds to simulation or bootstrap column. If specified, additional CI's of the individual statistics will be drawn.
 If \code{nsim} is specified and no caption is set, a default caption will be set. Set \code{caption} to "" to override this functionality.}
