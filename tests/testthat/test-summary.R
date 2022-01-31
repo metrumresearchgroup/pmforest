@@ -2,8 +2,9 @@ library(vdiffr)
 
 describe("Column selection, summary", {
 
-  dataDir <- here::here("tests", "testthat", "test-data")
+  dataDir <- system.file("test-data", package = "pmforest")
   plotData <- readRDS(file.path(dataDir, "plotData.RDS"))
+  plotData2 <- readRDS(file.path(dataDir, "plotDataEXP.RDS"))
 
   CI <- 0.95
   lci <- (1-CI)/2
@@ -27,10 +28,10 @@ describe("Column selection, summary", {
                                          CI=CI)
 
   sumdat <- plotData %>% group_by(GROUP, LVL) %>%
-    summarise(med = as.numeric(pmtables::sig(median(stat, na.rm = T))),
-              mean = as.numeric(pmtables::sig(mean(stat, na.rm = T))),
-              lo  = as.numeric(pmtables::sig(quantile(stat, lci))),
-              hi  = as.numeric(pmtables::sig(quantile(stat, 1-lci))))
+    summarise(med = median(stat, na.rm = T),
+              mean = mean(stat, na.rm = T),
+              lo  = quantile(stat, lci),
+              hi  = quantile(stat, 1-lci))
 
   it("correct column is summarized [PMF-PLOT-001]", {
     expect_equal(sumdat_med[[1]]$lo, sumdat$lo) # test lower quartile
@@ -48,4 +49,35 @@ describe("Column selection, summary", {
   })
 
 
+  it("Summary for multiple CI's [PMF-PLOT-018]", {
+
+    sumdat_med <- pmforest:::summarize_data(plotData2,
+                                            stat = stat,
+                                            covariate = GROUP,
+                                            cov_level = LVL,
+                                            metagroup = NULL,
+                                            nsim = nsim,
+                                            statistic="median",
+                                            CI=CI)
+
+    sumdat <- plotData2 %>% group_by(nsim, GROUP, LVL) %>%
+      summarise(med = median(stat, na.rm = T),
+                lo  = quantile(stat, lci),
+                hi  = quantile(stat, 1-lci))
+    sumDat2 <- sumdat %>%
+      group_by(GROUP, LVL) %>%
+      summarise(
+        med_dot = median(med),
+        lo_dot  = quantile(med, lci),
+        hi_dot  = quantile(med, 1-lci),
+        med_lo  = median(lo),
+        lo_lo  = quantile(lo, lci),
+        hi_lo  = quantile(lo, 1-lci),
+        med_hi  = median(hi),
+        lo_hi  = quantile(hi, lci),
+        hi_hi  = quantile(hi, 1-lci)
+      )
+
+    expect_equal(sumdat_med[[1]]$med_dot, sumDat2$med_dot) # Test medians
+  })
 })

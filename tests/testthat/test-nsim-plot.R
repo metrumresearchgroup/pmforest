@@ -1,6 +1,6 @@
 
-specDir <- here::here("tests", "testthat", "test-data", "spec")
-dataDir <- here::here("tests", "testthat", "test-data")
+dataDir <- system.file("test-data", package = "pmforest")
+specDir <- file.path(dataDir, "spec")
 
 describe("Multiple simulations", {
 
