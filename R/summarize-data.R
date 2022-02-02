@@ -1,10 +1,34 @@
 #' Summarize Data
 #'
-#' Private helper to summarize the referenced column. Called internally by plot_forest
+#' Summarize input data to prepare for forest plot. See Details.
+#'
+#' @details
+#' **Input Data**
+#'
+#' Should have 3-5 columns: stat, covariate,
+#'   cov_level, optionally metagroup, optionally nsim
+#'
+#' **Output Data**
+#' The tibble output from this function will have one of two formats, depending on whether
+#' `nsim` was passed. To be continued...
+#'
 #' @inheritParams plot_forest
+#' @param data A dataframe or tibble to summarize. See Details section for required format.
 #' @param r,l parameters corresponding to the plot margin for the confidence intervals
-#' @keywords internal
-summarize_data <- function(data, stat, covariate, cov_level, metagroup, nsim, CI=CI, statistic){
+#' @export
+summarize_data <- function(
+  data,
+  stat,
+  covariate,
+  cov_level,
+  metagroup,
+  nsim,
+  CI=CI,
+  statistic = c("median", "mean")
+){
+
+  statistic <- match.arg(statistic)
+  assert_that(CI > 0 & CI < 1, msg = "`CI` must be between 0 and 1")
 
   stat_func <- function(x,statistic){
     switch(statistic,
@@ -47,7 +71,7 @@ summarize_data <- function(data, stat, covariate, cov_level, metagroup, nsim, CI
         data %>%
         group_by(across(all_of(groups))) %>%
         summarise(
-          dot = stat_func(!!sym(stat),statistic),
+          mid = stat_func(!!sym(stat),statistic),
           lo  = quantile(!!sym(stat), lci),
           hi  = quantile(!!sym(stat), 1-lci)
         ) %>% ungroup
@@ -58,21 +82,21 @@ summarize_data <- function(data, stat, covariate, cov_level, metagroup, nsim, CI
         data %>%
         group_by(across(c(nsim,all_of(groups)))) %>%
         summarise(
-          dot = stat_func(!!sym(stat),statistic),
+          mid = stat_func(!!sym(stat),statistic),
           lo  = quantile(!!sym(stat), lci),
           hi  = quantile(!!sym(stat), 1-lci)
         ) %>% ungroup
       sum <- sum %>%
         group_by(across(all_of(groups))) %>%
         summarise(
-          med_dot = median(dot),
-          lo_dot  = quantile(dot, lci),
-          hi_dot  = quantile(dot, 1-lci),
-          med_lo  = median(lo),
+          mid_mid = median(mid),
+          mid_lo  = quantile(mid, lci),
+          mid_hi  = quantile(mid, 1-lci),
+          lo_mid  = median(lo),
           lo_lo  = quantile(lo, lci),
-          hi_lo  = quantile(lo, 1-lci),
-          med_hi  = median(hi),
-          lo_hi  = quantile(hi, lci),
+          lo_hi  = quantile(lo, 1-lci),
+          hi_mid  = median(hi),
+          hi_lo  = quantile(hi, lci),
           hi_hi  = quantile(hi, 1-lci)
         ) %>% ungroup
     })

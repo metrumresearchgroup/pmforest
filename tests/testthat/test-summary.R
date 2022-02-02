@@ -9,7 +9,7 @@ describe("Column selection, summary", {
   CI <- 0.95
   lci <- (1-CI)/2
 
-  sumdat_med <- pmforest:::summarize_data(plotData,
+  sumdat_med <- summarize_data(plotData,
                                           stat = stat,
                                           covariate = GROUP,
                                           cov_level = LVL,
@@ -18,7 +18,7 @@ describe("Column selection, summary", {
                                           statistic="median",
                                           CI=CI)
 
-  sumdat_mn <- pmforest:::summarize_data(plotData,
+  sumdat_mn <- summarize_data(plotData,
                                          stat = stat,
                                          covariate = GROUP,
                                          cov_level = LVL,
@@ -39,8 +39,8 @@ describe("Column selection, summary", {
   })
 
   it("Can switch between mean/median [PMF-PLOT-002]", {
-    expect_equal(sumdat_med[[1]]$dot, sumdat$med) # Test medians
-    expect_equal(sumdat_mn[[1]]$dot, sumdat$mean) # Test means
+    expect_equal(sumdat_med[[1]]$mid, sumdat$med) # Test medians
+    expect_equal(sumdat_mn[[1]]$mid, sumdat$mean) # Test means
   })
 
   it("CI is properly calculated [PMF-PLOT-003]", {
@@ -51,7 +51,7 @@ describe("Column selection, summary", {
 
   it("Summary for multiple CI's [PMF-PLOT-018]", {
 
-    sumdat_med <- pmforest:::summarize_data(plotData2,
+    sumdat_med <- summarize_data(plotData2,
                                             stat = stat,
                                             covariate = GROUP,
                                             cov_level = LVL,
@@ -61,23 +61,23 @@ describe("Column selection, summary", {
                                             CI=CI)
 
     sumdat <- plotData2 %>% group_by(nsim, GROUP, LVL) %>%
-      summarise(med = median(stat, na.rm = T),
+      summarise(mid = median(stat, na.rm = T),
                 lo  = quantile(stat, lci),
                 hi  = quantile(stat, 1-lci))
     sumDat2 <- sumdat %>%
       group_by(GROUP, LVL) %>%
       summarise(
-        med_dot = median(med),
-        lo_dot  = quantile(med, lci),
-        hi_dot  = quantile(med, 1-lci),
-        med_lo  = median(lo),
+        mid_mid = median(mid),
+        mid_lo  = quantile(mid, lci),
+        mid_hi  = quantile(mid, 1-lci),
+        lo_mid  = median(lo),
         lo_lo  = quantile(lo, lci),
-        hi_lo  = quantile(lo, 1-lci),
-        med_hi  = median(hi),
-        lo_hi  = quantile(hi, lci),
+        lo_hi  = quantile(lo, 1-lci),
+        hi_mid  = median(hi),
+        hi_lo  = quantile(hi, lci),
         hi_hi  = quantile(hi, 1-lci)
       )
 
-    expect_equal(sumdat_med[[1]]$med_dot, sumDat2$med_dot) # Test medians
+    expect_equal(sumdat_med[[1]]$mid_mid, sumDat2$mid_mid) # Test medians
   })
 })

@@ -184,14 +184,14 @@ forest_constructor <- function(data,
     hi_hi <- forest_data[, 9]
 
     plotdata <- data.frame(
-      "med_dot" = unlist(med_es, use.names = FALSE),
-      "lo_dot" = unlist(lo_es, use.names = FALSE),
-      "hi_dot" = unlist(hi_es, use.names = FALSE),
-      "med_lo" = unlist(med_lo, use.names = FALSE),
+      "mid_mid" = unlist(med_es, use.names = FALSE),
+      "mid_lo" = unlist(lo_es, use.names = FALSE),
+      "mid_hi" = unlist(hi_es, use.names = FALSE),
+      "lo_mid" = unlist(med_lo, use.names = FALSE),
       "lo_lo" = unlist(lo_lo, use.names = FALSE),
-      "hi_lo" = unlist(hi_lo, use.names = FALSE),
-      "med_hi" = unlist(med_hi, use.names = FALSE),
-      "lo_hi" = unlist(lo_hi, use.names = FALSE),
+      "lo_hi" = unlist(hi_lo, use.names = FALSE),
+      "hi_mid" = unlist(med_hi, use.names = FALSE),
+      "hi_lo" = unlist(lo_hi, use.names = FALSE),
       "hi_hi" = unlist(hi_hi, use.names = FALSE),
       "se" = rep(1, nrow(forest_data)),
       "ID" = ID$ID[ID$type == "study"],
@@ -246,9 +246,9 @@ forest_constructor <- function(data,
       lb <- plotdata$x_min
       ub <- plotdata$x_max
     }else{
-      x_hat <- plotdata$med_dot
-      lb <- plotdata$med_lo
-      ub <- plotdata$med_hi
+      x_hat <- plotdata$mid_mid
+      lb <- plotdata$lo_mid
+      ub <- plotdata$hi_mid
     }
     lb <- format(round(lb, sigfig), nsmall = 2)
     ub <- format(round(ub, sigfig), nsmall = 2)

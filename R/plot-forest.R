@@ -2,8 +2,9 @@
 #'
 #' Creates a forest plot with or without confidence intervals
 #' Expects..
-#' See params below..
-#' @param data a dataframe or tibble that contains the mean values and the lows & highs of the confidence interval
+#' @param data a dataframe or tibble that contains the summarized data you want
+#'   to plot. This must be in the same format as the tibble that is output by
+#'   [summarize_data()]. See "Output Data" in Details section of [summarize_data()] documentation.
 #' @param stat is the column to perform calculations on (i.e. median/mean, lower, and upper CI)
 #' @param statistic is the actual statistic to output (i.e. median/mean)
 #' @param CI is the confidence interval to plot

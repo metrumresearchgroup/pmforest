@@ -19,6 +19,23 @@
 NULL
 
 
+VALUE_COLS <- c(
+  "mid",
+  "lo",
+  "hi"
+)
+
+VALUE_COLS_NSIM <- c(
+  "mid_mid",
+  "mid_lo",
+  "mid_hi",
+  "lo_mid",
+  "lo_lo",
+  "lo_hi",
+  "hi_mid",
+  "hi_lo",
+  "hi_hi"
+)
 
 
 
