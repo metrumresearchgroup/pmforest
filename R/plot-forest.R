@@ -29,13 +29,13 @@
 #' @param jitter_nsim logical. Whether or not to vertically "jitter" the additional confidence intervals when using the `nsim` argument
 #' @export
 plot_forest <- function(data,
-                        stat = NULL,
-                        statistic = c("median","mean"),
-                        CI=0.95,
-                        covariate = NULL,
-                        cov_level = NULL,
-                        metagroup = NULL,
-                        nsim = NULL,
+                        stat = NULL,       ## probably still needed, but these are column names
+                        statistic = c("median", "mean"), ##### maybe not needed b/c summarize_data
+                        CI=0.95,              ##### maybe not needed b/c summarize_data
+                        covariate = NULL,  ## probably still needed, but these are column names
+                        cov_level = NULL,  ## probably still needed, but these are column names
+                        metagroup = NULL,  ## probably still needed, but these are column names
+                        nsim = NULL,          ##### maybe not needed b/c summarize_data
                         summary_label = NULL,
                         vline_intercept = 0,
                         annotate_CI = TRUE,
