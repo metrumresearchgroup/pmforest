@@ -17,14 +17,23 @@ describe("Base plots", {
 
   it("Test metagroup (Cl and V2) [PMF-PLOT-004]", {
 
-    plt1 <- plot_forest(data = plotData2 ,
-                       statistic = "median",
-                       CI=0.95,
-                       stat = stat,
-                       covariate = GROUP,
-                       metagroup = param,
-                       cov_level = LVL,
-                       annotate_CI = F
+    plt1 <- plotData2 %>%
+      summarize_data(
+        stat = stat,
+        statistic = "median",
+        CI=0.95,
+        covariate = GROUP,
+        metagroup = param,
+        cov_level = LVL
+      ) %>%
+      plot_forest(
+       statistic = "median",
+       CI=0.95,
+       stat = stat,
+       covariate = GROUP,
+       metagroup = param,
+       cov_level = LVL,
+       annotate_CI = F
     )
     vdiffr::expect_doppelganger("Test metagroup", plt1)
 

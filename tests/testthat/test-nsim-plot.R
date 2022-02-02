@@ -17,19 +17,28 @@ describe("Multiple simulations", {
 
   it("Multiple simulations base test [PMF-PLOT-012]", {
 
-    plt <- plot_forest(data = plotData,
-                       statistic = "mean",
-                       CI=0.95,
-                       stat = stat,
-                       covariate = GROUP,
-                       nsim = nsim,
-                       cov_level = LVL,
-                       shaded_interval = c(0.8,1.25),
-                       summary_label = plot_labels,
-                       text_size = 3.5,
-                       vline_intercept = 1,
-                       x_lab = "Fraction and 95% CI \nRelative to Reference",
-                       CI_label = "Median [95% CI]"
+    plt <- plotData %>%
+      summarize_data(
+        statistic = "mean",
+        CI=0.95,
+        stat = stat,
+        covariate = GROUP,
+        nsim = nsim,
+        cov_level = LVL,
+      ) %>%
+      plot_forest(
+         statistic = "mean",
+         CI=0.95,
+         stat = stat,
+         covariate = GROUP,
+         nsim = nsim,
+         cov_level = LVL,
+         shaded_interval = c(0.8,1.25),
+         summary_label = plot_labels,
+         text_size = 3.5,
+         vline_intercept = 1,
+         x_lab = "Fraction and 95% CI \nRelative to Reference",
+         CI_label = "Median [95% CI]"
     )
     plt
     vdiffr::expect_doppelganger("Multiple simulations", plt)

@@ -18,12 +18,12 @@
 #' @export
 summarize_data <- function(
   data,
-  stat,
-  covariate,
-  cov_level,
-  metagroup,
-  nsim,
-  CI=CI,
+  stat = NULL,
+  covariate = NULL,
+  cov_level = NULL,
+  metagroup = NULL,
+  nsim = NULL,
+  CI=0.95,
   statistic = c("median", "mean")
 ){
 
@@ -102,7 +102,5 @@ summarize_data <- function(
     })
   }
 
-  args <- names(sum)
-  args <- args[!grepl(paste0(groups, collapse = "|"), args)]
-  return(list(sum,args))
+  return(sum)
 }

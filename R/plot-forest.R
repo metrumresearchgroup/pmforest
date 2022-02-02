@@ -36,7 +36,7 @@ plot_forest <- function(data,
                         covariate = NULL,  ## probably still needed, but these are column names
                         cov_level = NULL,  ## probably still needed, but these are column names
                         metagroup = NULL,  ## probably still needed, but these are column names
-                        nsim = NULL,          ##### maybe not needed b/c summarize_data
+                        #nsim = NULL,          ##### maybe not needed b/c summarize_data
                         summary_label = NULL,
                         vline_intercept = 0,
                         annotate_CI = TRUE,
@@ -53,26 +53,31 @@ plot_forest <- function(data,
                         jitter_nsim = FALSE,
                         ...){
 
-  statistic <- match.arg(statistic)
   assert_that(is.numeric(sigfig) & sigfig > 1, msg = "`sigfig` must be a numeric value greater than 1")
-  assert_that(CI > 0 & CI < 1, msg = "`CI` must be between 0 and 1")
   assert_that(text_size >= 3.5, msg = "`text_size` must be at least 3.5")
   assert_that(is_logical(annotate_CI), msg = "`annotate_CI` must be a logical value (T/F)")
   assert_that(is_logical(jitter_nsim), msg = "`jitter_nsim` must be a logical value (T/F)")
 
-  lst <- summarize_data(data,
-                        stat = {{stat}},
-                        covariate = {{covariate}},
-                        cov_level = {{cov_level}},
-                        metagroup = {{metagroup}},
-                        nsim = {{nsim}},
-                        statistic={{statistic}},
-                        CI=CI)
-  data <- lst[[1]]
-  args <- lst[[2]]
+  # TODO: this will be refactored once we refactor some of the downstream code
+  if (all(VALUE_COLS %in% names(data))) {
+    args <- VALUE_COLS
+    nsim <- NULL
+  } else if (all(VALUE_COLS_NSIM %in% names(data))) {
+    args <- VALUE_COLS_NSIM
+    nsim <- "nsim" # should find a better way to do this
+  } else {
+    # TODO: add test for this case
+    stop(paste(
+      "`data` does not have required columns. Must have grouping columns and either:",
+      paste(VALUE_COLS, collapse = ", "),
+      "  OR ",
+      paste(VALUE_COLS_NSIM, collapse = ", "),
+      glue("`data` has columns: {paste(names(data), collapse = ', ')}"),
+      sep = "\n"
+    ))
+  }
 
   metagroups <- data %>% dplyr::select({{metagroup}})
-  if(ncol(data)>=9) nsim <- "nsim" # should find a better way to do this
 
   if(ncol(metagroups) == 0){
 
