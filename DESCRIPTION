@@ -8,24 +8,23 @@ Authors@R:
              email = "barrettk@metrumrg.com"))
 License: MIT + file LICENSE
 Imports:
-    magrittr,
     assertthat,
     dplyr,
     glue,
+    ggplot2,
+    ggpubr,
+    gridExtra,
     here,
+    magrittr,
     patchwork,
+    readr,
     rlang,
     stringr,
-    tibble,
-    ggplot2,
-    readr,
-    pmtables,
-    vdiffr,
-    gridExtra,
-    ggpubr,
-    yspec
+    tibble
 Suggests:
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    vdiffr,
+    yspec
 Config/testthat/edition: 3
 Depends:
     R (>= 3.5.0)
