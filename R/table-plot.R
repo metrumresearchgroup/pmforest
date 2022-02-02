@@ -60,8 +60,11 @@ table_plot <-
       value = v,
       stringsAsFactors = FALSE
     )
-    lab <- lab %>% arrange(desc(y)) %>% as.data.table()
-    lab[ , diff := y - shift(y)]
+
+    lab <- lab %>% arrange(desc(y))
+    lab <- lab %>% mutate(
+      diff = c(NA, apply(lab[-c(2:3)] , 2 , diff ))
+    )
 
     for(i in 1:nrow(lab)){
       if(spacer){
@@ -79,7 +82,6 @@ table_plot <-
       }
     }
 
-    lab[ , diff := y - shift(y)]
 
     lab_title <-
       data.frame(

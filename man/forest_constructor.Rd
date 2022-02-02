@@ -14,6 +14,7 @@ forest_constructor(
   vline_intercept = 0,
   annotate_CI = TRUE,
   confidence_level,
+  sigfig,
   shaded_interval = NULL,
   statistic = NULL,
   x_lab = "Effect",
@@ -43,6 +44,8 @@ If \code{nsim} is specified and no caption is set, a default caption will be set
 \item{vline_intercept}{(optional) numeric. Default 0.}
 
 \item{annotate_CI}{logical. Default \code{TRUE}. Show a table next to the graph with the numeric values for the confidence interval.}
+
+\item{sigfig}{numeric. Number of significant digits to round the table values to.}
 
 \item{shaded_interval}{numeric vector. Specified as c(lo, hi) for the interval you want to shade over. Default is NULL.}
 

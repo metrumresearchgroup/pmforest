@@ -1,4 +1,5 @@
 library(testthat)
-library(mrgforest)
+library(vdiffr)
+library(pmforest)
 
-test_check("mrgforest")
+test_check("pmforest")

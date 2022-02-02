@@ -1,0 +1,16 @@
+Version: 1
+
+Descriptions:
+ - DESCRIPTION
+
+Packages:
+  - devtools
+  - shiny
+  - diffviewer
+
+Repos:
+  - MPN: https://mpn.metworx.com/snapshots/stable/2021-11-19
+
+Lockfile:
+    Type: renv
+

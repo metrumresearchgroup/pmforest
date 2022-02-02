@@ -13,6 +13,7 @@ forest_constructor <- function(data,
                                vline_intercept = 0,
                                annotate_CI = TRUE,
                                confidence_level,
+                               sigfig,
                                shaded_interval = NULL,
                                statistic = NULL,
                                x_lab = "Effect",
@@ -249,9 +250,9 @@ forest_constructor <- function(data,
       lb <- plotdata$med_lo
       ub <- plotdata$med_hi
     }
-    lb <- format(round(lb, 2), nsmall = 2)
-    ub <- format(round(ub, 2), nsmall = 2)
-    x_hat <- format(round(x_hat, 2), nsmall = 2)
+    lb <- format(round(lb, sigfig), nsmall = 2)
+    ub <- format(round(ub, sigfig), nsmall = 2)
+    x_hat <- format(round(x_hat, sigfig), nsmall = 2)
 
     CI <-
       c(paste(x_hat, " [", lb, ", ", ub, "]", sep = ""), summary_label)

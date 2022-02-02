@@ -1,77 +1,64 @@
-specDir <- here::here("tests",  "test-data", "spec")
-dataDir <- here::here("tests",  "test-data")
 
-specFile <- yspec::ys_load(file.path(specDir, 'analysis3.yml'))
+dataDir <- system.file("test-data", package = "pmforest")
+specDir <- file.path(dataDir, "spec")
 
-all_labels <- yspec::ys_get_short(specFile, title_case = TRUE)
-all_labels$EGFR <- 'Renal Function'
-all_labels$CL <- 'CL (L/hr)'
-all_labels$V2 <- 'V (L)' # uncomment this line if using V2
+describe("Multiple simulations", {
 
-plot_labels <- as_labeller(unlist(all_labels))
+  specFile <- yspec::ys_load(file.path(specDir, 'analysis3.yml'))
 
-describe("Multiple CI's", {
+  all_labels <- yspec::ys_get_short(specFile, title_case = TRUE)
+  all_labels$EGFR <- 'Renal Function'
+  all_labels$CL <- 'CL (L/hr)'
+  all_labels$V2 <- 'V (L)' # uncomment this line if using V2
+  plot_labels <- ggplot2::as_labeller(unlist(all_labels))
 
   plotData <- readRDS(file.path(dataDir, "plotDataEXP.RDS"))
+  plotData2 <- readRDS(file.path(dataDir, "plotDataEXP.RDS")) %>% mutate(stat = stat + (nsim/300))
 
-  plt <- plot_forest(data = plotData,
-                    statistic = "mean",
-                    CI=0.95,
-                    stat = stat,
-                    covariate = GROUP,
-                    # metagroup = param,
-                    nsim = nsim,
-                    cov_level = LVL,
-                    shaded_interval = c(0.8,1.25),
-                    summary_label = plot_labels,
-                    text_size = 3.5,
-                    # vline_intercept = 1,
-                    x_lab = "Fraction and 95% CI \nRelative to Reference",
-                    CI_label = "Median [95% CI]",
-                    plot_width = 8, # out of 12
-                    # caption = "",
-                    x_breaks = c(0.4,0.6, 0.8, 1, 1.2, 1.4,1.6),
-                    x_limit = c(0.4,1.45),
-                    annotate_CI=T,
-                    nrow = 1)
+  it("Multiple simulations base test [PMF-PLOT-012]", {
 
-  plt
-
-
-})
+    plt <- plot_forest(data = plotData,
+                       statistic = "mean",
+                       CI=0.95,
+                       stat = stat,
+                       covariate = GROUP,
+                       nsim = nsim,
+                       cov_level = LVL,
+                       shaded_interval = c(0.8,1.25),
+                       summary_label = plot_labels,
+                       text_size = 3.5,
+                       vline_intercept = 1,
+                       x_lab = "Fraction and 95% CI \nRelative to Reference",
+                       CI_label = "Median [95% CI]"
+    )
+    plt
+    vdiffr::expect_doppelganger("Multiple simulations", plt)
+  })
 
 
 
 
-describe("Multiple CI's with jitter", {
+  it("Multiple CI's with jitter [PMF-PLOT-013]", {
 
-  plotData <- readRDS(file.path(dataDir, "plotDataEXP.RDS")) %>% mutate(stat = stat + (nsim/300))
+    plt <- plot_forest(data = plotData2,
+                       statistic = "mean",
+                       CI=0.95,
+                       stat = stat,
+                       covariate = GROUP,
+                       metagroup = param,
+                       nsim = nsim,
+                       cov_level = LVL,
+                       shaded_interval = c(0.8,1.25),
+                       summary_label = plot_labels,
+                       text_size = 4,
+                       vline_intercept = 1,
+                       x_lab = "Fraction and 95% CI \nRelative to Reference",
+                       CI_label = "Median [95% CI]",
+                       jitter_nsim = TRUE)
 
-  plt <- plot_forest(data = plotData,
-                     statistic = "mean",
-                     CI=0.95,
-                     stat = stat,
-                     covariate = GROUP,
-                     metagroup = param,
-                     nsim = nsim,
-                     cov_level = LVL,
-                     shaded_interval = c(0.8,1.25),
-                     summary_label = plot_labels,
-                     text_size = 4,
-                     vline_intercept = 1,
-                     x_lab = "Fraction and 95% CI \nRelative to Reference",
-                     CI_label = "Median [95% CI]",
-                     plot_width = 8, # out of 12
-                     x_breaks = c(0.4,0.6, 0.8, 1, 1.2, 1.4,1.6),
-                     x_limit = c(0.4,1.45),
-                     annotate_CI=T,
-                     nrow = 1,
-                     jitter_nsim = TRUE)
-
-  plt
-
+    plt
+    vdiffr::expect_doppelganger("Multiple CI's with jitter", plt)
+  })
 
 })
-
-
 
