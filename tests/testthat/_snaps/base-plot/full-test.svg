@@ -94,10 +94,6 @@
 <rect x='119.93' y='217.34' width='7.25' height='7.25' style='stroke-width: 0.71; fill: #00BFC4;' />
 <rect x='241.39' y='151.33' width='7.25' height='7.25' style='stroke-width: 0.71; fill: #C77CFF;' />
 <rect x='362.94' y='129.32' width='7.25' height='7.25' style='stroke-width: 0.71; fill: #C77CFF;' />
-<polygon points='-69.79,385.98 -69.79,379.38 -69.79,385.98 -69.79,392.58 ' style='stroke-width: 0.21; fill: #08306B;' />
-<polygon points='-69.79,297.97 -69.79,291.37 -69.79,297.97 -69.79,304.57 ' style='stroke-width: 0.21; fill: #08306B;' />
-<polygon points='-69.79,187.96 -69.79,181.35 -69.79,187.96 -69.79,194.56 ' style='stroke-width: 0.21; fill: #08306B;' />
-<polygon points='-69.79,99.94 -69.79,93.34 -69.79,99.94 -69.79,106.54 ' style='stroke-width: 0.21; fill: #08306B;' />
 <line x1='81.10' y1='99.94' x2='477.18' y2='99.94' style='stroke-width: 1.07; stroke-linecap: butt;' />
 <line x1='81.10' y1='187.96' x2='477.18' y2='187.96' style='stroke-width: 1.07; stroke-linecap: butt;' />
 <line x1='81.10' y1='297.97' x2='477.18' y2='297.97' style='stroke-width: 1.07; stroke-linecap: butt;' />

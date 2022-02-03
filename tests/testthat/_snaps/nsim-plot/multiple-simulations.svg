@@ -223,7 +223,7 @@
 <text x='492.73' y='402.50' style='font-size: 7.97px; font-family: sans;' textLength='14.18px' lengthAdjust='spacingAndGlyphs'>Age</text>
 <text x='492.73' y='437.49' style='font-size: 7.97px; font-family: sans;' textLength='57.59px' lengthAdjust='spacingAndGlyphs'>0.99 [0.92, 1.06]</text>
 <text x='492.73' y='462.86' style='font-size: 7.97px; font-family: sans;' textLength='57.59px' lengthAdjust='spacingAndGlyphs'>1.02 [0.93, 1.12]</text>
-<text x='492.73' y='53.25' style='font-size: 9.96px; font-family: sans;' textLength='73.62px' lengthAdjust='spacingAndGlyphs'>Median [95% CI]</text>
+<text x='492.73' y='53.25' style='font-size: 9.96px; font-family: sans;' textLength='65.88px' lengthAdjust='spacingAndGlyphs'>Mean [95% CI]</text>
 <line x1='492.73' y1='60.75' x2='703.56' y2='60.75' style='stroke-width: 1.07; stroke-linecap: butt;' />
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>

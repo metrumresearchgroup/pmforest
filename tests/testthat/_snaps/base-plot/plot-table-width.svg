@@ -90,10 +90,6 @@
 <rect x='90.86' y='230.13' width='7.25' height='7.25' style='stroke-width: 0.71; fill: #00BFC4;' />
 <rect x='216.31' y='159.32' width='7.25' height='7.25' style='stroke-width: 0.71; fill: #C77CFF;' />
 <rect x='341.85' y='135.72' width='7.25' height='7.25' style='stroke-width: 0.71; fill: #C77CFF;' />
-<polygon points='-105.20,410.77 -105.20,403.69 -105.20,410.77 -105.20,417.85 ' style='stroke-width: 0.21; fill: #08306B;' />
-<polygon points='-105.20,316.36 -105.20,309.28 -105.20,316.36 -105.20,323.44 ' style='stroke-width: 0.21; fill: #08306B;' />
-<polygon points='-105.20,198.35 -105.20,191.27 -105.20,198.35 -105.20,205.43 ' style='stroke-width: 0.21; fill: #08306B;' />
-<polygon points='-105.20,103.94 -105.20,96.86 -105.20,103.94 -105.20,111.02 ' style='stroke-width: 0.21; fill: #08306B;' />
 <line x1='61.24' y1='103.94' x2='359.00' y2='103.94' style='stroke-width: 1.07; stroke-linecap: butt;' />
 <line x1='61.24' y1='198.35' x2='359.00' y2='198.35' style='stroke-width: 1.07; stroke-linecap: butt;' />
 <line x1='61.24' y1='316.36' x2='359.00' y2='316.36' style='stroke-width: 1.07; stroke-linecap: butt;' />
