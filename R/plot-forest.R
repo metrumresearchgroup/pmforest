@@ -36,7 +36,6 @@ plot_forest <- function(data,
                         covariate = NULL,  ## probably still needed, but these are column names
                         cov_level = NULL,  ## probably still needed, but these are column names
                         metagroup = NULL,  ## probably still needed, but these are column names
-                        #nsim = NULL,          ##### maybe not needed b/c summarize_data
                         summary_label = NULL,
                         vline_intercept = 0,
                         annotate_CI = TRUE,
