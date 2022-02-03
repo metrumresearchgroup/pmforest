@@ -20,7 +20,9 @@
 #' @param x_breaks numeric vector of breaks to be used for the x-axis. See scale_x_continuous() for details.
 #' @param x_limit numeric vector (c(lo, hi)) specifying the minimum and maximum values to show on the x-axis. See coord_cartesian() for details
 #' @param ... additional args passed to `patchwork::wrap_plots()` for metagrouped plots.
-#' @param jitter_nsim logical. Whether or not to vertically "jitter" the additional confidence intervals when using the `nsim` argument
+#' @param jitter_reps logical. Whether or not to vertically "jitter" the
+#'   additional confidence intervals when using multiple replicates (i.e. when
+#'   input data has 9 numeric columns instead of 3).
 #' @export
 plot_forest <- function(data,
                         summary_label = NULL,
@@ -36,13 +38,14 @@ plot_forest <- function(data,
                         plot_width = 8,
                         x_breaks = NULL,
                         x_limit = NULL,
-                        jitter_nsim = FALSE,
+                        jitter_reps = FALSE,
                         ...){
 
   assert_that(is.numeric(sigfig) & sigfig > 1, msg = "`sigfig` must be a numeric value greater than 1")
   assert_that(text_size >= 3.5, msg = "`text_size` must be at least 3.5")
+  assert_that((is.character(caption) | is.null(caption)), msg = "`caption` must be a character scalar.")
   assert_that(is_logical(annotate_CI), msg = "`annotate_CI` must be a logical value (T/F)")
-  assert_that(is_logical(jitter_nsim), msg = "`jitter_nsim` must be a logical value (T/F)")
+  assert_that(is_logical(jitter_reps), msg = "`jitter_reps` must be a logical value (T/F)")
 
   # TODO: this will be refactored once we refactor some of the downstream code
   if (all(VALUE_COLS %in% names(data))) {
@@ -81,7 +84,7 @@ plot_forest <- function(data,
       text_size = text_size,
       x_limit = x_limit,
       x_breaks = x_breaks,
-      jitter_nsim = jitter_nsim
+      jitter_reps = jitter_reps
     )
 
   } else {
@@ -127,7 +130,7 @@ plot_forest <- function(data,
           text_size = text_size,
           x_limit = x_limit,
           x_breaks = x_breaks,
-          jitter_nsim = jitter_nsim
+          jitter_reps = jitter_reps
         )
 
       })

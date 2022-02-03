@@ -22,7 +22,7 @@ classicforest <- function(plotdata,
                           y_lab = NULL,
                           x_limit = NULL,
                           x_breaks = NULL,
-                          jitter_nsim) {
+                          jitter_reps) {
 
   n <- nrow(plotdata)
   k <- length(levels(plotdata$group))
@@ -142,7 +142,7 @@ classicforest <- function(plotdata,
                     expand = F)
   if(!is.null(nsim)){
     # Add geom_point for when the lo's and hi's are the same value
-    if(jitter_nsim){
+    if(jitter_reps){
       p1 <- p1 +
         geom_point(aes(x=lo_mid, color=factor(group)), position = position_nudge(y = 0.3), size=0.1) +
         geom_linerange(data=plotdata, aes(xmin = lo_lo, xmax = lo_hi, color=factor(group)),

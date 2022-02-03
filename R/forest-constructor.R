@@ -21,7 +21,7 @@ forest_constructor <- function(data,
                                text_size = 3,
                                x_limit = NULL,
                                x_breaks = NULL,
-                               jitter_nsim) {
+                               jitter_reps) {
   # Handle input object
   if (missing(data)) {
     stop("argument data is missing, with no default.")
@@ -204,7 +204,7 @@ forest_constructor <- function(data,
       y_lab = y_lab,
       x_limit = x_limit,
       x_breaks = x_breaks,
-      jitter_nsim = jitter_nsim
+      jitter_reps = jitter_reps
     )
   )
 
