@@ -5,12 +5,12 @@
 #' @details
 #' **Input Data**
 #'
-#' Should have 3-5 columns: stat, covariate,
-#'   cov_level, optionally metagroup, optionally nsim
+#' Should have 2-5 columns: value, group, and optionally any of
+#'   group_level, metagroup, or replicate.
 #'
 #' **Output Data**
 #' The tibble output from this function will have one of two formats, depending on whether
-#' `nsim` was passed. To be continued...
+#' `replicate` was passed. To be continued...
 #'
 #' @inheritParams plot_forest
 #' @param data A dataframe or tibble to summarize. See Details section for required format.
@@ -18,11 +18,11 @@
 #' @export
 summarize_data <- function(
   data,
-  stat = NULL,
-  covariate = NULL,
-  cov_level = NULL,
+  value,
+  group,
+  group_level = NULL,
   metagroup = NULL,
-  nsim = NULL,
+  replicate = NULL,
   CI=0.95,
   statistic = c("median", "mean")
 ){
@@ -36,18 +36,15 @@ summarize_data <- function(
            median=median(x, na.rm=TRUE))
   }
 
-  stat <- data %>% dplyr::select({{ stat }}) %>% names()
-  covariate <- data %>% dplyr::select({{ covariate }})
-  if(ncol(covariate) == 0){
-    covariate <- NULL
+  value <- data %>% dplyr::select({{ value }}) %>% names()
+  group <- data %>% dplyr::select({{ group }}) %>% names()
+  # TODO: some error checking here to make sure something sensible was passed?
+
+  group_level <- data %>% dplyr::select({{ group_level }})
+  if(ncol(group_level) == 0){
+    group_level <- NULL
   } else {
-    covariate <- names(covariate)
-  }
-  cov_level <- data %>% dplyr::select({{ cov_level }})
-  if(ncol(cov_level) == 0){
-    cov_level <- NULL
-  } else {
-    cov_level <- names(cov_level)
+    group_level <- names(group_level)
   }
   metagroup <- data %>% dplyr::select({{ metagroup }})
   if(ncol(metagroup) == 0){
@@ -55,36 +52,36 @@ summarize_data <- function(
   } else {
     metagroup <- names(metagroup)
   }
-  nsim <- data %>% dplyr::select({{ nsim }})
-  if(ncol(nsim) == 0){
-    nsim <- NULL
+  replicate <- data %>% dplyr::select({{ replicate }})
+  if(ncol(replicate) == 0){
+    replicate <- NULL
   } else {
-    nsim <- names(nsim)
+    replicate <- names(replicate)
   }
 
-  groups <- c(covariate, cov_level, metagroup)
+  groups <- c(group, group_level, metagroup)
   lci <- (1-CI)/2
 
-  if(is.null(nsim)){
+  if(is.null(replicate)){
     suppressMessages({
       sum <-
         data %>%
         group_by(across(all_of(groups))) %>%
         summarise(
-          mid = stat_func(!!sym(stat),statistic),
-          lo  = quantile(!!sym(stat), lci),
-          hi  = quantile(!!sym(stat), 1-lci)
+          mid = stat_func(!!sym(value),statistic),
+          lo  = quantile(!!sym(value), lci),
+          hi  = quantile(!!sym(value), 1-lci)
         ) %>% ungroup
     })
   }else{
     suppressMessages({
       sum <-
         data %>%
-        group_by(across(c(nsim,all_of(groups)))) %>%
+        group_by(across(c(replicate, all_of(groups)))) %>%
         summarise(
-          mid = stat_func(!!sym(stat),statistic),
-          lo  = quantile(!!sym(stat), lci),
-          hi  = quantile(!!sym(stat), 1-lci)
+          mid = stat_func(!!sym(value),statistic),
+          lo  = quantile(!!sym(value), lci),
+          hi  = quantile(!!sym(value), 1-lci)
         ) %>% ungroup
       sum <- sum %>%
         group_by(across(all_of(groups))) %>%
@@ -100,6 +97,17 @@ summarize_data <- function(
           hi_hi  = quantile(hi, 1-lci)
         ) %>% ungroup
     })
+  }
+
+  # rename output grouping columns
+  if (!is.null(group)) {
+    sum <- rename(sum, group = {{ group }})
+  }
+  if (!is.null(group_level)) {
+    sum <- rename(sum, group_level = {{ group_level }})
+  }
+  if (!is.null(metagroup)) {
+    sum <- rename(sum, metagroup = {{ metagroup }})
   }
 
   return(sum)
