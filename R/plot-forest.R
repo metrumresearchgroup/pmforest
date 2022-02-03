@@ -5,14 +5,7 @@
 #' @param data a dataframe or tibble that contains the summarized data you want
 #'   to plot. This must be in the same format as the tibble that is output by
 #'   [summarize_data()]. See "Output Data" in Details section of [summarize_data()] documentation.
-#' @param stat is the column to perform calculations on (i.e. median/mean, lower, and upper CI)
-#' @param statistic is the actual statistic to output (i.e. median/mean)
-#' @param CI is the confidence interval to plot
-#' @param covariate (optional) column that defines subgroups within the data- all subgroups will be shown on the same plot but grouped together.
-#' @param cov_level (optional) column name that corresponds to y-axis tick labels. If not specified, y-axis will be numbered.
-#' @param metagroup (optional) column name that corresponds to metagroups. Similar to facet wrap. Will produce independent plots per metagroup.
-#' @param nsim (optional) column name that corresponds to simulation or bootstrap column. If specified, additional CI's of the individual statistics will be drawn.
-#' If `nsim` is specified and no caption is set, a default caption will be set. Set `caption` to "" to override this functionality.
+#' @inheritParams summarize_data
 #' @param summary_labels (optional) labeler function created using `ggplot2::as_labeller`. Labels for group and metagroup.
 #' @param vline_intercept (optional) numeric. Default 0.
 #' @param annotate_CI logical. Default `TRUE`. Show a table next to the graph with the numeric values for the confidence interval.

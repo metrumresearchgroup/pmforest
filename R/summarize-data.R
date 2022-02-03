@@ -12,9 +12,15 @@
 #' The tibble output from this function will have one of two formats, depending on whether
 #' `replicate` was passed. To be continued...
 #'
-#' @inheritParams plot_forest
 #' @param data A dataframe or tibble to summarize. See Details section for required format.
-#' @param r,l parameters corresponding to the plot margin for the confidence intervals
+#' @param value is the column to perform calculations on (i.e. median/mean, lower, and upper CI)
+#' @param group column that defines subgroups within the data- all subgroups will be shown on the same plot but grouped together.
+#' @param group_level (optional) column name that corresponds to y-axis tick labels. If not specified, y-axis will be numbered.
+#' @param metagroup (optional) column name that corresponds to metagroups. Similar to facet wrap. Will produce independent plots per metagroup.
+#' @param replicate (optional) column name that corresponds to simulation or bootstrap column. If specified, additional CI's of the individual statistics will be drawn.
+#' If `replicate` is specified and no caption is set, a default caption will be set. Set `caption` to "" to override this functionality.
+#' @param CI is the confidence interval to plot, defaults to `0.95`.
+#' @param statistic is the actual statistic to output (i.e. median/mean)
 #' @export
 summarize_data <- function(
   data,
