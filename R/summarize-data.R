@@ -19,7 +19,7 @@
 #' @param metagroup (optional) column name that corresponds to metagroups. Similar to facet wrap. Will produce independent plots per metagroup.
 #' @param replicate (optional) column name that corresponds to simulation or bootstrap column. If specified, additional CI's of the individual statistics will be drawn.
 #' If `replicate` is specified and no caption is set, a default caption will be set. Set `caption` to "" to override this functionality.
-#' @param CI is the confidence interval to plot, defaults to `0.95`.
+#' @param CI numeric between 0 and 1. This is the confidence interval to plot, defaults to `0.95`.
 #' @param statistic is the actual statistic to output (i.e. median/mean)
 #' @export
 summarize_data <- function(

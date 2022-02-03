@@ -13,9 +13,9 @@
 #' @param x_lab string. x-axis label.
 #' @param y_lab string. Default is not to label y axis.
 #' @param CI_label string. Ignored if `annotate_CI` is `FALSE`.
+#' @param caption string. A patchwork styled caption for the overall plot.
 #' @param text_size numeric. Text size for labels. Must be at least 3.5
 #' @param plot_width numeric. Value between 1 and 12 to denote the ratio of plot : CI table
-#' @param caption string. A patchwork styled caption for the overall plot.
 #' @param shaded_interval numeric vector. Specified as c(lo, hi) for the interval you want to shade over. Default is NULL.
 #' @param x_breaks numeric vector of breaks to be used for the x-axis. See scale_x_continuous() for details.
 #' @param x_limit numeric vector (c(lo, hi)) specifying the minimum and maximum values to show on the x-axis. See coord_cartesian() for details
@@ -23,8 +23,6 @@
 #' @param jitter_nsim logical. Whether or not to vertically "jitter" the additional confidence intervals when using the `nsim` argument
 #' @export
 plot_forest <- function(data,
-                        statistic = c("median", "mean"), ##### maybe not needed b/c summarize_data
-                        CI=0.95,              ##### maybe not needed b/c summarize_data
                         summary_label = NULL,
                         vline_intercept = 0,
                         annotate_CI = TRUE,
@@ -33,9 +31,9 @@ plot_forest <- function(data,
                         x_lab = "Effect",
                         y_lab = NULL,
                         CI_label = NULL,
+                        caption = NULL,
                         text_size = 3.5,
                         plot_width = 8,
-                        caption = NULL,
                         x_breaks = NULL,
                         x_limit = NULL,
                         jitter_nsim = FALSE,
@@ -76,7 +74,6 @@ plot_forest <- function(data,
       annotate_CI = annotate_CI,
       sigfig = sigfig,
       shaded_interval = shaded_interval,
-      statistic = statistic,
       x_lab = x_lab,
       y_lab = y_lab,
       plot_width = plot_width,
@@ -122,7 +119,6 @@ plot_forest <- function(data,
           annotate_CI = annotate_CI,
           sigfig = sigfig,
           shaded_interval = shaded_interval,
-          statistic = statistic,
           x_lab = x_lab,
           y_lab = y_lab,
           plot_width = plot_width,
@@ -144,12 +140,5 @@ plot_forest <- function(data,
 
   plt <- patchwork::wrap_plots(plt, ...)
 
-  if(!is.null(nsim) & is.null(caption)){
-    plt <- plt + patchwork::plot_annotation(caption = glue::glue('Lower line represents the median of the summary statistics ({stringr::str_to_title(statistic)}, {(100-CI*100)/2}th and {CI*100 + (100-CI*100)/2}th quantiles).
-       Upper lines represent the {CI*100}% CI of the individual statistics.'))
-  }else{
-    plt <- plt + plot_annotation(caption = caption)
-  }
-  plt
-
+  return(plt)
 }
