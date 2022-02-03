@@ -131,14 +131,13 @@ plot_forest <- function(data,
         )
 
       })
-
-    # TODO: can this code be deleted?
-    # plt <- patchwork::wrap_plots(plt, ...) +
-    #   plot_annotation(caption = caption)
-
   }
 
   plt <- patchwork::wrap_plots(plt, ...)
+
+  if (!is.null(caption)) {
+    plt <- plt + plot_annotation(caption = caption)
+  }
 
   return(plt)
 }
