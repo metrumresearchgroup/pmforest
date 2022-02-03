@@ -85,10 +85,6 @@
 <rect x='89.75' y='230.13' width='7.25' height='7.25' style='stroke-width: 0.71; fill: #00BFC4;' />
 <rect x='211.00' y='159.32' width='7.25' height='7.25' style='stroke-width: 0.71; fill: #C77CFF;' />
 <rect x='332.34' y='135.72' width='7.25' height='7.25' style='stroke-width: 0.71; fill: #C77CFF;' />
-<polygon points='-99.64,410.77 -99.64,403.69 -99.64,410.77 -99.64,417.85 ' style='stroke-width: 0.21; fill: #08306B;' />
-<polygon points='-99.64,316.36 -99.64,309.28 -99.64,316.36 -99.64,323.44 ' style='stroke-width: 0.21; fill: #08306B;' />
-<polygon points='-99.64,198.35 -99.64,191.27 -99.64,198.35 -99.64,205.43 ' style='stroke-width: 0.21; fill: #08306B;' />
-<polygon points='-99.64,103.94 -99.64,96.86 -99.64,103.94 -99.64,111.02 ' style='stroke-width: 0.21; fill: #08306B;' />
 <line x1='61.24' y1='103.94' x2='349.04' y2='103.94' style='stroke-width: 1.07; stroke-linecap: butt;' />
 <line x1='61.24' y1='198.35' x2='349.04' y2='198.35' style='stroke-width: 1.07; stroke-linecap: butt;' />
 <line x1='61.24' y1='316.36' x2='349.04' y2='316.36' style='stroke-width: 1.07; stroke-linecap: butt;' />
@@ -198,10 +194,6 @@
 <rect x='556.04' y='230.13' width='7.25' height='7.25' style='stroke-width: 0.71; fill: #00BFC4;' />
 <rect x='425.22' y='159.32' width='7.25' height='7.25' style='stroke-width: 0.71; fill: #C77CFF;' />
 <rect x='686.86' y='135.72' width='7.25' height='7.25' style='stroke-width: 0.71; fill: #C77CFF;' />
-<polygon points='-50.82,410.77 -50.82,403.69 -50.82,410.77 -50.82,417.85 ' style='stroke-width: 0.21; fill: #08306B;' />
-<polygon points='-50.82,316.36 -50.82,309.28 -50.82,316.36 -50.82,323.44 ' style='stroke-width: 0.21; fill: #08306B;' />
-<polygon points='-50.82,198.35 -50.82,191.27 -50.82,198.35 -50.82,205.43 ' style='stroke-width: 0.21; fill: #08306B;' />
-<polygon points='-50.82,103.94 -50.82,96.86 -50.82,103.94 -50.82,111.02 ' style='stroke-width: 0.21; fill: #08306B;' />
 <line x1='415.76' y1='103.94' x2='703.56' y2='103.94' style='stroke-width: 1.07; stroke-linecap: butt;' />
 <line x1='415.76' y1='198.35' x2='703.56' y2='198.35' style='stroke-width: 1.07; stroke-linecap: butt;' />
 <line x1='415.76' y1='316.36' x2='703.56' y2='316.36' style='stroke-width: 1.07; stroke-linecap: butt;' />

@@ -10,7 +10,6 @@ forest_constructor <- function(data,
                                summary_label = NULL,
                                vline_intercept = 0,
                                annotate_CI = TRUE,
-                               confidence_level,
                                sigfig,
                                shaded_interval = NULL,
                                statistic = NULL,
@@ -199,7 +198,6 @@ forest_constructor <- function(data,
       shaded_interval = shaded_interval,
       statistic = statistic,
       vline_intercept = vline_intercept,
-      confidence_level = confidence_level,
       facet_titles = facet_titles,
       col = "Blues",
       summary_col = "Blues",
@@ -241,8 +239,10 @@ forest_constructor <- function(data,
     ub <- format(round(ub, sigfig), nsmall = 2)
     x_hat <- format(round(x_hat, sigfig), nsmall = 2)
 
-    CI <-
-      c(paste(x_hat, " [", lb, ", ", ub, "]", sep = ""), summary_label)
+    CI <- c(
+      paste(x_hat, " [", lb, ", ", ub, "]", sep = ""),
+      summary_label
+    )
     CI_label <- data.frame(CI = CI, stringsAsFactors = FALSE)
 
     # Ensure alignment of CI table with forest plot tick marks

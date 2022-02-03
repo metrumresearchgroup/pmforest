@@ -13,7 +13,6 @@ classicforest <- function(plotdata,
                           annotate_CI = FALSE,
                           shaded_interval = NULL,
                           statistic = NULL,
-                          confidence_level = 0.95,
                           facet_titles = NULL,
                           vline_intercept = 0,
                           col = "Blues",
@@ -46,21 +45,6 @@ classicforest <- function(plotdata,
   })
   y_breaks <- sort(c(plotdata$ID, madata$ID), decreasing = T)
   y_lines <- sort(madata$ID, decreasing = T)
-  summarydata <-
-    data.frame(
-      "x.diamond" = c(
-        madata$summary_es - stats::qnorm(1 - (1 - confidence_level) / 2, 0, 1) * madata$summary_se,
-        madata$summary_es,
-        madata$summary_es + stats::qnorm(1 - (1 - confidence_level) / 2, 0, 1) * madata$summary_se,
-        madata$summary_es
-      ),
-      "y.diamond" = c(madata$ID,
-                      madata$ID + 0.3,
-                      madata$ID,
-                      madata$ID - 0.3),
-      "diamond_group" = rep(1:k, times = 4)
-    )
-
 
   # set limits for the x axis if none are supplied
   if (is.null(x_limit)) {
@@ -108,9 +92,6 @@ classicforest <- function(plotdata,
   }
 
   # workaround for "Undefined global functions or variables" Note in R CMD check while using ggplot2.
-  x.diamond <- NULL
-  y.diamond <- NULL
-  diamond_group <- NULL
   ID <- NULL
   x <- NULL
   y <- NULL
@@ -153,13 +134,6 @@ classicforest <- function(plotdata,
     p +
     geom_point(data=plotdata,aes(size = weight, color=factor(group), fill=factor(group)),
                shape = 22, size = 3.5, col = "black") +
-    geom_polygon(
-      data = summarydata,
-      aes(x = x.diamond, y = y.diamond, group = diamond_group),
-      color = "black",
-      fill = summary_col,
-      size = 0.1
-    ) +
     geom_hline(yintercept = y_lines) +
     scale_y_continuous(name = y_lab,
                        breaks = y_breaks,
