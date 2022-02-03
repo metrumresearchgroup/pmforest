@@ -23,12 +23,8 @@
 #' @param jitter_nsim logical. Whether or not to vertically "jitter" the additional confidence intervals when using the `nsim` argument
 #' @export
 plot_forest <- function(data,
-                        stat = NULL,       ## probably still needed, but these are column names
                         statistic = c("median", "mean"), ##### maybe not needed b/c summarize_data
                         CI=0.95,              ##### maybe not needed b/c summarize_data
-                        covariate = NULL,  ## probably still needed, but these are column names
-                        cov_level = NULL,  ## probably still needed, but these are column names
-                        metagroup = NULL,  ## probably still needed, but these are column names
                         summary_label = NULL,
                         vline_intercept = 0,
                         annotate_CI = TRUE,
@@ -69,23 +65,19 @@ plot_forest <- function(data,
     ))
   }
 
-  metagroups <- data %>% dplyr::select({{metagroup}})
-
-  if(ncol(metagroups) == 0){
-
+  if(!("metagroup" %in% names(data))){
+    # no metagroups
     plt <- forest_constructor(
       data = data,
-      args = {{ args }},
-      covariate = {{ covariate }},
-      cov_level = {{ cov_level }},
-      nsim = {{ nsim }},
+      args = args,
+      nsim = nsim,
       summary_label = summary_label,
       vline_intercept = vline_intercept,
       annotate_CI = annotate_CI,
       sigfig = sigfig,
       confidence_level = CI,
       shaded_interval = shaded_interval,
-      statistic = {{ statistic }},
+      statistic = statistic,
       x_lab = x_lab,
       y_lab = y_lab,
       plot_width = plot_width,
@@ -97,11 +89,13 @@ plot_forest <- function(data,
     )
 
   } else {
-
-    metagroups <- metagroups %>%
+    # with metagroups
+    metagroups <- data %>%
+      dplyr::select(metagroup) %>%
       unlist(use.names = FALSE) %>%
       unique()
 
+    # TODO: is this still true or should we remove this code?
     # if(!is.null(y_lab)){
     #   message("y_lab is ignored when using metagroup argument. specify y axis labels by including them in summary labels with metagroup = label")
     # }
@@ -118,21 +112,19 @@ plot_forest <- function(data,
       purrr::map2(metagroups, metagroup_labels, function(.x, .y) {
 
         data <- data %>%
-          dplyr::filter({{ metagroup }} == .x)
+          dplyr::filter(.data$metagroup == .x)
 
         forest_constructor(
           data = data,
-          args = {{ args }},
-          covariate = {{ covariate }},
-          cov_level = {{ cov_level }},
-          nsim = {{ nsim }},
+          args = args,
+          nsim = nsim,
           summary_label = summary_label,
           vline_intercept = vline_intercept,
           annotate_CI = annotate_CI,
           confidence_level = CI,
           sigfig = sigfig,
           shaded_interval = shaded_interval,
-          statistic = {{ statistic }},
+          statistic = statistic,
           x_lab = x_lab,
           y_lab = y_lab,
           plot_width = plot_width,
@@ -146,6 +138,7 @@ plot_forest <- function(data,
 
       })
 
+    # TODO: can this code be deleted?
     # plt <- patchwork::wrap_plots(plt, ...) +
     #   plot_annotation(caption = caption)
 
