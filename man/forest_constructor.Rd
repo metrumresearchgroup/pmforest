@@ -7,16 +7,12 @@
 forest_constructor(
   data,
   args,
-  covariate = NULL,
-  cov_level = NULL,
   nsim = NULL,
   summary_label = NULL,
   vline_intercept = 0,
   annotate_CI = TRUE,
-  confidence_level,
   sigfig,
   shaded_interval = NULL,
-  statistic = NULL,
   x_lab = "Effect",
   y_lab = NULL,
   plot_width,
@@ -26,20 +22,15 @@ forest_constructor(
   text_size = 3,
   x_limit = NULL,
   x_breaks = NULL,
-  jitter_nsim
+  jitter_reps
 )
 }
 \arguments{
-\item{data}{a dataframe or tibble that contains the mean values and the lows & highs of the confidence interval}
+\item{data}{a dataframe or tibble that contains the summarized data you want
+to plot. This must be in the same format as the tibble that is output by
+\code{\link[=summarize_data]{summarize_data()}}. See "Output Data" in Details section of \code{\link[=summarize_data]{summarize_data()}} documentation.}
 
 \item{args}{mean/median, low CI, upper CI relating to the selected reference column}
-
-\item{covariate}{(optional) column that defines subgroups within the data- all subgroups will be shown on the same plot but grouped together.}
-
-\item{cov_level}{(optional) column name that corresponds to y-axis tick labels. If not specified, y-axis will be numbered.}
-
-\item{nsim}{(optional) column name that corresponds to simulation or bootstrap column. If specified, additional CI's of the individual statistics will be drawn.
-If \code{nsim} is specified and no caption is set, a default caption will be set. Set \code{caption} to "" to override this functionality.}
 
 \item{vline_intercept}{(optional) numeric. Default 0.}
 
@@ -48,8 +39,6 @@ If \code{nsim} is specified and no caption is set, a default caption will be set
 \item{sigfig}{numeric. Number of significant digits to round the table values to.}
 
 \item{shaded_interval}{numeric vector. Specified as c(lo, hi) for the interval you want to shade over. Default is NULL.}
-
-\item{statistic}{is the actual statistic to output (i.e. median/mean)}
 
 \item{x_lab}{string. x-axis label.}
 
@@ -65,7 +54,9 @@ If \code{nsim} is specified and no caption is set, a default caption will be set
 
 \item{x_breaks}{numeric vector of breaks to be used for the x-axis. See scale_x_continuous() for details.}
 
-\item{jitter_nsim}{logical. Whether or not to vertically "jitter" the additional confidence intervals when using the \code{nsim} argument}
+\item{jitter_reps}{logical. Whether or not to vertically "jitter" the
+additional confidence intervals when using multiple replicates (i.e. when
+input data has 9 numeric columns instead of 3).}
 }
 \description{
 Private helper to manipulate data and organize the structure of the forest plot and CI table
