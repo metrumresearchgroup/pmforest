@@ -5,7 +5,15 @@ Description: Create forest plots
 Authors@R:
     c(person(given = "Kyle", family = "Barrett",
              role = c("aut", "cre"),
-             email = "barrettk@metrumrg.com"))
+             email = "barrettk@metrumrg.com"),
+    person(given = "Seth",
+             family = "Green",
+             role = c("aut"),
+             email = "sethg@metrumrg.com"),
+      person(given = "Anna-Christina",
+             family = "Nevison",
+             role = "aut",
+             email = "annanev@umich.edu"))
 License: MIT + file LICENSE
 Imports:
     assertthat,
@@ -17,6 +25,7 @@ Imports:
     here,
     magrittr,
     patchwork,
+    pmtables,
     readr,
     rlang,
     stringr,

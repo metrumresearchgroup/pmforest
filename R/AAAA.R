@@ -11,6 +11,7 @@
 #' @importFrom stringr str_detect
 #' @importFrom utils write.csv
 #' @importFrom assertthat assert_that
+#' @importFrom pmtables sig
 #'
 #' @include forest-constructor.R
 #' @include table-plot.R

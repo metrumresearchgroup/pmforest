@@ -5,11 +5,11 @@
 #' @param data a dataframe or tibble that contains the summarized data you want
 #'   to plot. This must be in the same format as the tibble that is output by
 #'   [summarize_data()]. See "Output Data" in Details section of [summarize_data()] documentation.
-#' @inheritParams summarize_data
 #' @param summary_labels (optional) labeler function created using `ggplot2::as_labeller`. Labels for group and metagroup.
 #' @param vline_intercept (optional) numeric. Default 0.
 #' @param annotate_CI logical. Default `TRUE`. Show a table next to the graph with the numeric values for the confidence interval.
-#' @param sigfig numeric. Number of significant digits to round the table values to.
+#' @param digits numeric. Number of significant digits to round the table values to. Passed through to [pmtables::sig()]
+#' @param maxex numeric. Maximum number of significant digits before moving to scientific notation. Passed through to [pmtables::sig()].
 #' @param x_lab string. x-axis label.
 #' @param y_lab string. Default is not to label y axis.
 #' @param CI_label string. Ignored if `annotate_CI` is `FALSE`.
@@ -29,7 +29,8 @@ plot_forest <- function(data,
                         vline_intercept = 0,
                         annotate_CI = TRUE,
                         shaded_interval = NULL,
-                        sigfig = 2,
+                        digits = 3,
+                        maxex = NULL,
                         x_lab = "Effect",
                         y_lab = NULL,
                         CI_label = NULL,
@@ -41,7 +42,8 @@ plot_forest <- function(data,
                         jitter_reps = FALSE,
                         ...){
 
-  assert_that(is.numeric(sigfig) & sigfig > 1, msg = "`sigfig` must be a numeric value greater than 1")
+  assert_that(is.numeric(digits) & digits > 1, msg = "`digits` must be a numeric value greater than 1")
+  if (!is.null(maxex)) assert_that(is.numeric(maxex) & maxex > 1, msg = "`maxex` must be a numeric value greater than 1")
   assert_that(text_size >= 3.5, msg = "`text_size` must be at least 3.5")
   assert_that((is.character(caption) | is.null(caption)), msg = "`caption` must be a character scalar.")
   assert_that(is_logical(annotate_CI), msg = "`annotate_CI` must be a logical value (T/F)")
@@ -75,7 +77,8 @@ plot_forest <- function(data,
       summary_label = summary_label,
       vline_intercept = vline_intercept,
       annotate_CI = annotate_CI,
-      sigfig = sigfig,
+      digits = digits,
+      maxex = maxex,
       shaded_interval = shaded_interval,
       x_lab = x_lab,
       y_lab = y_lab,
@@ -120,7 +123,8 @@ plot_forest <- function(data,
           summary_label = summary_label,
           vline_intercept = vline_intercept,
           annotate_CI = annotate_CI,
-          sigfig = sigfig,
+          digits = digits,
+          maxex = maxex,
           shaded_interval = shaded_interval,
           x_lab = x_lab,
           y_lab = y_lab,

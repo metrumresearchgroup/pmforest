@@ -60,7 +60,7 @@ describe("Base plots", {
         metagroup = param,
         group_level = LVL,
         statistic = "mean",
-        CI=0.99
+        probs = c(0.005, 0.995)
       ) %>%
       plot_forest(annotate_CI = TRUE)
     vdiffr::expect_doppelganger("CI Table - mean", plt)
@@ -74,7 +74,7 @@ describe("Base plots", {
         metagroup = param,
         group_level = LVL,
         statistic = "median",
-        CI=0.99
+        probs = c(0.005, 0.995)
       ) %>%
       plot_forest(annotate_CI = TRUE)
     vdiffr::expect_doppelganger("CI Table - median", plt)
@@ -156,7 +156,7 @@ describe("Base plots", {
                        shaded_interval = c(0.8,1.25),
                        summary_label = plot_labels,
                        text_size = 3.5,
-                       sigfig = 2,
+                       digits = 2,
                        vline_intercept = 1,
                        x_lab = "Fraction and 95% CI \nRelative to Reference",
                        CI_label = "Median [95% CI]",

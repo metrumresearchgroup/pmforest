@@ -10,7 +10,8 @@ forest_constructor <- function(data,
                                summary_label = NULL,
                                vline_intercept = 0,
                                annotate_CI = TRUE,
-                               sigfig,
+                               digits,
+                               maxex,
                                shaded_interval = NULL,
                                x_lab = "Effect",
                                y_lab = NULL,
@@ -233,9 +234,12 @@ forest_constructor <- function(data,
       lb <- plotdata$lo_mid
       ub <- plotdata$hi_mid
     }
-    lb <- format(round(lb, sigfig), nsmall = 2)
-    ub <- format(round(ub, sigfig), nsmall = 2)
-    x_hat <- format(round(x_hat, sigfig), nsmall = 2)
+    # lb <- format(round(lb, sigfig), nsmall = 2)
+    # ub <- format(round(ub, sigfig), nsmall = 2)
+    # x_hat <- format(round(x_hat, sigfig), nsmall = 2)
+    lb <- pmtables::sig(lb, digits = digits, maxex = maxex)
+    ub <- pmtables::sig(ub, digits = digits, maxex = maxex)
+    x_hat <- pmtables::sig(x_hat, digits = digits, maxex = maxex)
 
     CI <- c(
       paste(x_hat, " [", lb, ", ", ub, "]", sep = ""),
