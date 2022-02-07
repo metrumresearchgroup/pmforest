@@ -6,36 +6,65 @@
 \usage{
 summarize_data(
   data,
-  stat,
-  covariate,
-  cov_level,
-  metagroup,
-  nsim,
-  CI = CI,
-  statistic
+  value,
+  group,
+  group_level = NULL,
+  metagroup = NULL,
+  replicate = NULL,
+  CI = 0.95,
+  statistic = c("median", "mean")
 )
 }
 \arguments{
-\item{data}{a dataframe or tibble that contains the mean values and the lows & highs of the confidence interval}
+\item{data}{A dataframe or tibble to summarize. See Details section for required format.}
 
-\item{stat}{is the column to perform calculations on (i.e. median/mean, lower, and upper CI)}
+\item{value}{name of the column in \code{data} to perform calculations on (i.e.
+median/mean, lower, and upper CI)}
 
-\item{covariate}{(optional) column that defines subgroups within the data- all subgroups will be shown on the same plot but grouped together.}
+\item{group}{name of the column in \code{data} that defines groups within the
+data. Often, this will contain the names of the covariates you are grouping
+by.}
 
-\item{cov_level}{(optional) column name that corresponds to y-axis tick labels. If not specified, y-axis will be numbered.}
+\item{group_level}{(optional) name of the column in \code{data} that contains
+subgroups to group by. For example, if your \code{group} column contains
+covariates like \code{WEIGHT} and \code{AGE}, this column could contain categories
+like \code{underweight}, \code{average}, \code{overweight}, \code{young}, \code{mid}, \code{elderly}, etc.}
 
-\item{metagroup}{(optional) column name that corresponds to metagroups. Similar to facet wrap. Will produce independent plots per metagroup.}
+\item{metagroup}{(optional) name of the column in \code{data} that contains
+\code{metagroups}. Similar to facet wrap, if passed, this will cause
+\code{\link[=plot_forest]{plot_forest()}} to produce independent plots per metagroup.}
 
-\item{nsim}{(optional) column name that corresponds to simulation or bootstrap column. If specified, additional CI's of the individual statistics will be drawn.
-If \code{nsim} is specified and no caption is set, a default caption will be set. Set \code{caption} to "" to override this functionality.}
+\item{replicate}{(optional) name of the column in \code{data} that contains to an
+index of replicates, for example with multiple simulations or
+bootstrapping. If specified, \code{\link[=plot_forest]{plot_forest()}} will draw additional CI's of
+the individual statistics, as small lines above each primary line.}
 
-\item{CI}{is the confidence interval to plot}
+\item{CI}{numeric between 0 and 1. This is the confidence interval to plot, defaults to \code{0.95}.}
 
 \item{statistic}{is the actual statistic to output (i.e. median/mean)}
-
-\item{r, l}{parameters corresponding to the plot margin for the confidence intervals}
 }
 \description{
-Private helper to summarize the referenced column. Called internally by plot_forest
+Summarize input data to prepare for passing to \code{\link[=plot_forest]{plot_forest()}}. Takes a
+data.frame or tibble, calculates the relevant confidence intervals, and
+returns a tibble that can be passed directly to \code{\link[=plot_forest]{plot_forest()}}. See Details
+section for data specification and format.
 }
-\keyword{internal}
+\details{
+\strong{Input Data}
+
+The tibble passed to \code{data} must be in a "long" format and will have 2-5
+columns: \code{value}, \code{group}, and optionally any of \code{group_level}, \code{metagroup},
+and/or \code{replicate}. These are each described in detail in the input arguments
+section.
+
+\strong{Output Data}
+The tibble output from this function will have one of two formats, depending on whether
+\code{replicate} was passed (details below).
+
+Either way, the output tibble will have a column named \code{group}, containing the
+values in the column you passed to the \code{group} argument, and optionally similar columns
+for \code{group_level} and \code{metagroup} if those were passed.
+\itemize{
+\item \strong{Without \code{replicate}} If \code{replicate} is \emph{not} passed, the output data
+}
+}

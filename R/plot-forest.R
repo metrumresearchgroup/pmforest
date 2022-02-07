@@ -2,92 +2,84 @@
 #'
 #' Creates a forest plot with or without confidence intervals
 #' Expects..
-#' See params below..
-#' @param data a dataframe or tibble that contains the mean values and the lows & highs of the confidence interval
-#' @param stat is the column to perform calculations on (i.e. median/mean, lower, and upper CI)
-#' @param statistic is the actual statistic to output (i.e. median/mean)
-#' @param CI is the confidence interval to plot
-#' @param covariate (optional) column that defines subgroups within the data- all subgroups will be shown on the same plot but grouped together.
-#' @param cov_level (optional) column name that corresponds to y-axis tick labels. If not specified, y-axis will be numbered.
-#' @param metagroup (optional) column name that corresponds to metagroups. Similar to facet wrap. Will produce independent plots per metagroup.
-#' @param nsim (optional) column name that corresponds to simulation or bootstrap column. If specified, additional CI's of the individual statistics will be drawn.
-#' If `nsim` is specified and no caption is set, a default caption will be set. Set `caption` to "" to override this functionality.
+#' @param data a dataframe or tibble that contains the summarized data you want
+#'   to plot. This must be in the same format as the tibble that is output by
+#'   [summarize_data()]. See "Output Data" in Details section of [summarize_data()] documentation.
 #' @param summary_labels (optional) labeler function created using `ggplot2::as_labeller`. Labels for group and metagroup.
 #' @param vline_intercept (optional) numeric. Default 0.
 #' @param annotate_CI logical. Default `TRUE`. Show a table next to the graph with the numeric values for the confidence interval.
-#' @param sigfig numeric. Number of significant digits to round the table values to.
+#' @param digits numeric. Number of significant digits to round the table values to. Passed through to [pmtables::sig()]
+#' @param maxex numeric. Maximum number of significant digits before moving to scientific notation. Passed through to [pmtables::sig()].
 #' @param x_lab string. x-axis label.
 #' @param y_lab string. Default is not to label y axis.
 #' @param CI_label string. Ignored if `annotate_CI` is `FALSE`.
+#' @param caption string. A patchwork styled caption for the overall plot.
 #' @param text_size numeric. Text size for labels. Must be at least 3.5
 #' @param plot_width numeric. Value between 1 and 12 to denote the ratio of plot : CI table
-#' @param caption string. A patchwork styled caption for the overall plot.
 #' @param shaded_interval numeric vector. Specified as c(lo, hi) for the interval you want to shade over. Default is NULL.
 #' @param x_breaks numeric vector of breaks to be used for the x-axis. See scale_x_continuous() for details.
 #' @param x_limit numeric vector (c(lo, hi)) specifying the minimum and maximum values to show on the x-axis. See coord_cartesian() for details
 #' @param ... additional args passed to `patchwork::wrap_plots()` for metagrouped plots.
-#' @param jitter_nsim logical. Whether or not to vertically "jitter" the additional confidence intervals when using the `nsim` argument
+#' @param jitter_reps logical. Whether or not to vertically "jitter" the
+#'   additional confidence intervals when using multiple replicates (i.e. when
+#'   input data has 9 numeric columns instead of 3).
 #' @export
 plot_forest <- function(data,
-                        stat = NULL,
-                        statistic = c("median","mean"),
-                        CI=0.95,
-                        covariate = NULL,
-                        cov_level = NULL,
-                        metagroup = NULL,
-                        nsim = NULL,
                         summary_label = NULL,
                         vline_intercept = 0,
                         annotate_CI = TRUE,
                         shaded_interval = NULL,
-                        sigfig = 2,
+                        digits = 3,
+                        maxex = NULL,
                         x_lab = "Effect",
                         y_lab = NULL,
                         CI_label = NULL,
+                        caption = NULL,
                         text_size = 3.5,
                         plot_width = 8,
-                        caption = NULL,
                         x_breaks = NULL,
                         x_limit = NULL,
-                        jitter_nsim = FALSE,
+                        jitter_reps = FALSE,
                         ...){
 
-  statistic <- match.arg(statistic)
-  assert_that(is.numeric(sigfig) & sigfig > 1, msg = "`sigfig` must be a numeric value greater than 1")
-  assert_that(CI > 0 & CI < 1, msg = "`CI` must be between 0 and 1")
+  assert_that(is.numeric(digits) & digits > 1, msg = "`digits` must be a numeric value greater than 1")
+  if (!is.null(maxex)) assert_that(is.numeric(maxex) & maxex > 1, msg = "`maxex` must be a numeric value greater than 1")
   assert_that(text_size >= 3.5, msg = "`text_size` must be at least 3.5")
+  assert_that((is.character(caption) | is.null(caption)), msg = "`caption` must be a character scalar.")
   assert_that(is_logical(annotate_CI), msg = "`annotate_CI` must be a logical value (T/F)")
-  assert_that(is_logical(jitter_nsim), msg = "`jitter_nsim` must be a logical value (T/F)")
+  assert_that(is_logical(jitter_reps), msg = "`jitter_reps` must be a logical value (T/F)")
 
-  lst <- summarize_data(data,
-                        stat = {{stat}},
-                        covariate = {{covariate}},
-                        cov_level = {{cov_level}},
-                        metagroup = {{metagroup}},
-                        nsim = {{nsim}},
-                        statistic={{statistic}},
-                        CI=CI)
-  data <- lst[[1]]
-  args <- lst[[2]]
+  # TODO: this will be refactored once we refactor some of the downstream code
+  if (all(VALUE_COLS %in% names(data))) {
+    args <- VALUE_COLS
+    nsim <- NULL
+  } else if (all(VALUE_COLS_NSIM %in% names(data))) {
+    args <- VALUE_COLS_NSIM
+    nsim <- "nsim" # should find a better way to do this
+  } else {
+    # TODO: add test for this case
+    stop(paste(
+      "`data` does not have required columns. Must have grouping columns and either:",
+      paste(VALUE_COLS, collapse = ", "),
+      "  OR ",
+      paste(VALUE_COLS_NSIM, collapse = ", "),
+      glue("`data` has columns: {paste(names(data), collapse = ', ')}"),
+      sep = "\n"
+    ))
+  }
 
-  metagroups <- data %>% dplyr::select({{metagroup}})
-  if(ncol(data)>=9) nsim <- "nsim" # should find a better way to do this
-
-  if(ncol(metagroups) == 0){
-
+  if(!("metagroup" %in% names(data))){
+    # no metagroups
     plt <- forest_constructor(
       data = data,
-      args = {{ args }},
-      covariate = {{ covariate }},
-      cov_level = {{ cov_level }},
-      nsim = {{ nsim }},
+      args = args,
+      nsim = nsim,
       summary_label = summary_label,
       vline_intercept = vline_intercept,
       annotate_CI = annotate_CI,
-      sigfig = sigfig,
-      confidence_level = CI,
+      digits = digits,
+      maxex = maxex,
       shaded_interval = shaded_interval,
-      statistic = {{ statistic }},
       x_lab = x_lab,
       y_lab = y_lab,
       plot_width = plot_width,
@@ -95,15 +87,17 @@ plot_forest <- function(data,
       text_size = text_size,
       x_limit = x_limit,
       x_breaks = x_breaks,
-      jitter_nsim = jitter_nsim
+      jitter_reps = jitter_reps
     )
 
   } else {
-
-    metagroups <- metagroups %>%
+    # with metagroups
+    metagroups <- data %>%
+      dplyr::select(metagroup) %>%
       unlist(use.names = FALSE) %>%
       unique()
 
+    # TODO: is this still true or should we remove this code?
     # if(!is.null(y_lab)){
     #   message("y_lab is ignored when using metagroup argument. specify y axis labels by including them in summary labels with metagroup = label")
     # }
@@ -120,21 +114,18 @@ plot_forest <- function(data,
       purrr::map2(metagroups, metagroup_labels, function(.x, .y) {
 
         data <- data %>%
-          dplyr::filter({{ metagroup }} == .x)
+          dplyr::filter(.data$metagroup == .x)
 
         forest_constructor(
           data = data,
-          args = {{ args }},
-          covariate = {{ covariate }},
-          cov_level = {{ cov_level }},
-          nsim = {{ nsim }},
+          args = args,
+          nsim = nsim,
           summary_label = summary_label,
           vline_intercept = vline_intercept,
           annotate_CI = annotate_CI,
-          confidence_level = CI,
-          sigfig = sigfig,
+          digits = digits,
+          maxex = maxex,
           shaded_interval = shaded_interval,
-          statistic = {{ statistic }},
           x_lab = x_lab,
           y_lab = y_lab,
           plot_width = plot_width,
@@ -143,24 +134,17 @@ plot_forest <- function(data,
           text_size = text_size,
           x_limit = x_limit,
           x_breaks = x_breaks,
-          jitter_nsim = jitter_nsim
+          jitter_reps = jitter_reps
         )
 
       })
-
-    # plt <- patchwork::wrap_plots(plt, ...) +
-    #   plot_annotation(caption = caption)
-
   }
 
   plt <- patchwork::wrap_plots(plt, ...)
 
-  if(!is.null(nsim) & is.null(caption)){
-    plt <- plt + patchwork::plot_annotation(caption = glue::glue('Lower line represents the median of the summary statistics ({stringr::str_to_title(statistic)}, {(100-CI*100)/2}th and {CI*100 + (100-CI*100)/2}th quantiles).
-       Upper lines represent the {CI*100}% CI of the individual statistics.'))
-  }else{
+  if (!is.null(caption)) {
     plt <- plt + plot_annotation(caption = caption)
   }
-  plt
 
+  return(plt)
 }

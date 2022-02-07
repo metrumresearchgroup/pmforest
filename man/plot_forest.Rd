@@ -6,13 +6,6 @@
 \usage{
 plot_forest(
   data,
-  stat = NULL,
-  statistic = c("median", "mean"),
-  CI = 0.95,
-  covariate = NULL,
-  cov_level = NULL,
-  metagroup = NULL,
-  nsim = NULL,
   summary_label = NULL,
   vline_intercept = 0,
   annotate_CI = TRUE,
@@ -21,32 +14,19 @@ plot_forest(
   x_lab = "Effect",
   y_lab = NULL,
   CI_label = NULL,
+  caption = NULL,
   text_size = 3.5,
   plot_width = 8,
-  caption = NULL,
   x_breaks = NULL,
   x_limit = NULL,
-  jitter_nsim = FALSE,
+  jitter_reps = FALSE,
   ...
 )
 }
 \arguments{
-\item{data}{a dataframe or tibble that contains the mean values and the lows & highs of the confidence interval}
-
-\item{stat}{is the column to perform calculations on (i.e. median/mean, lower, and upper CI)}
-
-\item{statistic}{is the actual statistic to output (i.e. median/mean)}
-
-\item{CI}{is the confidence interval to plot}
-
-\item{covariate}{(optional) column that defines subgroups within the data- all subgroups will be shown on the same plot but grouped together.}
-
-\item{cov_level}{(optional) column name that corresponds to y-axis tick labels. If not specified, y-axis will be numbered.}
-
-\item{metagroup}{(optional) column name that corresponds to metagroups. Similar to facet wrap. Will produce independent plots per metagroup.}
-
-\item{nsim}{(optional) column name that corresponds to simulation or bootstrap column. If specified, additional CI's of the individual statistics will be drawn.
-If \code{nsim} is specified and no caption is set, a default caption will be set. Set \code{caption} to "" to override this functionality.}
+\item{data}{a dataframe or tibble that contains the summarized data you want
+to plot. This must be in the same format as the tibble that is output by
+\code{\link[=summarize_data]{summarize_data()}}. See "Output Data" in Details section of \code{\link[=summarize_data]{summarize_data()}} documentation.}
 
 \item{vline_intercept}{(optional) numeric. Default 0.}
 
@@ -62,17 +42,19 @@ If \code{nsim} is specified and no caption is set, a default caption will be set
 
 \item{CI_label}{string. Ignored if \code{annotate_CI} is \code{FALSE}.}
 
+\item{caption}{string. A patchwork styled caption for the overall plot.}
+
 \item{text_size}{numeric. Text size for labels. Must be at least 3.5}
 
 \item{plot_width}{numeric. Value between 1 and 12 to denote the ratio of plot : CI table}
-
-\item{caption}{string. A patchwork styled caption for the overall plot.}
 
 \item{x_breaks}{numeric vector of breaks to be used for the x-axis. See scale_x_continuous() for details.}
 
 \item{x_limit}{numeric vector (c(lo, hi)) specifying the minimum and maximum values to show on the x-axis. See coord_cartesian() for details}
 
-\item{jitter_nsim}{logical. Whether or not to vertically "jitter" the additional confidence intervals when using the \code{nsim} argument}
+\item{jitter_reps}{logical. Whether or not to vertically "jitter" the
+additional confidence intervals when using multiple replicates (i.e. when
+input data has 9 numeric columns instead of 3).}
 
 \item{...}{additional args passed to \code{patchwork::wrap_plots()} for metagrouped plots.}
 
@@ -81,5 +63,4 @@ If \code{nsim} is specified and no caption is set, a default caption will be set
 \description{
 Creates a forest plot with or without confidence intervals
 Expects..
-See params below..
 }

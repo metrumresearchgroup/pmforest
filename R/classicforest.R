@@ -8,12 +8,10 @@
 classicforest <- function(plotdata,
                           madata,
                           nsim = NULL,
-                          cov_level = NULL,
+                          group_level = NULL,
                           summary_label = NULL,
                           annotate_CI = FALSE,
                           shaded_interval = NULL,
-                          statistic = NULL,
-                          confidence_level = 0.95,
                           facet_titles = NULL,
                           vline_intercept = 0,
                           col = "Blues",
@@ -24,20 +22,21 @@ classicforest <- function(plotdata,
                           y_lab = NULL,
                           x_limit = NULL,
                           x_breaks = NULL,
-                          jitter_nsim) {
+                          jitter_reps) {
+
   n <- nrow(plotdata)
-  k <- length(levels(plotdata$covariate))
+  k <- length(levels(plotdata$group))
 
   # weight of each study used to scale the height of each raindrop
 
   weight <-
-    1 / (plotdata$se ^ 2 + madata$summary_tau2[as.numeric(plotdata$covariate)])
+    1 / (plotdata$se ^ 2 + madata$summary_tau2[as.numeric(plotdata$group)])
   plotdata$rel_weight <- weight / sum(weight)
 
 
   y_limit <- c(min(plotdata$ID) - 3, max(plotdata$ID) + 4)
   y_tick_names <-
-    c(as.vector(cov_level), as.vector(summary_label))[order(c(plotdata$ID, madata$ID), decreasing = T)]
+    c(as.vector(group_level), as.vector(summary_label))[order(c(plotdata$ID, madata$ID), decreasing = T)]
   suppressWarnings({
     if(any(is.na(as.numeric(y_tick_names)))){
       y_tick_names[!is.na(as.numeric(y_tick_names))] <- ""
@@ -45,21 +44,6 @@ classicforest <- function(plotdata,
   })
   y_breaks <- sort(c(plotdata$ID, madata$ID), decreasing = T)
   y_lines <- sort(madata$ID, decreasing = T)
-  summarydata <-
-    data.frame(
-      "x.diamond" = c(
-        madata$summary_es - stats::qnorm(1 - (1 - confidence_level) / 2, 0, 1) * madata$summary_se,
-        madata$summary_es,
-        madata$summary_es + stats::qnorm(1 - (1 - confidence_level) / 2, 0, 1) * madata$summary_se,
-        madata$summary_es
-      ),
-      "y.diamond" = c(madata$ID,
-                      madata$ID + 0.3,
-                      madata$ID,
-                      madata$ID - 0.3),
-      "diamond_group" = rep(1:k, times = 4)
-    )
-
 
   # set limits for the x axis if none are supplied
   if (is.null(x_limit)) {
@@ -107,9 +91,6 @@ classicforest <- function(plotdata,
   }
 
   # workaround for "Undefined global functions or variables" Note in R CMD check while using ggplot2.
-  x.diamond <- NULL
-  y.diamond <- NULL
-  diamond_group <- NULL
   ID <- NULL
   x <- NULL
   y <- NULL
@@ -119,12 +100,12 @@ classicforest <- function(plotdata,
   # create classic forest plot
   if(is.null(nsim)){
     p <-
-      ggplot(data = plotdata, aes(y = ID, x = x, group=factor(covariate))) +
+      ggplot(data = plotdata, aes(y = ID, x = x, group=factor(group))) +
       geom_vline(xintercept = vline_intercept, linetype = 4) +
       geom_errorbarh(data = plotdata,
                      # col = "black",
                      aes(
-                       col = factor(covariate),
+                       col = factor(group),
                        xmin = x_min,
                        xmax = x_max,
                        y = ID,
@@ -132,14 +113,14 @@ classicforest <- function(plotdata,
                      ))
   }else{
     p <-
-      ggplot(data = plotdata, aes(y = ID, x = med_dot, group=factor(covariate))) +
+      ggplot(data = plotdata, aes(y = ID, x = mid_mid, group=factor(group))) +
       geom_vline(xintercept = vline_intercept, linetype = 4) +
       geom_errorbarh(data = plotdata,
                      # col = "black",
                      aes(
-                       col = factor(covariate),
-                       xmin = med_lo,
-                       xmax = med_hi,
+                       col = factor(group),
+                       xmin = lo_mid,
+                       xmax = hi_mid,
                        y = ID,
                        height = 0
                      ))
@@ -150,15 +131,8 @@ classicforest <- function(plotdata,
 
   p1 <-
     p +
-    geom_point(data=plotdata,aes(size = weight, color=factor(covariate), fill=factor(covariate)),
+    geom_point(data=plotdata,aes(size = weight, color=factor(group), fill=factor(group)),
                shape = 22, size = 3.5, col = "black") +
-    geom_polygon(
-      data = summarydata,
-      aes(x = x.diamond, y = y.diamond, group = diamond_group),
-      color = "black",
-      fill = summary_col,
-      size = 0.1
-    ) +
     geom_hline(yintercept = y_lines) +
     scale_y_continuous(name = y_lab,
                        breaks = y_breaks,
@@ -168,27 +142,27 @@ classicforest <- function(plotdata,
                     expand = F)
   if(!is.null(nsim)){
     # Add geom_point for when the lo's and hi's are the same value
-    if(jitter_nsim){
+    if(jitter_reps){
       p1 <- p1 +
-        geom_point(aes(x=med_lo, color=factor(covariate)), position = position_nudge(y = 0.3), size=0.1) +
-        geom_linerange(data=plotdata, aes(xmin = lo_lo, xmax = hi_lo, color=factor(covariate)),
+        geom_point(aes(x=lo_mid, color=factor(group)), position = position_nudge(y = 0.3), size=0.1) +
+        geom_linerange(data=plotdata, aes(xmin = lo_lo, xmax = lo_hi, color=factor(group)),
                        position = position_nudge(y = 0.3), size=0.7) +
-        geom_point(aes(x=med_hi, color=factor(covariate)), position = position_nudge(y = 0.55), size=0.1) +
-        geom_linerange(data=plotdata, aes(xmin = lo_hi, xmax = hi_hi, color=factor(covariate)),
+        geom_point(aes(x=hi_mid, color=factor(group)), position = position_nudge(y = 0.55), size=0.1) +
+        geom_linerange(data=plotdata, aes(xmin = hi_lo, xmax = hi_hi, color=factor(group)),
                        position = position_nudge(y = 0.55), size=0.7) +
-        geom_point(aes(x=med_dot, color=factor(covariate)), position = position_nudge(y = 0.425), size=0.1) +
-        geom_linerange(data=plotdata, aes(xmin = lo_dot, xmax = hi_dot, color=factor(covariate)),
+        geom_point(aes(x=mid_mid, color=factor(group)), position = position_nudge(y = 0.425), size=0.1) +
+        geom_linerange(data=plotdata, aes(xmin = mid_lo, xmax = mid_hi, color=factor(group)),
                        position = position_nudge(y = 0.425), size=0.7)
     }else{
       p1 <- p1 +
-        geom_point(aes(x=med_lo, color=factor(covariate)), position = position_nudge(y = 0.5), size=0.1) +
-        geom_linerange(data=plotdata, aes(xmin = lo_lo, xmax = hi_lo, color=factor(covariate)),
+        geom_point(aes(x=lo_mid, color=factor(group)), position = position_nudge(y = 0.5), size=0.1) +
+        geom_linerange(data=plotdata, aes(xmin = lo_lo, xmax = lo_mid, color=factor(group)),
                        position = position_nudge(y = 0.5), size=0.7) +
-        geom_point(aes(x=med_hi, color=factor(covariate)), position = position_nudge(y = 0.5), size=0.1) +
-        geom_linerange(data=plotdata, aes(xmin = lo_hi, xmax = hi_hi, color=factor(covariate)),
+        geom_point(aes(x=hi_mid, color=factor(group)), position = position_nudge(y = 0.5), size=0.1) +
+        geom_linerange(data=plotdata, aes(xmin = hi_lo, xmax = hi_hi, color=factor(group)),
                        position = position_nudge(y = 0.5), size=0.7) +
-        geom_point(aes(x=med_dot, color=factor(covariate)), position = position_nudge(y = 0.5), size=0.1) +
-        geom_linerange(data=plotdata, aes(xmin = lo_dot, xmax = hi_dot, color=factor(covariate)),
+        geom_point(aes(x=mid_mid, color=factor(group)), position = position_nudge(y = 0.5), size=0.1) +
+        geom_linerange(data=plotdata, aes(xmin = mid_lo, xmax = mid_hi, color=factor(group)),
                        position = position_nudge(y = 0.5), size=0.7)
     }
 

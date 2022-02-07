@@ -11,6 +11,7 @@
 #' @importFrom stringr str_detect
 #' @importFrom utils write.csv
 #' @importFrom assertthat assert_that
+#' @importFrom pmtables sig
 #'
 #' @include forest-constructor.R
 #' @include table-plot.R
@@ -19,6 +20,23 @@
 NULL
 
 
+VALUE_COLS <- c(
+  "mid",
+  "lo",
+  "hi"
+)
+
+VALUE_COLS_NSIM <- c(
+  "mid_mid",
+  "mid_lo",
+  "mid_hi",
+  "lo_mid",
+  "lo_lo",
+  "lo_hi",
+  "hi_mid",
+  "hi_lo",
+  "hi_hi"
+)
 
 
 

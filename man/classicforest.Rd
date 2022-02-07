@@ -8,12 +8,10 @@ classicforest(
   plotdata,
   madata,
   nsim = NULL,
-  cov_level = NULL,
+  group_level = NULL,
   summary_label = NULL,
   annotate_CI = FALSE,
   shaded_interval = NULL,
-  statistic = NULL,
-  confidence_level = 0.95,
   facet_titles = NULL,
   vline_intercept = 0,
   col = "Blues",
@@ -24,7 +22,7 @@ classicforest(
   y_lab = NULL,
   x_limit = NULL,
   x_breaks = NULL,
-  jitter_nsim
+  jitter_reps
 )
 }
 \arguments{
@@ -32,16 +30,9 @@ classicforest(
 
 \item{madata}{dataframe constructed by forest_constructor}
 
-\item{nsim}{(optional) column name that corresponds to simulation or bootstrap column. If specified, additional CI's of the individual statistics will be drawn.
-If \code{nsim} is specified and no caption is set, a default caption will be set. Set \code{caption} to "" to override this functionality.}
-
-\item{cov_level}{(optional) column name that corresponds to y-axis tick labels. If not specified, y-axis will be numbered.}
-
 \item{annotate_CI}{logical. Default \code{TRUE}. Show a table next to the graph with the numeric values for the confidence interval.}
 
 \item{shaded_interval}{numeric vector. Specified as c(lo, hi) for the interval you want to shade over. Default is NULL.}
-
-\item{statistic}{is the actual statistic to output (i.e. median/mean)}
 
 \item{vline_intercept}{(optional) numeric. Default 0.}
 
@@ -55,7 +46,9 @@ If \code{nsim} is specified and no caption is set, a default caption will be set
 
 \item{x_breaks}{numeric vector of breaks to be used for the x-axis. See scale_x_continuous() for details.}
 
-\item{jitter_nsim}{logical. Whether or not to vertically "jitter" the additional confidence intervals when using the \code{nsim} argument}
+\item{jitter_reps}{logical. Whether or not to vertically "jitter" the
+additional confidence intervals when using multiple replicates (i.e. when
+input data has 9 numeric columns instead of 3).}
 }
 \description{
 Private helper to generate the forest plot. Called internally by forest_constructor
