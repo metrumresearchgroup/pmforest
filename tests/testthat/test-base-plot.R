@@ -1,3 +1,4 @@
+skip_on_cran() # vdiffr flakiness
 
 dataDir <- system.file("test-data", package = "pmforest")
 specDir <- file.path(dataDir, "spec")
