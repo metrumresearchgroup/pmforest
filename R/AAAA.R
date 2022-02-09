@@ -12,6 +12,8 @@
 #' @importFrom utils write.csv
 #' @importFrom assertthat assert_that
 #' @importFrom pmtables sig
+#' @importFrom utils globalVariables
+#' @importFrom stats median quantile
 #'
 #' @include forest-constructor.R
 #' @include table-plot.R
@@ -38,5 +40,12 @@ VALUE_COLS_NSIM <- c(
   "hi_hi"
 )
 
-
-
+# column names used with tidyselect syntax throughout
+# declaring here to appease R CMD CHECK
+utils::globalVariables(c(
+  VALUE_COLS,
+  VALUE_COLS_NSIM,
+  "group",
+  "metagroup",
+  "x", "y"
+))
