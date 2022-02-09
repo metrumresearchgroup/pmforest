@@ -5,7 +5,7 @@
 #' @param data a dataframe or tibble that contains the summarized data you want
 #'   to plot. This must be in the same format as the tibble that is output by
 #'   [summarize_data()]. See "Output Data" in Details section of [summarize_data()] documentation.
-#' @param summary_labels (optional) labeler function created using `ggplot2::as_labeller`. Labels for group and metagroup.
+#' @param summary_label (optional) labeler function created using `ggplot2::as_labeller`. Labels for group and metagroup.
 #' @param vline_intercept (optional) numeric. Default 0.
 #' @param annotate_CI logical. Default `TRUE`. Show a table next to the graph with the numeric values for the confidence interval.
 #' @param digits numeric. Number of significant digits to round the table values to. Passed through to [pmtables::sig()]

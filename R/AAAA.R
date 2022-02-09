@@ -4,6 +4,7 @@
 #' @importFrom tibble as_tibble tibble
 #' @import rlang
 #' @import dplyr
+#' @importFrom purrr map flatten
 #' @import ggplot2
 #' @importFrom gridExtra arrangeGrob
 #' @importFrom ggpubr as_ggplot
@@ -14,6 +15,7 @@
 #' @importFrom pmtables sig
 #' @importFrom utils globalVariables
 #' @importFrom stats median quantile
+#' @importFrom RColorBrewer brewer.pal
 #'
 #' @include forest-constructor.R
 #' @include table-plot.R

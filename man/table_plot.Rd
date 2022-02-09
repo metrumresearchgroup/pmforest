@@ -19,6 +19,8 @@ table_plot(
 )
 }
 \arguments{
+\item{summary_label}{(optional) labeler function created using \code{ggplot2::as_labeller}. Labels for group and metagroup.}
+
 \item{r, l}{parameters corresponding to the plot margin for the confidence intervals}
 
 \item{plotdata}{dataframe constructed by forest_constructor}

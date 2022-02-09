@@ -29,6 +29,8 @@ plot_forest(
 to plot. This must be in the same format as the tibble that is output by
 \code{\link[=summarize_data]{summarize_data()}}. See "Output Data" in Details section of \code{\link[=summarize_data]{summarize_data()}} documentation.}
 
+\item{summary_label}{(optional) labeler function created using \code{ggplot2::as_labeller}. Labels for group and metagroup.}
+
 \item{vline_intercept}{(optional) numeric. Default 0.}
 
 \item{annotate_CI}{logical. Default \code{TRUE}. Show a table next to the graph with the numeric values for the confidence interval.}
@@ -60,8 +62,6 @@ additional confidence intervals when using multiple replicates (i.e. when
 input data has 9 numeric columns instead of 3).}
 
 \item{...}{additional args passed to \code{patchwork::wrap_plots()} for metagrouped plots.}
-
-\item{summary_labels}{(optional) labeler function created using \code{ggplot2::as_labeller}. Labels for group and metagroup.}
 }
 \description{
 Creates a forest plot with or without confidence intervals

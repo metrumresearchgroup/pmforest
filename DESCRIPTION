@@ -1,7 +1,7 @@
 Package: pmforest
 Title: Create forest plots
 Version: 0.0.0.9000
-Description: Create forest plots
+Description: Create forest plots.
 Authors@R:
     c(person(given = "Kyle", family = "Barrett",
              role = c("aut", "cre"),
@@ -26,6 +26,8 @@ Imports:
     magrittr,
     patchwork,
     pmtables,
+    purrr,
+    RColorBrewer,
     readr,
     rlang,
     stringr,

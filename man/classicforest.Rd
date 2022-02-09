@@ -30,6 +30,8 @@ classicforest(
 
 \item{madata}{dataframe constructed by forest_constructor}
 
+\item{summary_label}{(optional) labeler function created using \code{ggplot2::as_labeller}. Labels for group and metagroup.}
+
 \item{annotate_CI}{logical. Default \code{TRUE}. Show a table next to the graph with the numeric values for the confidence interval.}
 
 \item{shaded_interval}{numeric vector. Specified as c(lo, hi) for the interval you want to shade over. Default is NULL.}
