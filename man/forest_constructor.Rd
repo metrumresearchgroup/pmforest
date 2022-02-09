@@ -11,7 +11,8 @@ forest_constructor(
   summary_label = NULL,
   vline_intercept = 0,
   annotate_CI = TRUE,
-  sigfig,
+  digits,
+  maxex,
   shaded_interval = NULL,
   x_lab = "Effect",
   y_lab = NULL,
@@ -36,7 +37,9 @@ to plot. This must be in the same format as the tibble that is output by
 
 \item{annotate_CI}{logical. Default \code{TRUE}. Show a table next to the graph with the numeric values for the confidence interval.}
 
-\item{sigfig}{numeric. Number of significant digits to round the table values to.}
+\item{digits}{numeric. Number of significant digits to round the table values to. Passed through to \code{\link[pmtables:sig]{pmtables::sig()}}}
+
+\item{maxex}{numeric. Maximum number of significant digits before moving to scientific notation. Passed through to \code{\link[pmtables:sig]{pmtables::sig()}}.}
 
 \item{shaded_interval}{numeric vector. Specified as c(lo, hi) for the interval you want to shade over. Default is NULL.}
 

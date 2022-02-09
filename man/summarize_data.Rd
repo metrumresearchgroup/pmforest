@@ -11,8 +11,10 @@ summarize_data(
   group_level = NULL,
   metagroup = NULL,
   replicate = NULL,
-  CI = 0.95,
-  statistic = c("median", "mean")
+  probs = c(0.05, 0.95),
+  statistic = c("median", "mean", "geo_mean"),
+  rep_probs = c(0.025, 0.975),
+  rep_statistic = c("median", "mean", "geo_mean")
 )
 }
 \arguments{
@@ -39,9 +41,16 @@ index of replicates, for example with multiple simulations or
 bootstrapping. If specified, \code{\link[=plot_forest]{plot_forest()}} will draw additional CI's of
 the individual statistics, as small lines above each primary line.}
 
-\item{CI}{numeric between 0 and 1. This is the confidence interval to plot, defaults to \code{0.95}.}
+\item{probs}{numeric vector of length two, both between 0 and 1, corresponding to
+your lower and upper tail probabilities. Defaults to \code{c(0.05, 0.95)}}
 
 \item{statistic}{is the actual statistic to output (i.e. median/mean)}
+
+\item{rep_probs}{same as \code{probs} but used \strong{only when \code{replicate} is passed}
+for the minor intervals (i.e. the small lines) above the major interval (i.e. the big lines).}
+
+\item{rep_statistic}{same as \code{statistic} but used \strong{only when \code{replicate} is
+passed} for the minor intervals (i.e. the small lines) above the major interval (i.e. the big lines).}
 }
 \description{
 Summarize input data to prepare for passing to \code{\link[=plot_forest]{plot_forest()}}. Takes a
@@ -52,19 +61,28 @@ section for data specification and format.
 \details{
 \strong{Input Data}
 
-The tibble passed to \code{data} must be in a "long" format and will have 2-5
+The tibble passed to \code{data} must be in a "long" format and has 2-5
 columns: \code{value}, \code{group}, and optionally any of \code{group_level}, \code{metagroup},
 and/or \code{replicate}. These are each described in detail in the input arguments
 section.
 
 \strong{Output Data}
-The tibble output from this function will have one of two formats, depending on whether
+The tibble output from this function has one of two formats, depending on whether
 \code{replicate} was passed (details below).
 
-Either way, the output tibble will have a column named \code{group}, containing the
-values in the column you passed to the \code{group} argument, and optionally similar columns
+Either way, the output tibble has a column named \code{group}, containing the
+values in the column you passed to the \code{group} argument, and optionally analogous columns
 for \code{group_level} and \code{metagroup} if those were passed.
 \itemize{
-\item \strong{Without \code{replicate}} If \code{replicate} is \emph{not} passed, the output data
+\item \strong{Without \code{replicate}} If \code{replicate} is \emph{not} passed, the output data has three
+additional columns \code{mid}, \code{lo}, and \code{hi}, containing the summarized values corresponding
+to what was passed to \code{statistic} (\code{mid}) and \code{probs} (\code{lo}/\code{hi}).
+\item \strong{With \code{replicate}} If \code{replicate} \emph{is} passed, the output data has
+nine additional columns \code{mid_mid}, \code{mid_lo}, \code{mid_hi}, plus three more each
+for \verb{lo_*} and \verb{hi_*}, containing the summarized values. In this case, the
+\code{mid_mid}, \code{lo_mid}, and \code{hi_mid} correspond to the values of the major
+interval (i.e. the big lines and data point) and the \verb{*_mid}, \verb{*_lo}, and
+\verb{*_hi} correspond to the values for each minor interval (i.e. the small
+lines).
 }
 }

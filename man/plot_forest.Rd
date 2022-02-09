@@ -10,7 +10,8 @@ plot_forest(
   vline_intercept = 0,
   annotate_CI = TRUE,
   shaded_interval = NULL,
-  sigfig = 2,
+  digits = 3,
+  maxex = NULL,
   x_lab = "Effect",
   y_lab = NULL,
   CI_label = NULL,
@@ -34,7 +35,9 @@ to plot. This must be in the same format as the tibble that is output by
 
 \item{shaded_interval}{numeric vector. Specified as c(lo, hi) for the interval you want to shade over. Default is NULL.}
 
-\item{sigfig}{numeric. Number of significant digits to round the table values to.}
+\item{digits}{numeric. Number of significant digits to round the table values to. Passed through to \code{\link[pmtables:sig]{pmtables::sig()}}}
+
+\item{maxex}{numeric. Maximum number of significant digits before moving to scientific notation. Passed through to \code{\link[pmtables:sig]{pmtables::sig()}}.}
 
 \item{x_lab}{string. x-axis label.}
 
