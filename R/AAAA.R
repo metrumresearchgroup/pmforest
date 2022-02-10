@@ -7,7 +7,8 @@
 #' @importFrom purrr map flatten
 #' @import ggplot2
 #' @importFrom gridExtra arrangeGrob
-#' @importFrom ggpubr as_ggplot
+#' @importFrom grid grobTree
+#' @importFrom cowplot ggdraw draw_grob
 #' @import patchwork
 #' @importFrom stringr str_detect
 #' @importFrom utils write.csv

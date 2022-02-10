@@ -9,7 +9,8 @@ Packages:
   - diffviewer
 
 Repos:
-  - MPN: https://mpn.metworx.com/snapshots/stable/2021-11-19
+  - CRAN: https://cran.rstudio.com # used for most things
+  - MPN: https://mpn.metworx.com/snapshots/stable/2021-11-19 # used for pmtables
 
 Lockfile:
     Type: renv
