@@ -274,7 +274,9 @@ forest_constructor <- function(data,
     p2 <- gridExtra::arrangeGrob(p)
   }
 
-  ggpubr::as_ggplot(p2)
+  # copied this from ggpubr::as_ggplot() so to not need ggpubr (and specifically nloptr)
+  cowplot::ggdraw() +
+    cowplot::draw_grob(grid::grobTree(p2))
 
 }
 
