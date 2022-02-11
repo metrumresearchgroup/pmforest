@@ -141,7 +141,7 @@ describe("Base plots", {
     vdiffr::expect_doppelganger("Modify text size", plt)
   })
 
-  it("Base plot [PMF-PLOT-0017]", {
+  it("Base plot [PMF-PLOT-017]", {
     plt <- plotData %>%
       summarize_data(
         value = stat,
@@ -152,7 +152,7 @@ describe("Base plots", {
     vdiffr::expect_doppelganger("Base plot", plt)
   })
 
-  it("Full Test [PMF-PLOT-0018]", {
+  it("Full Test [PMF-PLOT-018]", {
     plt <- plot_forest(data = sumData,
                        shaded_interval = c(0.8,1.25),
                        summary_label = plot_labels,
@@ -183,4 +183,5 @@ describe("Base plots", {
     vdiffr::expect_doppelganger("No group_level", plt)
   })
 })
+
 
