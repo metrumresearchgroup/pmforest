@@ -30,7 +30,7 @@ library(pmforest)
 <style> body {text-align: justify} </style>
 
 ### Multiple Simulations
-In some instances, it may be useful to present the variability of each summary statistic (ex: median, 5th and 95th percentile). In order to accomplish this you must have a column denoting the replicate/simulation number. This column is then assigned to the `replicate`` argument. An example dataset can be seen below:
+In some instances, it may be useful to present the variability of each summary statistic (ex: median, 5th and 95th percentile). In order to accomplish this you must have a column denoting the replicate/simulation number. This column is then assigned to the `replicate` argument. An example dataset can be seen below:
 
 ![](../assets/forest/forest-data-ex2.png)<!-- -->
 
