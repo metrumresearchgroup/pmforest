@@ -34,9 +34,13 @@ forest_constructor <- function(data,
     dplyr::select(group) %>%
     unlist(use.names = FALSE)
 
-  group_level <- data %>%
-    dplyr::select(group_level) %>%
-    unlist(use.names = FALSE)
+  if ("group_level" %in% names(data)) {
+    group_level <- data %>%
+      dplyr::select(group_level) %>%
+      unlist(use.names = FALSE)
+  } else {
+    group_level <- NULL
+  }
 
   if(!is.null(summary_label)){
     summary_label <- summary_label(levels(factor(group))) %>%

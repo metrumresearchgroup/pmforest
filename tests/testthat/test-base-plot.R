@@ -170,4 +170,17 @@ describe("Base plots", {
     )
     vdiffr::expect_doppelganger("Full Test", plt)
   })
+
+  it("plots without group_level [PMF-PLOT-019]", {
+    df <-
+      data.frame(
+        group = c("a", "b", "c"),
+        lo = c(1, 2, 3),
+        mid = c(3, 4, 5),
+        hi = c(5, 6, 7)
+      )
+    plt <- plot_forest(df)
+    vdiffr::expect_doppelganger("No group_level", plt)
+  })
 })
+
