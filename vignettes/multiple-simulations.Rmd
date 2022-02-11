@@ -30,11 +30,33 @@ library(pmforest)
 <style> body {text-align: justify} </style>
 
 ### Multiple Simulations
-In some instances, it may be useful to present the variability of each summary statistic (ex: median, 5th and 95th percentile). In order to accomplish this you must have a column denoting the run/simulation number. This column is then assigned to the `nsim` argument. An example can be seen below:
+In some instances, it may be useful to present the variability of each summary statistic (ex: median, 5th and 95th percentile). In order to accomplish this you must have a column denoting the replicate/simulation number. This column is then assigned to the `replicate`` argument. An example dataset can be seen below:
 
 ![](../assets/forest/forest-data-ex2.png)<!-- -->
 
 <br>
+
+When summarizing the data, users will now also have to specify the `replicate` column, the `rep_statistic` (mean, median, or geo_mean), and the `rep_props`.
+
+```
+sumdat_med <- summarize_data(
+  data = data,
+  value = stat,
+  group = GROUP,
+  group_level = LVL,
+  replicate = nsim,
+  statistic = "median",
+  probs = c(0.05, 0.95),
+  rep_statistic = "geom_mean",
+  rep_probs = c(0.025, 0.975)
+)
+```
+
+The output data now has nine additional columns: `mid_mid`, `mid_lo`, `mid_hi`, plus three more each for `lo_x` and `hi_x`, containing the summarized values. In this case, the `mid_mid`, `lo_mid`, and `hi_mid` columns correspond to the values of the major interval (i.e. the big lines and data point) and the `x_mid`, `x_lo`, and `x_hi` columns correspond to the values for each of the three minor intervals (i.e. the small lines).
+
+![](assets/summarize-data-rep.png)<!-- -->
+
+As before, `plot_forest` will assume the column names listed above, and will throw an error if they are renamed to anything else.
 
 ```
 plot_forest(data = data_new , 

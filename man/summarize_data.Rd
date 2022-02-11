@@ -67,6 +67,7 @@ and/or \code{replicate}. These are each described in detail in the input argumen
 section.
 
 \strong{Output Data}
+
 The tibble output from this function has one of two formats, depending on whether
 \code{replicate} was passed (details below).
 

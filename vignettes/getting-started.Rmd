@@ -30,20 +30,42 @@ library(pmforest)
 <style> body {text-align: justify} </style>
 
 # Introduction/Scope
-`pmforest` is a package for producing forest plots: graphical summaries of covariate effects in a pharmacometric model. Given a dataset of model responses or model parameters simulated with uncertainty from the model at various covariate levels, the package generates plots of confidence intervals reflecting the predicted impact of the covariates.
+`pmforest` is a package for producing forest plots: graphical summaries of covariate effects or covariate-dependent predictions in a pharmacometric model. 
+
+Given a dataset of model responses or model parameters with uncertainty at various covariate levels, the package generates plots of confidence intervals reflecting the predicted impact of the covariates. This uncertainty could come from a variety of sources, for example: simulations, bootstrapping, Bayesian posteriors.
+
 
 <hr>
 <br>
 
-# Data Spec
+# Data Format
 To use the forest plot function you will need input data that conforms to the specifications defined below. 
 
-The input dataset is in long format, where 3 main columns are required: the column to plot (often normalized values), a character column denoting the covariate or group you want to separate by, and the specific covariate level the plotting column corresponds to. For instance, one set of values could be **`0.51`, "Renal Function", "Severe"**
+The input dataset must be in long format, and has 2-5 columns: `value`, `group`, and optionally any of `group_level`, `metagroup`, and/or `replicate`. For instance, one set of values could be **`0.51`, "Renal Function", "Severe"**. Specifying the 'replicate' or simulation number,  will result in a plot with multiple intervals per group level (see `multiple-simulations.Rmd` - make link).
 
 
 An example dataset that meets these specifications can be seen here: 
 
 ![](assets/forest-data-ex.png)<!-- -->
+
+Before using the plotting functionality the data must first be summarized according to the previously discussed group levels. This is also where the confidence interval and other relevant statistical parameters will be specified.
+
+```
+sumData <- summarize_data(data = data,
+                          value = stat,
+                          group = GROUP,
+                          group_level = LVL,
+                          probs = c(0.05, 0.95),
+                          statistic = "median")
+```
+
+The output data will have three columns `mid`, `lo`, and `hi`, containing the summarized values corresponding to what was passed to `statistic` (`mid`) and `probs` (`lo`/`hi`). The `group` and `group_level` columns will also be renamed as seen below:
+
+![](assets/summarize-data-1.png)<!-- -->
+
+
+It's worth noting that `plot_forest` will assume the column names listed above, and will throw an error if they are renamed to anything else. In cases where users would like to reformat these tables for reports, it is recommended to do so after plotting the data.
+
 
 <hr>
 <br>
@@ -52,32 +74,11 @@ An example dataset that meets these specifications can be seen here:
 
 In the examples below we will reference the dataset shown above
 
-### The Main Arguments:
 
-#### Core Columns
- - **`stat`** (stat) is the column you want to perform summary statistics on. In this case, the `stat` column was equivalent to `value/ref` column in the example dataset. This argument defaults to `NULL` and must be specified.
- - **`covariate`** (GROUP) denotes the covariate/group
- - **`cov_level`** (LVL) denotes the level within the covariate grouping
- 
-#### Required Arguments
- - **`CI`** is the chosen two-tailed confidence interval - defaults to 0.95.
- - **`annotate_CI`** (T/F) denotes whether or not to show the confidence interval values to the right of the plot - default is `TRUE`.
- - **`statistic`** is the chosen statistic - options include "mean" or "median". Must be specified as a character string.
- 
-#### Other Common Specifications
- - **`vline_intercept`** is the location of the vertical dotted-line.
- - **`metagroup`** (param) denotes a column you want to facet by. In many cases you may only plot one covariate at a time. Note that this argument is necessary for creating a facet title via ggplot. You can however add a title via patchwork (shown later).
- 
 ```
-clp <- plot_forest(data = data,
-                   statistic = "median",
-                   CI = 0.95,
-                   stat = stat,
-                   covariate = GROUP,
-                   cov_level = LVL,
-                   metagroup = param,
-                   vline_intercept = 1,
-                   annotate_CI = TRUE) 
+clp <- sumData %>% 
+  plot_forest(vline_intercept = 1, 
+              annotate_CI = TRUE) 
 ```
 
 <br>
@@ -121,8 +122,8 @@ clp <- plot_forest(data = data_cl,
                    statistic = "median",
                    CI=0.95,
                    stat = stat,
-                   covariate = GROUP,
-                   cov_level = LVL,
+                   group = GROUP,
+                   group_level = LVL,
                    metagroup = param,
                    text_size = 3.5,
                    vline_intercept = 1)
@@ -140,8 +141,8 @@ clp <- plot_forest(data = data_cl,
                    statistic = "median",
                    CI=0.95,
                    stat = stat,
-                   covariate = GROUP,
-                   cov_level = LVL,
+                   group = GROUP,
+                   group_level = LVL,
                    metagroup = param,
                    text_size = 3.5,
                    vline_intercept = 1,
@@ -236,8 +237,8 @@ clp <- plot_forest(data = data_cl,
                    statistic = "median",
                    CI=0.95,
                    stat = stat,
-                   covariate = GROUP,
-                   cov_level = LVL,
+                   group = GROUP,
+                   group_level = LVL,
                    metagroup = param,
                    summary_label = plot_labels,
                    text_size = 3.5,
@@ -272,8 +273,8 @@ clp <- plot_forest(data = data,
                    statistic = "median",
                    CI=0.95,
                    stat = stat,
-                   covariate = GROUP,
-                   cov_level = LVL,
+                   group = GROUP,
+                   group_level = LVL,
                    metagroup = param,
                    shaded_interval = c(0.8,1.25),
                    summary_label = plot_labels,
