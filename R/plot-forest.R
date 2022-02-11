@@ -57,7 +57,6 @@ plot_forest <- function(data,
     args <- VALUE_COLS_NSIM
     nsim <- "nsim" # should find a better way to do this
   } else {
-    # TODO: add test for this case
     stop(paste(
       "`data` does not have required columns. Must have grouping columns and either:",
       paste(VALUE_COLS, collapse = ", "),
@@ -68,6 +67,26 @@ plot_forest <- function(data,
     ))
   }
 
+  # check grouping columns
+  if(!("group" %in% names(data))){
+    stop(paste(
+      "`data` does not have required columns. Must have column labeled `group`.",
+      glue("`data` has columns: {paste(names(data), collapse = ', ')}"),
+      sep = "\n"
+    ))
+  }
+
+  ignored_cols <- names(data)[!(names(data) %in% c("group", "group_level", "metagroup", args))]
+  if(length(ignored_cols) > 0){
+    warning(paste(
+      glue("`data` has extra columns that will be ignored:  {paste(ignored_cols, collapse = ', ')}"),
+      "If these were intended to be grouping columns, they must be named either `group`, `group_level`, or `metagroup`.",
+      "See `?summarize_data` for more detail.",
+      sep = "\n"
+    ))
+  }
+
+  # create the plot
   if(!("metagroup" %in% names(data))){
     # no metagroups
     plt <- forest_constructor(
