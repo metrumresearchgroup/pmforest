@@ -33,18 +33,18 @@ describe("Column selection, summary", {
               lo  = quantile(stat, lci),
               hi  = quantile(stat, uci))
 
-  it("correct column is summarized [PMF-PLOT-001]", {
+  it("correct column is summarized [PMF-DATA-001]", {
     expect_equal(sumdat_med$lo, sumdat$lo) # test lower quartile
     expect_equal(sumdat_med$hi, sumdat$hi) # test upper quartile
   })
 
-  it("Can switch between mean/median [PMF-PLOT-002]", {
+  it("Can switch between mean/median [PMF-DATA-002]", {
     expect_equal(sumdat_med$mid, sumdat$med) # Test medians
     expect_equal(sumdat_mn$mid, sumdat$mean) # Test means
   })
 
 
-  it("Summary for multiple CI's [PMF-PLOT-019]", {
+  it("Summary for multiple CI's [PMF-DATA-003]", {
 
     sumdat_med <- summarize_data(
       plotData2,
