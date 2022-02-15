@@ -33,8 +33,11 @@ Imports:
     stringr,
     tibble
 Suggests:
+    mrgvalidate,
+    mrgvalprep (>= 0.0.4),
     testthat (>= 3.0.0),
     vdiffr,
+    yaml,
     yspec
 Config/testthat/edition: 3
 Depends:
