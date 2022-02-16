@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot-forest.R
 \name{plot_forest}
 \alias{plot_forest}
-\title{Function to create forest plots}
+\title{Create forest plots}
 \usage{
 plot_forest(
   data,
@@ -64,6 +64,7 @@ input data has 9 numeric columns instead of 3).}
 \item{...}{additional args passed to \code{patchwork::wrap_plots()} for metagrouped plots.}
 }
 \description{
-Creates a forest plot with or without confidence intervals
-Expects..
+Creates a forest plot with or without confidence intervals.
+See \href{https://metrumresearchgroup.github.io/pmforest/articles/getting-started.html#summarize-data}{the "Getting Started" vignette}
+for usage and examples.
 }

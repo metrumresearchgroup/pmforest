@@ -11,18 +11,20 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.width=7, 
+  fig.height=4
 )
 ```
 
 ```{r setup, include=FALSE}
-if (interactive()) {
+if (interactive() || isTRUE(getOption('knitr.in.progress'))) {
   devtools::load_all()
 }
 ```
 
 ```{r load packages, results = 'hide', message=FALSE, warning=FALSE}
-library(tidyverse)
+library(dplyr)
 library(patchwork)
 library(pmforest)
 ```
@@ -38,160 +40,217 @@ Given a dataset of model responses or model parameters with uncertainty at vario
 <hr>
 <br>
 
-# Data Format
-To use the forest plot function you will need input data that conforms to the specifications defined below. 
+# Input data
+To use the forest plot function you will have raw data coming from something like simulations. Before plotting, the raw data must first be summarized. To help with this, `pmforest` has a [`summarize_data()`](https://metrumresearchgroup.github.io/pmforest/reference/summarize_data.html) function. The usage of this function is described in the next section, but note that **the user can write their own custom summarization function**, as long as the data it returns conforms to the format described in the "Output Data" section of [`?summarize_data`](https://metrumresearchgroup.github.io/pmforest/reference/summarize_data.html#details).
 
-The input dataset must be in long format, and has 2-5 columns: `value`, `group`, and optionally any of `group_level`, `metagroup`, and/or `replicate`. For instance, one set of values could be **`0.51`, "Renal Function", "Severe"**. Specifying the 'replicate' or simulation number,  will result in a plot with multiple intervals per group level (see `multiple-simulations.Rmd` - make link).
+## Raw data
+The raw dataset must be in long format and have the following:
 
+* A numeric column containing the values to be summarized (passed to `value` argument of [`summarize_data()`](https://metrumresearchgroup.github.io/pmforest/reference/summarize_data.html)).
+* A character (or factor) column containing the groups to summarize over (passed to `group` argument of [`summarize_data()`](https://metrumresearchgroup.github.io/pmforest/reference/summarize_data.html)).
 
-An example dataset that meets these specifications can be seen here: 
+It can optionally have other grouping columns, described in the `group_level`, `metagroup`, and `replicate` arguments of [`?summarize_data`](https://metrumresearchgroup.github.io/pmforest/reference/summarize_data.html#arguments). Note that specifying a `replicate` column (i.e. a simulation number) will result in a plot with multiple intervals per group level (see [the "Multiple Simulations" vignette](https://metrumresearchgroup.github.io/pmforest/articles/multiple-simulations.html)).
 
-![](assets/forest-data-ex.png)<!-- -->
+An example dataset that meets these specifications comes with the package:
 
-Before using the plotting functionality the data must first be summarized according to the previously discussed group levels. This is also where the confidence interval and other relevant statistical parameters will be specified.
-
+```{r}
+rawData <- readRDS(system.file(file.path("test-data", "plotData.RDS"), package = "pmforest"))
+rawData %>%
+  select(stat, GROUP, LVL) %>%
+  head()
 ```
-sumData <- summarize_data(data = data,
-                          value = stat,
-                          group = GROUP,
-                          group_level = LVL,
-                          probs = c(0.05, 0.95),
-                          statistic = "median")
+
+In this example, `stat` is the "value", `GROUP` is the "group" column, and `LVL` will be "group_level".
+
+## Summarize data
+
+Now we pass this data to [`summarize_data()`](https://metrumresearchgroup.github.io/pmforest/reference/summarize_data.html). This is where the confidence interval and other relevant statistical parameters will be calculated.
+
+```{r}
+sumData <- rawData %>%
+  summarize_data(
+    value = stat,
+    group = GROUP,
+    group_level = LVL,
+    probs = c(0.05, 0.95),
+    statistic = "median"
+  )
+head(sumData)
 ```
 
-The output data will have three columns `mid`, `lo`, and `hi`, containing the summarized values corresponding to what was passed to `statistic` (`mid`) and `probs` (`lo`/`hi`). The `group` and `group_level` columns will also be renamed as seen below:
+The output data will have three new columns `mid`, `lo`, and `hi`, containing the summarized values (from the data in `value`) corresponding to what was passed to `statistic` (`mid`) and `probs` (`lo`/`hi`). The `group` and `group_level` columns will also be renamed as seen above.
 
-![](assets/summarize-data-1.png)<!-- -->
+Note that, if a `replicate` column is passed, there will be nine numeric columns (instead of three) output from [`summarize_data()`](https://metrumresearchgroup.github.io/pmforest/reference/summarize_data.html). See [the "Multiple Simulations" vignette](https://metrumresearchgroup.github.io/pmforest/articles/multiple-simulations.html) for an example of this.
 
+### Column names
 
-It's worth noting that `plot_forest` will assume the column names listed above, and will throw an error if they are renamed to anything else. In cases where users would like to reformat these tables for reports, it is recommended to do so after plotting the data.
+It's worth noting here that [`plot_forest()`](https://metrumresearchgroup.github.io/pmforest/reference/plot_forest.html) (discussed in the next section) will assume the column names shown above, and will throw an error if they are renamed to anything else. In cases where users would like to reformat these tables for reports, it is recommended to do so _after_ plotting the data.
 
 
 <hr>
 <br>
 
-# Plot Generation
+# Plot generation
 
-In the examples below we will reference the dataset shown above
+The main plotting function is [`pmforest::plot_forest()`](https://metrumresearchgroup.github.io/pmforest/reference/plot_forest.html). In the examples below we will use the dataset shown above. Here is a basic example:
 
 
-```
-clp <- sumData %>% 
-  plot_forest(vline_intercept = 1, 
-              annotate_CI = TRUE) 
+```{r}
+sumData %>% 
+  plot_forest() 
 ```
 
 <br>
 
-#### Formatting Arguments:
+## Formatting Arguments
 
-
-# Examples
-Below are a few examples showcasing the uses of some of the function arguments, as well as additional formatting techniques using the [patchwork](https://github.com/thomasp85/patchwork) R package. Most examples will reference the dataset featured above, denoted `data_cl`. However, there are a couple examples that showcase the use of multiple covariates (CL and V2), denoted by the use of `data_both`. This is  elaborated on later.
+Below are a few examples showcasing the uses of some of the function arguments, as well as additional formatting techniques using the [patchwork](https://github.com/thomasp85/patchwork) R package. 
 
 <br>
 
-### Base Case
-All the necessary arguments for creating a basic forest plot. Start from here and build up.
+### Basics
 
-```
-clp <- sumData %>% 
+You can add a vertical line (at some reference value), and suppress adding the table of confidence intervals.
+
+```{r, fig.width=5}
+sumData %>% 
   plot_forest(vline_intercept = 1, 
-              annotate_CI = TRUE,
-              text_size = 3.5) 
+              annotate_CI = FALSE) 
 ```
 
-![](assets/forestPlot-baseCase.png)<!-- -->
 
 <br>
 
-### Adding Labels
-This example illustrates the use of the label arguments (`summary_label`, `CI_label`, `x_lab`, and `caption`). Note that `caption` is a `patchwork` argument, and `text_size` will only apply to `ggplot` layers. You can change the `caption` formatting using `patchwork` functions (see *Patchwork Annotations* example).
+### Adding group labels
 
-```
-clp <- sumData %>% 
+The `summary_labels` argument takes a [`ggplot2::labeller()`](https://ggplot2.tidyverse.org/reference/labeller.html) function. In this example, we load a list of covariate labels with the [`yspec` package](https://github.com/metrumresearchgroup/yspec) and pass it through [`ggplot2::as_labeller()`](https://ggplot2.tidyverse.org/reference/as_labeller.html).
+
+```{r}
+spec_file <- yspec::ys_load(
+  system.file(file.path("test-data", "spec", "analysis3.yml"), package = "pmforest")
+)
+all_labels <- yspec::ys_get_short(spec_file, title_case = TRUE)
+plot_labels <- as_labeller(unlist(all_labels))
+
+sumData %>% 
   plot_forest(vline_intercept = 1, 
-              annotate_CI = TRUE,
+              summary_label = plot_labels) 
+```
+Notice the more informative group labels on the y-axis and the CI table, as compared to the raw values from `GROUP` shown in the previous plots.
+
+### Adding captions and other labels
+
+This example illustrates the use of the other labelling arguments (`CI_label`, `x_lab`, and `caption`). 
+
+
+
+Some notes: 
+
+* The title at the top of the plot ("CL (L/hr)" in the example below) is pulled from the `metagroup` column of the data, as it is most useful when using `metagroup` to make multiple plots (shown later on). Here we just create it with `dplyr::mutate()` (and add a label for it to `plot_labels`).
+* `caption` is a `patchwork` argument. You can change the `caption` formatting using `patchwork` functions (see "Patchwork Annotations" section below).
+* If `CI_label` is _not_ passed, the value passed to `x_lab` will be used for the table label.
+* `text_size` applies directly to `ggplot` layers (minimum is 3.5), though the table text will scale with this input accordingly. 
+
+```{r}
+all_labels$CL <- 'CL (L/hr)'
+plot_labels <- as_labeller(unlist(all_labels))
+
+sumData %>% 
+  mutate(metagroup = "CL") %>%
+  plot_forest(vline_intercept = 1, 
+              x_lab = "Fraction and 95% CI\nRelative to Reference",
+              CI_label = "Median [95% CI]",
+              summary_label = plot_labels,
               text_size = 3.5,
-              
+              caption = "This is a patchwork caption.
+                         You can add multiple lines.") 
+```
+
+<br>
+
+### Shaded Interval
+You can add a shaded interval over a specified range. It is important to note that the x-axis is automatically determined based on your input data. The specified interval may therefore be cut off, as the x limits do not adjust based on the specified interval. You can correct for this by specifying the `x_breaks` and `x_limit` arguments.
+
+```{r}
+sumData %>% 
+  mutate(metagroup = "CL") %>%
+  plot_forest(vline_intercept = 1, 
+              x_lab = "Fraction and 95% CI\nRelative to Reference",
+              CI_label = "Median [95% CI]",
+              summary_label = plot_labels,
+              caption = "This is a patchwork caption.
+                         You can add multiple lines.",
+              shaded_interval = c(0.8,1.25),
+              x_breaks = c(0.4,0.6, 0.8, 1, 1.2, 1.4, 1.6), 
+              x_limit = c(0.6,1.45)) 
+```
+
+<br>
+
+### Multiple covariates (or facets)
+
+Here we pull in a new dataset with the `param` column containing both `V2` and `CL`, where the previous example only contained `CL`, and pass this to the `metagroup` argument of [`summarize_data()`](https://metrumresearchgroup.github.io/pmforest/reference/summarize_data.html).
+
+```{r}
+sumData2 <- system.file(file.path("test-data", "plotData2.RDS"), package = "pmforest") %>%
+  readRDS() %>%
+  summarize_data(
+    value = stat,
+    group = GROUP,
+    group_level = LVL,
+    metagroup = param
+  )
+head(sumData2)
+```
+
+The `metagroup` argument doesn't necessarily have to facet across multiple covariates, though this is a common use case. When doing this, you may consider setting `annotate_CI = FALSE` to simplify the plots.
+
+```{r, fig.width=8}
+all_labels$CL <- 'CL (L/hr)'
+all_labels$V2 <- 'V (L)'
+plot_labels <- as_labeller(unlist(all_labels))
+
+sumData2 %>% 
+  plot_forest(vline_intercept = 1, 
+              x_lab = "Fraction and 95% CI\nRelative to Reference",
+              CI_label = "Median [95% CI]",
+              summary_label = plot_labels,
+              caption = "This is a patchwork caption.
+                         You can add multiple lines.",
+              annotate_CI = FALSE) 
+```
+
+Regardless, you can specify how you want to align the plots using the `nrow` argument or other functions in the `patchwork` R package.
+
+```{r, fig.height=8}
+sumData2 %>% 
+  plot_forest(vline_intercept = 1, 
+              x_lab = "Fraction and 95% CI\nRelative to Reference",
+              CI_label = "Median [95% CI]",
+              summary_label = plot_labels,
+              caption = "This is a patchwork caption.
+                         You can add multiple lines.",
+              plot_width = 9,
+              nrow = 2) 
+```
+
+<br>
+
+
+### Patchwork Annotations
+The individual layers of the returned object are defined using `ggplot`, but the final plot is assembled using `patchwork`.
+
+Thus you can add additional `patchwork` themes/annotations to the returned object, but cannot alter the ggplot layers. Themes can be added using the `&` operator, and follow the same convention as `ggplot` themes. In this example we change the formatting of the `caption` argument, combine the plot with an example table, and add some additional labels/titles.
+
+```{r, fig.height=7, fig.width=8}
+clp <- sumData %>% 
+  mutate(metagroup = "CL") %>%
+  plot_forest(vline_intercept = 1, 
               x_lab = "Fraction and 95% CI\nRelative to Reference",
               CI_label = "Median [95% CI]",
               summary_label = plot_labels,
               caption = "This is a patchwork caption.
                          You can add multiple lines.") 
-```
-
-![](assets/forestPlot-labels.png)<!-- -->
-
-<br>
-
-### Multiple covariates (or facets)
-The `metagroup` argument doesn't necessarily have to facet across multiple covariates. Regardless, you can specify how you want to align the plots using the `nrow` argument or other functions in the `patchwork` R package. Note that in `data_both`, `$param` contains both VC and CL, where the previous example only contained CL. You may also consider setting `annotate_CI = FALSE` to simplify the plots.
-
-```
-sumData <- summarize_data(data = data,
-                          value = stat,
-                          group = GROUP,
-                          group_level = LVL,
-                          probs = c(0.05, 0.95),
-                          statistic = "median",
-                          metagroup = param)
-pl_both_1 <- sumData %>%
-                plot_forest(previous arguments...
-                            
-                            nrow = 2)
-                   
-pl_both_2 <- sumData %>%
-                plot_forest(previous arguments...
-                            
-                            nrow = 1, 
-                            annotate_CI = FALSE)
-```
-
-
-Multiple rows (`nrow = 2`)           |  Side-by-side (`nrow = 1`, `annotate_CI = FALSE`)
-:-------------------------:|:-------------------------:
-![](assets/forestPlot-multiple1.png)  |  ![](assets/forestPlot-multiple2.png)
-
-<br>
-
-
-### Shaded Interval
-You can add a shaded interval over a specified range. It is important to note that the x-axis is automatically determined based on your input data. The specified interval may therefore be cut off, as the x limits do not adjust based on the specified interval. You can correct for this by specifying the `x_breaks` and `x_limit` arguments.
-```
-clp <- sumData %>%
-          plot_forest(previous arguments...
-                      
-                      shaded_interval = c(0.8,1.25)) 
-
-clp_fixed <- sumData %>%
-                plot_forest(previous arguments...
-                            
-                            shaded_interval = c(0.8,1.25),
-                            x_breaks = c(0.4,0.6, 0.8, 1, 1.2, 1.4,1.6), 
-                            x_limit = c(0.6,1.45)) 
-```
-
-Shaded Interval cut off       |  Fixed using `x_breaks` and `x_limit`
-:-------------------------:|:-------------------------:
-![](assets/forestPlot-shadedInterval1.png)  |  ![](assets/forestPlot-shadedInterval2.png)
-
-<br>
-
-### Patchwork Annotations
-The individual layers of the returned object are defined using `ggplot`, but the final plot is assembled using `patchwork`.
-Thus you can add additional `patchwork` themes/annotations to the returned object, but cannot alter the ggplot layers. Themes can be added using the `&` operator, and follow the same convention as `ggplot` themes. In this example we change the formatting of the `caption` argument.
-
-```
-clp <- sumData %>%
-          plot_forest(summary_label = plot_labels,
-                      text_size = 3.5,
-                      vline_intercept = 1,
-                      x_lab = "Fraction and 95% CI \nRelative to Reference",
-                      caption = "This is a patchwork caption.
-                                 You can add multiple lines.",
-                      CI_label = "Median [95% CI]",
-                      plot_width = 8) 
 
 wrap_plots(clp, grid::textGrob('Text on right side'), widths = c(4,1)) +
   plot_annotation(
@@ -205,43 +264,31 @@ wrap_plots(clp, grid::textGrob('Text on right side'), widths = c(4,1)) +
         plot.tag = element_text(size = 8, hjust = 0, vjust = 0))
 ```
 
-![](assets/forestPlot-annotations.png)<!-- -->
-
 <br>
 
 
 ### Full Forest Plot Example:
 
-```
-sumData <- summarize_data(data = data,
-                          value = stat,
-                          group = GROUP,
-                          group_level = LVL,
-                          probs = c(0.05, 0.95),
-                          statistic = "median",
-                          metagroup = param)
+```{r, fig.height=7, fig.width=8}
 clp <- sumData %>% 
           plot_forest(shaded_interval = c(0.8,1.25),
                       summary_label = plot_labels,
-                      text_size = 3.5,
+                      text_size = 4,
                       vline_intercept = 1,
                       x_lab = "Fraction and 95% CI \nRelative to Reference",
                       CI_label = "Median [95% CI]",
                       caption = "The shaded area corresponds 
                                  to the interval (0.8, 1.25)",
                       plot_width = 9, # out of 12
-                      x_breaks = c(0.4,0.6, 0.8, 1, 1.2, 1.4,1.6), 
-                      x_limit = c(0.6,1.45),
-                      annotate_CI = TRUE,
-                      nrow = 1)
+                      x_breaks = c(0.4,0.6, 0.8, 1, 1.2, 1.4), 
+                      x_limit = c(0.4,1.45),
+                      annotate_CI = TRUE)
                    
 clp +
     plot_annotation(
-          title = 'Here is a title',
-          subtitle = 'Here is a subtitle',
+          title = 'Figure 1.A',
+          subtitle = 'CL (L/hr)',
           theme = theme(plot.title = element_text(size = 18))) & 
     theme(plot.caption = element_text(size = 11))
 ```
 
-
-![](assets/forest-plot-ex.png)<!-- -->
