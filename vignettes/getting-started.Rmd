@@ -41,18 +41,18 @@ Given a dataset of model responses or model parameters with uncertainty at vario
 <hr>
 <br>
 
-# Data Format
-To use the forest plot function you will have raw data coming from something like a bunch of simulations. Before plotting, the raw data must first be summarized. The help with this, `pmforest` has a [`summarize_data()`](https://metrumresearchgroup.github.io/pmforest/reference/summarize_data.html) function. The usage of this function is described in the next section, but note that **the user can write their own custom summarization function**, as long as the data it returns conforms to the format described in the "Output Data" section of [`?summarize_data`](https://metrumresearchgroup.github.io/pmforest/reference/summarize_data.html#details).
+# Input data
+To use the forest plot function you will have raw data coming from something like simulations. Before plotting, the raw data must first be summarized. The help with this, `pmforest` has a [`summarize_data()`](https://metrumresearchgroup.github.io/pmforest/reference/summarize_data.html) function. The usage of this function is described in the next section, but note that **the user can write their own custom summarization function**, as long as the data it returns conforms to the format described in the "Output Data" section of [`?summarize_data`](https://metrumresearchgroup.github.io/pmforest/reference/summarize_data.html#details).
 
 ## Raw data
 The raw dataset must be in long format and have the following:
 
-* A numeric column containing the value to be summarized (passed to `value` argument of [`summarize_data()`](https://metrumresearchgroup.github.io/pmforest/reference/summarize_data.html)).
+* A numeric column containing the values to be summarized (passed to `value` argument of [`summarize_data()`](https://metrumresearchgroup.github.io/pmforest/reference/summarize_data.html)).
 * A character (or factor) column containing the groups to summarize over (passed to `group` argument of [`summarize_data()`](https://metrumresearchgroup.github.io/pmforest/reference/summarize_data.html)).
 
 It can optionally have other grouping columns, described in the `group_level`, `metagroup`, and `replicate` arguments of [`?summarize_data`](https://metrumresearchgroup.github.io/pmforest/reference/summarize_data.html#arguments). Note that specifying a `replicate` column (i.e. a simulation number) will result in a plot with multiple intervals per group level (see [the "Multiple Simulations" vignette](https://metrumresearchgroup.github.io/pmforest/articles/multiple-simulations.html)).
 
-An example dataset that meets these specifications comes with the package (and is shown below). For this data set, 
+An example dataset that meets these specifications comes with the package:
 
 ```{r}
 rawData <- readRDS(system.file(file.path("test-data", "plotData.RDS"), package = "pmforest"))
@@ -83,15 +83,15 @@ Note that, if a `replicate` column is passed, there will be nine numeric columns
 
 ### Column names
 
-It's worth noting here that [`plot_forest()`](https://metrumresearchgroup.github.io/pmforest/reference/plot_forest.html) (discussed in the next section) will assume the column names listed above, and will throw an error if they are renamed to anything else. In cases where users would like to reformat these tables for reports, it is recommended to do so _after_ plotting the data.
+It's worth noting here that [`plot_forest()`](https://metrumresearchgroup.github.io/pmforest/reference/plot_forest.html) (discussed in the next section) will assume the column names shown above, and will throw an error if they are renamed to anything else. In cases where users would like to reformat these tables for reports, it is recommended to do so _after_ plotting the data.
 
 
 <hr>
 <br>
 
-# Plot Generation
+# Plot generation
 
-The main plotting function is [`pmforest::plot_forest()`](https://metrumresearchgroup.github.io/pmforest/reference/plot_forest.html). In the examples below we will reference the dataset shown above. Here is a basic example:
+The main plotting function is [`pmforest::plot_forest()`](https://metrumresearchgroup.github.io/pmforest/reference/plot_forest.html). In the examples below we will use the dataset shown above. Here is a basic example:
 
 
 ```{r}
@@ -122,7 +122,7 @@ sumData %>%
 
 ### Adding group labels
 
-The `summary_labels` argument takes a [`ggplot2::labeller()`](https://ggplot2.tidyverse.org/reference/labeller.html) function. In this example, load a list of covariate labels with the [`yspec` package](https://github.com/metrumresearchgroup/yspec) and pass it through [`ggplot2::as_labeller()`](https://ggplot2.tidyverse.org/reference/as_labeller.html).
+The `summary_labels` argument takes a [`ggplot2::labeller()`](https://ggplot2.tidyverse.org/reference/labeller.html) function. In this example, we load a list of covariate labels with the [`yspec` package](https://github.com/metrumresearchgroup/yspec) and pass it through [`ggplot2::as_labeller()`](https://ggplot2.tidyverse.org/reference/as_labeller.html).
 
 ```{r}
 spec_file <- yspec::ys_load(
@@ -135,16 +135,18 @@ sumData %>%
   plot_forest(vline_intercept = 1, 
               summary_label = plot_labels) 
 ```
-Notice the more informative group labels on the y-axis and the CI table, as compared to the covariate names shown in the previous plots.
+Notice the more informative group labels on the y-axis and the CI table, as compared to the raw values from `GROUP` shown in the previous plots.
 
 ### Adding captions and other labels
 
-This example illustrates the use of the other label arguments (`CI_label`, `x_lab`, and `caption`). 
+This example illustrates the use of the other labelling arguments (`CI_label`, `x_lab`, and `caption`). 
 
-The title at the top of the plot is also pulled from the `metagroup` column of the data, as it is most useful when using `metagroup` to make multiple plots (shown below). Here we just create it with `dplyr::mutate()` (and add a label for it to `plot_labels`).
+
 
 Some notes: 
-* `caption` is a `patchwork` argument. You can change the `caption` formatting using `patchwork` functions (see *Patchwork Annotations* example).
+
+* The title at the top of the plot ("CL (L/hr)" in the example below) is pulled from the `metagroup` column of the data, as it is most useful when using `metagroup` to make multiple plots (shown below). Here we just create it with `dplyr::mutate()` (and add a label for it to `plot_labels`).
+* `caption` is a `patchwork` argument. You can change the `caption` formatting using `patchwork` functions (see "Patchwork Annotations" section below).
 * If `CI_label` is _not_ passed, the value passed to `x_lab` will be used for the table label.
 * `text_size` will only apply to `ggplot` layers. 
 
@@ -158,15 +160,35 @@ sumData %>%
               x_lab = "Fraction and 95% CI\nRelative to Reference",
               CI_label = "Median [95% CI]",
               summary_label = plot_labels,
+              text_size = 3.5,
               caption = "This is a patchwork caption.
                          You can add multiple lines.") 
 ```
 
 <br>
 
+### Shaded Interval
+You can add a shaded interval over a specified range. It is important to note that the x-axis is automatically determined based on your input data. The specified interval may therefore be cut off, as the x limits do not adjust based on the specified interval. You can correct for this by specifying the `x_breaks` and `x_limit` arguments.
+
+```{r}
+sumData %>% 
+  mutate(metagroup = "CL") %>%
+  plot_forest(vline_intercept = 1, 
+              x_lab = "Fraction and 95% CI\nRelative to Reference",
+              CI_label = "Median [95% CI]",
+              summary_label = plot_labels,
+              caption = "This is a patchwork caption.
+                         You can add multiple lines.",
+              shaded_interval = c(0.8,1.25),
+              x_breaks = c(0.4,0.6, 0.8, 1, 1.2, 1.4, 1.6), 
+              x_limit = c(0.6,1.45)) 
+```
+
+<br>
+
 ### Multiple covariates (or facets)
 
-Here we pull in a new dataset where the `param` column contains both `VC` and `CL`, where the previous example only contained `CL`, and pass this to the `metagroup` argument of [`summarize_data()`](https://metrumresearchgroup.github.io/pmforest/reference/summarize_data.html).
+Here we pull in a new dataset with the `param` column containing both `V2` and `CL`, where the previous example only contained `CL`, and pass this to the `metagroup` argument of [`summarize_data()`](https://metrumresearchgroup.github.io/pmforest/reference/summarize_data.html).
 
 ```{r}
 sumData2 <- system.file(file.path("test-data", "plotData2.RDS"), package = "pmforest") %>%
@@ -207,30 +229,12 @@ sumData2 %>%
               summary_label = plot_labels,
               caption = "This is a patchwork caption.
                          You can add multiple lines.",
+              plot_width = 9,
               nrow = 2) 
 ```
 
 <br>
 
-
-### Shaded Interval
-You can add a shaded interval over a specified range. It is important to note that the x-axis is automatically determined based on your input data. The specified interval may therefore be cut off, as the x limits do not adjust based on the specified interval. You can correct for this by specifying the `x_breaks` and `x_limit` arguments.
-
-```{r}
-sumData %>% 
-  mutate(metagroup = "CL") %>%
-  plot_forest(vline_intercept = 1, 
-              x_lab = "Fraction and 95% CI\nRelative to Reference",
-              CI_label = "Median [95% CI]",
-              summary_label = plot_labels,
-              caption = "This is a patchwork caption.
-                         You can add multiple lines.",
-              shaded_interval = c(0.8,1.25),
-              x_breaks = c(0.4,0.6, 0.8, 1, 1.2, 1.4, 1.6), 
-              x_limit = c(0.6,1.45)) 
-```
-
-<br>
 
 ### Patchwork Annotations
 The individual layers of the returned object are defined using `ggplot`, but the final plot is assembled using `patchwork`.
