@@ -3,7 +3,7 @@ title: "Multiple Simulations"
 author: "Kyle Barrett"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{getting-started}
+  %\VignetteIndexEntry{multiple-simulations}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -11,77 +11,93 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.width=8, 
+  fig.height=5.5
 )
 ```
 
 ```{r setup, include=FALSE}
-if (interactive()) {
+if (interactive() || isTRUE(getOption('knitr.in.progress'))) {
   devtools::load_all()
 }
 ```
 
 ```{r load packages, results = 'hide', message=FALSE, warning=FALSE}
-library(tidyverse)
+library(dplyr)
 library(patchwork)
 library(pmforest)
 ```
 
 <style> body {text-align: justify} </style>
 
-### Multiple Simulations
-In some instances, it may be useful to present the variability of each summary statistic (ex: median, 5th and 95th percentile). In order to accomplish this you must have a column denoting the run/simulation number. This column is then assigned to the `nsim` argument. An example can be seen below:
+### Introduction
+In some instances, it may be useful to present the variability of each summary statistic (i.e. median, 5th and 95th percentile). In order to accomplish this you must have a column denoting the replicate/simulation number. This column is then passed to the `replicate` argument. An example dataset comes with the package:
 
-![](../assets/forest/forest-data-ex2.png)<!-- -->
+```{r}
+rawData <- readRDS(system.file(file.path("test-data", "plotDataEXP.RDS"), package = "pmforest"))
+rawData %>%
+  select(nsim, stat, GROUP, LVL) %>%
+  head()
+```
+
+In this example, `nsim` is the "replicate" identifier, while `stat` is the "value", `GROUP` is the "group" column, and `LVL` will be "group_level". Notice in our example we have 50 replicates and 1,800 rows for each replicate.
+
+```{r}
+count(rawData, nsim)
+```
 
 <br>
 
-```
-plot_forest(data = data_new , 
-            statistic = "median",
-            CI=0.95,
-            stat = stat,
-            covariate = GROUP,
-            cov_level = LVL,
-            nsim = nsim,
-            shaded_interval = c(0.8,1.25),
-            summary_label = plot_labels,
-            text_size = 3.5,
-            x_lab = "Fraction and 95% CI \nRelative to Reference",
-            CI_label = "Median [95% CI]",
-            plot_width = 9, # out of 12
-            x_breaks = c(0.4,0.6, 0.8, 1, 1.2, 1.4,1.6),
-            x_limit = c(0.4,1.45),
-            annotate_CI=T,
-            nrow = 1)
+# Summarize data
+
+When summarizing the data, users will have to specify the `replicate` column. This will output the same data structure described in the "Summarize data" section of [the "Getting Started" vignette](https://metrumresearchgroup.github.io/pmforest/articles/getting-started.html#summarize-data), however it will now have _nine_ numeric columns instead of three.
+
+```{r}
+sumData <- 
+  summarize_data(
+    rawData, 
+    value = stat,
+    group = GROUP,
+    group_level = LVL,
+    replicate = nsim
+  )
+head(sumData)
 ```
 
-![](assets/forestPlot-nsim.png)<!-- -->
+These nine columns (`mid_mid`, `mid_lo`, `mid_hi`, plus three more each for `lo_*` and `hi_*`) contain the summarized values. In this case, the `mid_mid`, `lo_mid`, and `hi_mid` columns correspond to the values of the major interval (i.e. the big lines and central data point on the plots we are about to create) and the `*_lo` and `*_hi` columns correspond to the values for each of the three minor intervals (i.e. the small lines on the plots). 
 
+Users can also use the arguments `rep_statistic` (options are "median", "mean", or "geo_mean", defaulting to "median"), and the `rep_probs` (defaulting to `c(0.025, 0.975)`) to control how the minor intervals are calculated.
 
-In cases where the additional confidence intervals overlap, you can vertically jitter them via the `jitter_nsim` argument (logical). An example can be seen below (note that the data is different than above):
+As before, [`plot_forest()`](https://metrumresearchgroup.github.io/pmforest/reference/plot_forest.html) will assume the grouping column names shown above, and will throw an error if they are renamed to anything else.
 
-```
-plot_forest(data = plotData,
-            statistic = "mean",
-            CI=0.95,
-            stat = stat,
-            covariate = GROUP,
-            cov_level = LVL,
-            metagroup = param,
-            nsim = nsim,
-            shaded_interval = c(0.8,1.25),
-            summary_label = plot_labels,
-            text_size = 4,
-            vline_intercept = 1,
-            x_lab = "Fraction and 95% CI \nRelative to Reference",
-            CI_label = "Median [95% CI]",
-            plot_width = 8, # out of 12
-            x_breaks = c(0.4,0.6, 0.8, 1, 1.2, 1.4,1.6),
-            x_limit = c(0.4,1.45),
-            annotate_CI=T,
-            nrow = 1,
-            jitter_nsim = TRUE)
+# Create plots
+
+You can now pass this data directly to [`pmforest::plot_forest()`](https://metrumresearchgroup.github.io/pmforest/reference/plot_forest.html). The function will recognize the additional columns and automatically draw the minor intervals.
+
+Note: these plots can be customized and labelled as shown in [the "Getting Started" vignette](https://metrumresearchgroup.github.io/pmforest/articles/getting-started.html#formatting-arguments), but for clarity and simplicity, we just show the basic forest plots below.
+
+```{r}
+plot_forest(sumData, vline_intercept = 1)
 ```
 
-![](assets/forestPlot-nsim-jitter.png)<!-- -->
+### Jitter minor interval
+
+In cases where the additional confidence intervals overlap, you can vertically jitter them via the `jitter_reps` argument (logical). An example can be seen below (note that the data is different than above):
+
+```{r}
+system.file(file.path("test-data", "plotDataEXP.RDS"), package = "pmforest") %>%
+  readRDS() %>%
+  mutate(stat = stat + (nsim/600)) %>% # making variability larger to demonstrate jitter
+  summarize_data(
+    value = stat,
+    group = GROUP,
+    group_level = LVL,
+    replicate = nsim
+  ) %>%
+  plot_forest(
+    jitter_reps = TRUE,
+    vline_intercept = 1
+  )
+```
+

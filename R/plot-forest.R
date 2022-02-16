@@ -1,7 +1,8 @@
-#' Function to create forest plots
+#' Create forest plots
 #'
-#' Creates a forest plot with or without confidence intervals
-#' Expects..
+#' Creates a forest plot with or without confidence intervals.
+#' See [the "Getting Started" vignette](https://metrumresearchgroup.github.io/pmforest/articles/getting-started.html#summarize-data)
+#' for usage and examples.
 #' @param data a dataframe or tibble that contains the summarized data you want
 #'   to plot. This must be in the same format as the tibble that is output by
 #'   [summarize_data()]. See "Output Data" in Details section of [summarize_data()] documentation.
