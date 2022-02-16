@@ -14,6 +14,7 @@
 #' section.
 #'
 #' **Output Data**
+#'
 #' The tibble output from this function has one of two formats, depending on whether
 #' `replicate` was passed (details below).
 #'
