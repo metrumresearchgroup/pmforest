@@ -65,9 +65,11 @@ sumData <-
 head(sumData)
 ```
 
-These nine columns (`mid_mid`, `mid_lo`, `mid_hi`, plus three more each for `lo_*` and `hi_*`) contain the summarized values. In this case, the `mid_mid`, `lo_mid`, and `hi_mid` columns correspond to the values of the major interval (i.e. the big lines and central data point on the plots we are about to create) and the `*_lo` and `*_hi` columns correspond to the values for each of the three minor intervals (i.e. the small lines on the plots).
+These nine columns (`mid_mid`, `mid_lo`, `mid_hi`, plus three more each for `lo_*` and `hi_*`) contain the summarized values. In this case, the `mid_mid`, `lo_mid`, and `hi_mid` columns correspond to the values of the major interval (i.e. the big lines and central data point on the plots we are about to create) and the `*_lo` and `*_hi` columns correspond to the values for each of the three minor intervals (i.e. the small lines on the plots). 
 
-As before, `plot_forest` will assume the grouping column names shown above, and will throw an error if they are renamed to anything else.
+Users can also use the arguments `rep_statistic` (options are "median", "mean", or "geo_mean", defaulting to "median"), and the `rep_probs` (defaulting to `c(0.025, 0.975)`) to control how the minor intervals are calculated.
+
+As before, [`plot_forest()`](https://metrumresearchgroup.github.io/pmforest/reference/plot_forest.html) will assume the grouping column names shown above, and will throw an error if they are renamed to anything else.
 
 # Create plots
 
