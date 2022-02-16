@@ -23,7 +23,7 @@ steps:
   commands:
   - R -s -e 'devtools::install_deps(upgrade = '"'"'always'"'"', dependencies = TRUE)'
   - R -s -e 'devtools::load_all(); sessioninfo::session_info()'
-  - R -s -e 'devtools::check(env_vars = c("NOT_CRAN" = "true"))'
+  - R -s -e 'devtools::test()'
   environment:
     USER: drone
   volumes:
