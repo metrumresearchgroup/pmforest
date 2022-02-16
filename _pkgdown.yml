@@ -9,3 +9,8 @@ navbar:
   right:
   - icon: fa-github fa-lg
     href: https://github.com/metrumresearchgroup/pmforest
+reference:
+- title: pmforest
+  contents:
+  - plot_forest
+  - summarize_data
