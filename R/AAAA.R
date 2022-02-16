@@ -3,7 +3,7 @@
 #' @importFrom readr read_table read_csv
 #' @importFrom tibble as_tibble tibble
 #' @importFrom rlang is_logical
-#' @importFrom dplyr %>% select mutate filter all_of rename pull across arrange
+#' @importFrom dplyr select mutate filter all_of rename pull across arrange
 #'   desc group_by summarise ungroup
 #' @importFrom purrr map flatten
 #' @import ggplot2
