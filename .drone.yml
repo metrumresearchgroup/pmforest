@@ -112,3 +112,4 @@ trigger:
 
 depends_on:
 - cran-latest
+
