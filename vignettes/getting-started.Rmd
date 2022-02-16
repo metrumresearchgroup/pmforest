@@ -26,8 +26,7 @@ if (interactive()) {
 ```{r load packages, results = 'hide', message=FALSE, warning=FALSE}
 library(dplyr)
 library(patchwork)
-#library(pmforest)
-devtools::load_all()
+library(pmforest)
 ```
 
 <style> body {text-align: justify} </style>
@@ -62,6 +61,8 @@ rawData %>%
 ```
 
 In this example, `stat` is the "value", `GROUP` is the "group" column, and `LVL` will be "group_level".
+
+## Summarize data
 
 Now we pass this data to [`summarize_data()`](https://metrumresearchgroup.github.io/pmforest/reference/summarize_data.html). This is where the confidence interval and other relevant statistical parameters will be calculated.
 
