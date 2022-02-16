@@ -2,14 +2,15 @@
 #' @importFrom here here
 #' @importFrom readr read_table read_csv
 #' @importFrom tibble as_tibble tibble
-#' @import rlang
-#' @import dplyr
+#' @importFrom rlang is_logical
+#' @importFrom dplyr %>% select mutate filter all_of rename pull across arrange
+#'   desc group_by summarise ungroup
 #' @importFrom purrr map flatten
 #' @import ggplot2
 #' @importFrom gridExtra arrangeGrob
 #' @importFrom grid grobTree
 #' @importFrom cowplot ggdraw draw_grob
-#' @import patchwork
+#' @importFrom patchwork wrap_plots plot_annotation
 #' @importFrom stringr str_detect
 #' @importFrom utils write.csv
 #' @importFrom assertthat assert_that

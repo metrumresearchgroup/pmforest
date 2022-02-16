@@ -1,5 +1,3 @@
-library(vdiffr)
-
 describe("Column selection, summary", {
 
   dataDir <- system.file("test-data", package = "pmforest")
