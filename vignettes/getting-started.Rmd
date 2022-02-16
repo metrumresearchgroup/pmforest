@@ -41,7 +41,7 @@ Given a dataset of model responses or model parameters with uncertainty at vario
 <br>
 
 # Input data
-To use the forest plot function you will have raw data coming from something like simulations. Before plotting, the raw data must first be summarized. The help with this, `pmforest` has a [`summarize_data()`](https://metrumresearchgroup.github.io/pmforest/reference/summarize_data.html) function. The usage of this function is described in the next section, but note that **the user can write their own custom summarization function**, as long as the data it returns conforms to the format described in the "Output Data" section of [`?summarize_data`](https://metrumresearchgroup.github.io/pmforest/reference/summarize_data.html#details).
+To use the forest plot function you will have raw data coming from something like simulations. Before plotting, the raw data must first be summarized. To help with this, `pmforest` has a [`summarize_data()`](https://metrumresearchgroup.github.io/pmforest/reference/summarize_data.html) function. The usage of this function is described in the next section, but note that **the user can write their own custom summarization function**, as long as the data it returns conforms to the format described in the "Output Data" section of [`?summarize_data`](https://metrumresearchgroup.github.io/pmforest/reference/summarize_data.html#details).
 
 ## Raw data
 The raw dataset must be in long format and have the following:
@@ -146,10 +146,10 @@ This example illustrates the use of the other labelling arguments (`CI_label`, `
 
 Some notes: 
 
-* The title at the top of the plot ("CL (L/hr)" in the example below) is pulled from the `metagroup` column of the data, as it is most useful when using `metagroup` to make multiple plots (shown below). Here we just create it with `dplyr::mutate()` (and add a label for it to `plot_labels`).
+* The title at the top of the plot ("CL (L/hr)" in the example below) is pulled from the `metagroup` column of the data, as it is most useful when using `metagroup` to make multiple plots (shown later on). Here we just create it with `dplyr::mutate()` (and add a label for it to `plot_labels`).
 * `caption` is a `patchwork` argument. You can change the `caption` formatting using `patchwork` functions (see "Patchwork Annotations" section below).
 * If `CI_label` is _not_ passed, the value passed to `x_lab` will be used for the table label.
-* `text_size` will only apply to `ggplot` layers. 
+* `text_size` applies directly to `ggplot` layers (minimum is 3.5), though the table text will scale with this input accordingly. 
 
 ```{r}
 all_labels$CL <- 'CL (L/hr)'
@@ -240,7 +240,7 @@ sumData2 %>%
 ### Patchwork Annotations
 The individual layers of the returned object are defined using `ggplot`, but the final plot is assembled using `patchwork`.
 
-Thus you can add additional `patchwork` themes/annotations to the returned object, but cannot alter the ggplot layers. Themes can be added using the `&` operator, and follow the same convention as `ggplot` themes. In this example we change the formatting of the `caption` argument.
+Thus you can add additional `patchwork` themes/annotations to the returned object, but cannot alter the ggplot layers. Themes can be added using the `&` operator, and follow the same convention as `ggplot` themes. In this example we change the formatting of the `caption` argument, combine the plot with an example table, and add some additional labels/titles.
 
 ```{r, fig.height=7, fig.width=8}
 clp <- sumData %>% 
@@ -273,21 +273,21 @@ wrap_plots(clp, grid::textGrob('Text on right side'), widths = c(4,1)) +
 clp <- sumData %>% 
           plot_forest(shaded_interval = c(0.8,1.25),
                       summary_label = plot_labels,
-                      text_size = 3.5,
+                      text_size = 4,
                       vline_intercept = 1,
                       x_lab = "Fraction and 95% CI \nRelative to Reference",
                       CI_label = "Median [95% CI]",
                       caption = "The shaded area corresponds 
                                  to the interval (0.8, 1.25)",
                       plot_width = 9, # out of 12
-                      x_breaks = c(0.4,0.6, 0.8, 1, 1.2, 1.4,1.6), 
-                      x_limit = c(0.6,1.45),
+                      x_breaks = c(0.4,0.6, 0.8, 1, 1.2, 1.4), 
+                      x_limit = c(0.4,1.45),
                       annotate_CI = TRUE)
                    
 clp +
     plot_annotation(
-          title = 'Here is a title',
-          subtitle = 'Here is a subtitle',
+          title = 'Figure 1.A',
+          subtitle = 'CL (L/hr)',
           theme = theme(plot.title = element_text(size = 18))) & 
     theme(plot.caption = element_text(size = 11))
 ```
