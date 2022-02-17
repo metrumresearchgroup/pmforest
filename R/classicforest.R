@@ -22,7 +22,9 @@ classicforest <- function(plotdata,
                           y_lab = NULL,
                           x_limit = NULL,
                           x_breaks = NULL,
-                          jitter_reps) {
+                          jitter_reps,
+                          shapes,
+                          ggplot_theme) {
 
   n <- nrow(plotdata)
   k <- length(levels(plotdata$group))
@@ -83,7 +85,7 @@ classicforest <- function(plotdata,
   }
 
 
-  # Set plot margins. If table is aligned on the left, no y axus breaks and ticks are plotted
+  # Set plot margins. If table is aligned on the left, no y axis breaks and ticks are plotted
   l <- 5.5
   r <- 11
   if (annotate_CI == TRUE) {
@@ -96,6 +98,13 @@ classicforest <- function(plotdata,
   y <- NULL
   x_min <- NULL
   x_max <- NULL
+
+  shape_value <- switch(shapes,
+                   "square" = 22,
+                   "diamond" = 23,
+                   "circle" = 21,
+                   "triangle" = 24
+  )
 
   # create classic forest plot
   if(is.null(nsim)){
@@ -132,7 +141,7 @@ classicforest <- function(plotdata,
   p1 <-
     p +
     geom_point(data=plotdata,aes(size = weight, color=factor(group), fill=factor(group)),
-               shape = 22, size = 3.5, col = "black") +
+               shape = shape_value, size = 3.5, col = "black") +
     geom_hline(yintercept = y_lines) +
     scale_y_continuous(name = y_lab,
                        breaks = y_breaks,
@@ -187,7 +196,7 @@ classicforest <- function(plotdata,
   p2 <- p1 +
     ggtitle(facet_titles) +
     scale_size_area(max_size = 3) +
-    theme_bw() +
+    ggplot_theme +
     theme(
       text = element_text(size = 1 / 0.352777778  * text_size),
       legend.position = "none",

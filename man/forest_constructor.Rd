@@ -23,7 +23,9 @@ forest_constructor(
   text_size = 3,
   x_limit = NULL,
   x_breaks = NULL,
-  jitter_reps
+  jitter_reps,
+  shapes,
+  ggplot_theme
 )
 }
 \arguments{
@@ -62,6 +64,12 @@ to plot. This must be in the same format as the tibble that is output by
 \item{jitter_reps}{logical. Whether or not to vertically "jitter" the
 additional confidence intervals when using multiple replicates (i.e. when
 input data has 9 numeric columns instead of 3).}
+
+\item{shapes}{string. Denotes the shape of the mean/median value, passed to \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}}.
+Can be one of the following: "square", "diamond", "circle", or "triangle".}
+
+\item{ggplot_theme}{a ggplot theme. Note that some legend options, text size, and grid elements may be overwritten.
+See \code{\link[ggplot2:theme]{ggplot2::theme()}} for details.}
 }
 \description{
 Private helper to manipulate data and organize the structure of the forest plot and CI table

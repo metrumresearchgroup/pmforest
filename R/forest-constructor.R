@@ -22,7 +22,9 @@ forest_constructor <- function(data,
                                text_size = 3,
                                x_limit = NULL,
                                x_breaks = NULL,
-                               jitter_reps) {
+                               jitter_reps,
+                               shapes,
+                               ggplot_theme) {
   # Handle input object
   if (missing(data)) {
     stop("argument data is missing, with no default.")
@@ -209,7 +211,9 @@ forest_constructor <- function(data,
       y_lab = y_lab,
       x_limit = x_limit,
       x_breaks = x_breaks,
-      jitter_reps = jitter_reps
+      jitter_reps = jitter_reps,
+      shapes = shapes,
+      ggplot_theme = ggplot_theme
     )
   )
 
