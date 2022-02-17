@@ -23,7 +23,7 @@ steps:
   commands:
   - R -s -e 'devtools::install_deps(upgrade = '"'"'always'"'"', dependencies = TRUE)'
   - R -s -e 'devtools::load_all(); sessioninfo::session_info()'
-  - R -s -e 'devtools::check(env_vars = c("NOT_CRAN" = "false"))'
+  - R -s -e 'devtools::check(env_vars = c("PMF_SKIP_VDIFFR" = "true", "NOT_CRAN" = "true"))'
   environment:
     USER: drone
   volumes:

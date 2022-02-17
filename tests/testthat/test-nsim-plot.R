@@ -19,6 +19,7 @@ describe("Multiple simulations", {
 
   it("Multiple simulations base test [PMF-PLOT-012]", {
     skip_on_cran()
+    skip_vdiffr()
     plt <- plotData %>%
       summarize_data(
         value = stat,
@@ -40,6 +41,7 @@ describe("Multiple simulations", {
 
   it("Multiple CI's with jitter [PMF-PLOT-013]", {
     skip_on_cran()
+    skip_vdiffr()
     plt <- plotData2 %>%
       summarize_data(
         value = stat,
