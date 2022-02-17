@@ -50,6 +50,7 @@ Collate:
     'table-plot.R'
     'forest-constructor.R'
     'AAAA.R'
+    'helpers-for-tests.R'
     'plot-forest.R'
     'summarize-data.R'
     'utils-null.R'
