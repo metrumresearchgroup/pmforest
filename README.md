@@ -24,7 +24,7 @@ You can install the latest development version from
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("metrumresearchgroup/pmforest", ref = "develop")
+devtools::install_github("metrumresearchgroup/pmforest", ref = "main")
 ```
 
 ## Documentation
