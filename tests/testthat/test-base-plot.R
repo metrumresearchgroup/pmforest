@@ -1,4 +1,4 @@
-skip_on_cran() # vdiffr flakiness
+
 
 dataDir <- system.file("test-data", package = "pmforest")
 specDir <- file.path(dataDir, "spec")
@@ -32,7 +32,8 @@ describe("Base plots", {
     )
 
   it("Test metagroup (Cl and V2) [PMF-PLOT-004]", {
-
+    skip_on_cran()
+    skip_vdiffr()
     plt1 <- sumData2 %>%
       plot_forest(annotate_CI = F)
     vdiffr::expect_doppelganger("Test metagroup", plt1)
@@ -45,6 +46,8 @@ describe("Base plots", {
   })
 
   it("Test metagroup (Cl and V2) with labels [PMF-PLOT-005]", {
+    skip_on_cran()
+    skip_vdiffr()
     plt <- plot_forest(data = sumData2,
                        annotate_CI = F,
                        nrow = 2,
@@ -54,6 +57,8 @@ describe("Base plots", {
   })
 
   it("CI Table - mean [PMF-PLOT-006]", {
+    skip_on_cran()
+    skip_vdiffr()
     plt <- plotData %>%
       summarize_data(
         value = stat,
@@ -68,6 +73,8 @@ describe("Base plots", {
   })
 
   it("CI Table - median [PMF-PLOT-007]", {
+    skip_on_cran()
+    skip_vdiffr()
     plt <- plotData %>%
       summarize_data(
         value = stat,
@@ -82,6 +89,8 @@ describe("Base plots", {
   })
 
   it("Plot/Table width [PMF-PLOT-008]", {
+    skip_on_cran()
+    skip_vdiffr()
     plt <- plot_forest(data = sumData,
                        plot_width = 6 # not the default value
     )
@@ -89,6 +98,8 @@ describe("Base plots", {
   })
 
   it("Vertical Intercept [PMF-PLOT-009]", {
+    skip_on_cran()
+    skip_vdiffr()
     plt <- plot_forest(data = sumData,
                        vline_intercept = 1
     )
@@ -96,6 +107,8 @@ describe("Base plots", {
   })
 
   it("shaded interval displays over correct range [PMF-PLOT-010]", {
+    skip_on_cran()
+    skip_vdiffr()
     plt <- plot_forest(data = sumData,
                        shaded_interval = c(0.8,1.25),
     )
@@ -103,6 +116,8 @@ describe("Base plots", {
   })
 
   it("update labels via yaml file [PMF-PLOT-011]", {
+    skip_on_cran()
+    skip_vdiffr()
     plt <- plot_forest(data = sumData,
                        summary_label = plot_labels
     )
@@ -110,6 +125,8 @@ describe("Base plots", {
   })
 
   it("Axis labels and captions [PMF-PLOT-014]", {
+    skip_on_cran()
+    skip_vdiffr()
     plt <- plotData %>%
       summarize_data(
         value = stat,
@@ -126,6 +143,8 @@ describe("Base plots", {
   })
 
   it("Test breaks and limits of x-axis [PMF-PLOT-015]", {
+    skip_on_cran()
+    skip_vdiffr()
     plt <- plot_forest(data = sumData,
                        x_breaks = c(0.4,0.6, 0.8, 1, 1.2, 1.4,1.6),
                        x_limit = c(0.4,1.45)
@@ -135,6 +154,8 @@ describe("Base plots", {
 
 
   it("Modify text size [PMF-PLOT-016]", {
+    skip_on_cran()
+    skip_vdiffr()
     plt <- plot_forest(data = sumData,
                        text_size = 4
     )
@@ -142,6 +163,8 @@ describe("Base plots", {
   })
 
   it("Base plot [PMF-PLOT-017]", {
+    skip_on_cran()
+    skip_vdiffr()
     plt <- plotData %>%
       summarize_data(
         value = stat,
@@ -153,6 +176,8 @@ describe("Base plots", {
   })
 
   it("Full Test [PMF-PLOT-018]", {
+    skip_on_cran()
+    skip_vdiffr()
     plt <- plot_forest(data = sumData,
                        shaded_interval = c(0.8,1.25),
                        summary_label = plot_labels,
@@ -172,6 +197,8 @@ describe("Base plots", {
   })
 
   it("plots without group_level [PMF-PLOT-019]", {
+    skip_on_cran()
+    skip_vdiffr()
     df <-
       data.frame(
         group = c("a", "b", "c"),

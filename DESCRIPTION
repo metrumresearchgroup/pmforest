@@ -1,6 +1,6 @@
 Package: pmforest
 Title: Create forest plots
-Version: 0.0.0.9000
+Version: 0.0.1
 Description: Create forest plots.
 Authors@R:
     c(person(given = "Kyle", family = "Barrett",
@@ -33,6 +33,8 @@ Imports:
     stringr,
     tibble
 Suggests:
+    devtools,
+    knitr,
     mrgvalidate,
     mrgvalprep (>= 0.0.4),
     testthat (>= 3.0.0),
@@ -45,11 +47,13 @@ Depends:
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
+VignetteBuilder: knitr
 Collate: 
     'classicforest.R'
     'table-plot.R'
     'forest-constructor.R'
     'AAAA.R'
+    'helpers-for-tests.R'
     'plot-forest.R'
     'summarize-data.R'
     'utils-null.R'

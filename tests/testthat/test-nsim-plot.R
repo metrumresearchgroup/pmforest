@@ -1,4 +1,4 @@
-skip_on_cran() # vdiffr flakiness
+
 
 dataDir <- system.file("test-data", package = "pmforest")
 specDir <- file.path(dataDir, "spec")
@@ -18,7 +18,8 @@ describe("Multiple simulations", {
     mutate(stat = stat + (nsim/300)) # make larger to test jitter
 
   it("Multiple simulations base test [PMF-PLOT-012]", {
-
+    skip_on_cran()
+    skip_vdiffr()
     plt <- plotData %>%
       summarize_data(
         value = stat,
@@ -39,6 +40,8 @@ describe("Multiple simulations", {
   })
 
   it("Multiple CI's with jitter [PMF-PLOT-013]", {
+    skip_on_cran()
+    skip_vdiffr()
     plt <- plotData2 %>%
       summarize_data(
         value = stat,
