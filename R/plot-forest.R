@@ -26,6 +26,7 @@
 #'   input data has 9 numeric columns instead of 3).
 #' @param shapes string. Denotes the shape of the mean/median value, passed to [ggplot2::geom_point()].
 #'   Can be one of the following: "square", "diamond", "circle", or "triangle".
+#' @param shape_size numeric. Value between 1 and 4 that denotes the relative size of the `shape` argument. Defaults to 3.5.
 #' @param ggplot_theme a ggplot theme. Note that some legend options, text size, and grid elements may be overwritten.
 #'   See [ggplot2::theme()] for details.
 #' @export
@@ -46,6 +47,7 @@ plot_forest <- function(data,
                         x_limit = NULL,
                         jitter_reps = FALSE,
                         shapes = c("square", "diamond", "circle", "triangle"),
+                        shape_size = 3.5,
                         ggplot_theme = ggplot2::theme_bw(),
                         ...){
 
@@ -57,6 +59,7 @@ plot_forest <- function(data,
   assert_that(is_logical(jitter_reps), msg = "`jitter_reps` must be a logical value (T/F)")
   assert_that(all(class(ggplot_theme) == c("theme", "gg")), msg = "`ggplot_theme` must be a ggplot theme. See `?ggplot2::theme` for details.")
   shapes <- match.arg(shapes)
+  assert_that(is.numeric(shape_size) & shape_size >= 1 & shape_size <= 4, msg = "`shape_size` must be a numeric value between 1 and 4")
 
   # TODO: this will be refactored once we refactor some of the downstream code
   if (all(VALUE_COLS %in% names(data))) {
@@ -117,6 +120,7 @@ plot_forest <- function(data,
       x_breaks = x_breaks,
       jitter_reps = jitter_reps,
       shapes = shapes,
+      shape_size = shape_size,
       ggplot_theme = ggplot_theme
     )
 
@@ -166,6 +170,7 @@ plot_forest <- function(data,
           x_breaks = x_breaks,
           jitter_reps = jitter_reps,
           shapes = shapes,
+          shape_size = shape_size,
           ggplot_theme = ggplot_theme
         )
 

@@ -24,6 +24,7 @@ classicforest <- function(plotdata,
                           x_breaks = NULL,
                           jitter_reps,
                           shapes,
+                          shape_size,
                           ggplot_theme) {
 
   n <- nrow(plotdata)
@@ -141,7 +142,7 @@ classicforest <- function(plotdata,
   p1 <-
     p +
     geom_point(data=plotdata,aes(size = weight, color=factor(group), fill=factor(group)),
-               shape = shape_value, size = 3.5, col = "black") +
+               shape = shape_value, size = shape_size, col = "black") +
     geom_hline(yintercept = y_lines) +
     scale_y_continuous(name = y_lab,
                        breaks = y_breaks,

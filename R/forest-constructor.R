@@ -24,6 +24,7 @@ forest_constructor <- function(data,
                                x_breaks = NULL,
                                jitter_reps,
                                shapes,
+                               shape_size,
                                ggplot_theme) {
   # Handle input object
   if (missing(data)) {
@@ -213,6 +214,7 @@ forest_constructor <- function(data,
       x_breaks = x_breaks,
       jitter_reps = jitter_reps,
       shapes = shapes,
+      shape_size = shape_size,
       ggplot_theme = ggplot_theme
     )
   )
