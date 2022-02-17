@@ -3,4 +3,5 @@
 .Rprofile
 .RData
 .Ruserdata
+docs
 renv/*
