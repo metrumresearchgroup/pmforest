@@ -209,6 +209,33 @@ describe("Base plots", {
     plt <- plot_forest(df)
     vdiffr::expect_doppelganger("No group_level", plt)
   })
+
+  it("modify shape of median value [PMF-PLOT-020]", {
+    skip_on_cran()
+    skip_vdiffr()
+    plt <- plot_forest(data = sumData,
+                       shapes = "square"
+    )
+    vdiffr::expect_doppelganger("Modify shape", plt)
+  })
+
+  it("modify shape size of median value [PMF-PLOT-020]", {
+    skip_on_cran()
+    skip_vdiffr()
+    plt <- plot_forest(data = sumData,
+                       shape_size = 2
+    )
+    vdiffr::expect_doppelganger("Modify shape size", plt)
+  })
+
+  it("modify ggplot theme [PMF-PLOT-021]", {
+    skip_on_cran()
+    skip_vdiffr()
+    plt <- plot_forest(data = sumData,
+                       ggplot_theme = theme_classic()
+    )
+    vdiffr::expect_doppelganger("Modify ggplot theme", plt)
+  })
 })
 
 
