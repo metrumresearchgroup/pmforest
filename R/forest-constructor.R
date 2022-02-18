@@ -260,8 +260,6 @@ forest_constructor <- function(data,
     # Ensure alignment of CI table with forest plot tick marks
     y_breaks <- ggplot_build(p)$layout$panel_params[[1]]$y$breaks
 
-    spacer <- ifelse(is.null(p$labels$title),TRUE,FALSE)
-
     table_CI <-
       table_plot(
         tbl = CI_label,
@@ -273,8 +271,7 @@ forest_constructor <- function(data,
         plotdata=plotdata,
         text_size=text_size,
         y_limit=y_limit,
-        y_breaks=y_breaks,
-        spacer=spacer
+        y_breaks=y_breaks
       )
 
     layout_matrix <- matrix(c(rep(1,plot_width), rep(2,(12-plot_width))), nrow = 1)
