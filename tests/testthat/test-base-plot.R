@@ -219,7 +219,7 @@ describe("Base plots", {
     vdiffr::expect_doppelganger("Modify shape", plt)
   })
 
-  it("modify shape size of median value [PMF-PLOT-020]", {
+  it("modify shape size of median value [PMF-PLOT-021]", {
     skip_on_cran()
     skip_vdiffr()
     plt <- plot_forest(data = sumData,
@@ -228,7 +228,7 @@ describe("Base plots", {
     vdiffr::expect_doppelganger("Modify shape size", plt)
   })
 
-  it("modify ggplot theme [PMF-PLOT-021]", {
+  it("modify ggplot theme [PMF-PLOT-022]", {
     skip_on_cran()
     skip_vdiffr()
     plt <- plot_forest(data = sumData,
