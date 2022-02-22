@@ -14,8 +14,9 @@ PLOT-S003:
     vs median) and width of the confidence interval (e.g., 90% vs 95%).
   ProductRisk: high
   tests:
+  - PMF-DATA-001
   - PMF-DATA-002
-  - PMF-PLOT-003
+  - PMF-DATA-003
 PLOT-S004:
   name: metagroup specification
   description: As a user, I want to be able to generate multiple forest plots from
