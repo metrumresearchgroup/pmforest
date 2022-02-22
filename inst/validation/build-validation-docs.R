@@ -13,10 +13,16 @@
 
 PKGNAME <- "pmforest"
 PKGVERSION <- "0.0.1"
+STYLE_REF_DIR <- "docx-ref-header-image" # set to NULL if not using style ref
 
 # set up directories and clear existing output dirs, if they exist
 val_dir <- system.file("validation", package = PKGNAME)
 print(val_dir)
+
+style_ref_path <- NULL
+if (!is.null(STYLE_REF_DIR)) {
+  style_ref_path <- file.path(val_dir, STYLE_REF_DIR)
+}
 
 test_dir <- file.path(val_dir, "test_results")
 if (fs::dir_exists(test_dir)) fs::dir_delete(test_dir)
@@ -56,5 +62,5 @@ mrgvalidate::create_validation_docs(
   spec,
   auto_test_dir = test_dir,
   output_dir = docs_dir,
-  style_dir = file.path(val_dir, "docx-ref-header-image")
+  style_dir = style_ref_path
 )
