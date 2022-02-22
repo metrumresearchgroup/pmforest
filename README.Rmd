@@ -28,7 +28,7 @@ knitr::opts_chunk$set(
 ## Installation
 `pmforest` is not currently on [MPN snapshots](https://mpn.metworx.com/docs/snapshots), but will be added soon.
 
-You can install the latest development version from [GitHub](https://github.com/) with:
+You can install the latest development version from [GitHub](https://github.com/) with: 
 
 ``` r
 # install.packages("devtools")
