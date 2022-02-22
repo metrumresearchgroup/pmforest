@@ -20,8 +20,7 @@ PLOT-S004:
   name: metagroup specification
   description: As a user, I want to be able to generate multiple forest plots from
     the same set of simulations, e.g., for multiple model parameters (CL and V) or
-    multiple responses (AUC and Cmax) or a combination of both (CL, AUC, Cmax). I
-    want to be able to either
+    multiple responses (AUC and Cmax) or a combination of both (CL, AUC, Cmax).
   ProductRisk: low
   tests:
   - PMF-PLOT-004
