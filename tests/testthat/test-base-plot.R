@@ -191,6 +191,8 @@ describe("Base plots", {
                    plot_width = 8, # out of 12
                    x_breaks = c(0.4,0.6, 0.8, 1, 1.2, 1.4,1.6),
                    x_limit = c(0.4,1.45),
+                   ggplot_theme = theme_classic(),
+                   shape_size = 2,
                    annotate_CI=T
     )
     vdiffr::expect_doppelganger("Full Test", plt)
