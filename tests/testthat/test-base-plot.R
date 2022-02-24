@@ -238,6 +238,16 @@ describe("Base plots", {
     )
     vdiffr::expect_doppelganger("Modify ggplot theme", plt)
   })
+
+  it("Multiple lines for CI_label [PMF-PLOT-023]", {
+    skip_on_cran()
+    skip_vdiffr()
+    expect_error(
+      plot_forest(data = sumData, CI_label = "Fraction and 95% CI \nRelative to Reference\n test \n test"),
+      "must be less than 4 lines"
+    )
+  })
+
 })
 
 

@@ -77,6 +77,7 @@ PLOT-S011:
   - PMF-PLOT-014
   - PMF-PLOT-015
   - PMF-PLOT-016
+  - PMF-PLOT-023
 PLOT-S012:
   name: Formatting options, ggplot themes
   description: As a user, I would like to have be able to change the shape and size
