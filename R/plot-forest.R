@@ -132,11 +132,6 @@ plot_forest <- function(data,
       unlist(use.names = FALSE) %>%
       unique()
 
-    # TODO: is this still true or should we remove this code?
-    # if(!is.null(y_lab)){
-    #   message("y_lab is ignored when using metagroup argument. specify y axis labels by including them in summary labels with metagroup = label")
-    # }
-
     if(!is.null(summary_label)){
       metagroup_labels <- purrr::flatten(purrr::map(metagroups, summary_label))
       na_labels <- which(is.na(metagroup_labels))

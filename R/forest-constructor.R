@@ -87,20 +87,6 @@ forest_constructor <- function(data,
     group <- as.factor(group)
   }
 
-  # TODO: is this check still necessary? shouldn't be possible...
-  # # check if group vector has the right length
-  #
-  # if (!is.null(group) && (length(group) != n)) {
-  #   warning(
-  #     "length of supplied group vector does not correspond to the number of studies; group argument is ignored"
-  #   )
-  #   group <- NULL
-  # }
-  #
-  # # if no group argument is supplied, use all cases
-  # if (is.null(group)) {
-  #   group <- factor(rep(1, times = n))
-  # }
 
   # drop unused levels of group factor
   group <- droplevels(group)
