@@ -24,6 +24,11 @@
 #' @param jitter_reps logical. Whether or not to vertically "jitter" the
 #'   additional confidence intervals when using multiple replicates (i.e. when
 #'   input data has 9 numeric columns instead of 3).
+#' @param shapes string. Denotes the shape of the mean/median value, passed to [ggplot2::geom_point()].
+#'   Can be one of the following: "square", "diamond", "circle", or "triangle".
+#' @param shape_size numeric. Value between 1 and 4 that denotes the relative size of the `shape` argument. Defaults to 3.5.
+#' @param ggplot_theme a ggplot theme. Note that some legend options, text size, and grid elements may be overwritten.
+#'   See [ggplot2::theme()] for details.
 #' @export
 plot_forest <- function(data,
                         summary_label = NULL,
@@ -41,6 +46,9 @@ plot_forest <- function(data,
                         x_breaks = NULL,
                         x_limit = NULL,
                         jitter_reps = FALSE,
+                        shapes = c("diamond", "square", "circle", "triangle"),
+                        shape_size = 3.5,
+                        ggplot_theme = ggplot2::theme_bw(),
                         ...){
 
   assert_that(is.numeric(digits) & digits > 1, msg = "`digits` must be a numeric value greater than 1")
@@ -49,6 +57,9 @@ plot_forest <- function(data,
   assert_that((is.character(caption) | is.null(caption)), msg = "`caption` must be a character scalar.")
   assert_that(is_logical(annotate_CI), msg = "`annotate_CI` must be a logical value (T/F)")
   assert_that(is_logical(jitter_reps), msg = "`jitter_reps` must be a logical value (T/F)")
+  assert_that(all(class(ggplot_theme) == c("theme", "gg")), msg = "`ggplot_theme` must be a ggplot theme. See `?ggplot2::theme` for details.")
+  shapes <- match.arg(shapes)
+  assert_that(is.numeric(shape_size) & shape_size >= 1 & shape_size <= 4, msg = "`shape_size` must be a numeric value between 1 and 4")
 
   # TODO: this will be refactored once we refactor some of the downstream code
   if (all(VALUE_COLS %in% names(data))) {
@@ -103,11 +114,15 @@ plot_forest <- function(data,
       x_lab = x_lab,
       y_lab = y_lab,
       plot_width = plot_width,
+      facet_titles = "",
       CI_label = CI_label,
       text_size = text_size,
       x_limit = x_limit,
       x_breaks = x_breaks,
-      jitter_reps = jitter_reps
+      jitter_reps = jitter_reps,
+      shapes = shapes,
+      shape_size = shape_size,
+      ggplot_theme = ggplot_theme
     )
 
   } else {
@@ -154,7 +169,10 @@ plot_forest <- function(data,
           text_size = text_size,
           x_limit = x_limit,
           x_breaks = x_breaks,
-          jitter_reps = jitter_reps
+          jitter_reps = jitter_reps,
+          shapes = shapes,
+          shape_size = shape_size,
+          ggplot_theme = ggplot_theme
         )
 
       })

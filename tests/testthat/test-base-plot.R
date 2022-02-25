@@ -191,6 +191,8 @@ describe("Base plots", {
                    plot_width = 8, # out of 12
                    x_breaks = c(0.4,0.6, 0.8, 1, 1.2, 1.4,1.6),
                    x_limit = c(0.4,1.45),
+                   ggplot_theme = theme_classic(),
+                   shape_size = 2,
                    annotate_CI=T
     )
     vdiffr::expect_doppelganger("Full Test", plt)
@@ -209,6 +211,43 @@ describe("Base plots", {
     plt <- plot_forest(df)
     vdiffr::expect_doppelganger("No group_level", plt)
   })
+
+  it("modify shape of median value [PMF-PLOT-020]", {
+    skip_on_cran()
+    skip_vdiffr()
+    plt <- plot_forest(data = sumData,
+                       shapes = "square"
+    )
+    vdiffr::expect_doppelganger("Modify shape", plt)
+  })
+
+  it("modify shape size of median value [PMF-PLOT-021]", {
+    skip_on_cran()
+    skip_vdiffr()
+    plt <- plot_forest(data = sumData,
+                       shape_size = 2
+    )
+    vdiffr::expect_doppelganger("Modify shape size", plt)
+  })
+
+  it("modify ggplot theme [PMF-PLOT-022]", {
+    skip_on_cran()
+    skip_vdiffr()
+    plt <- plot_forest(data = sumData,
+                       ggplot_theme = theme_classic()
+    )
+    vdiffr::expect_doppelganger("Modify ggplot theme", plt)
+  })
+
+  it("Multiple lines for CI_label [PMF-PLOT-023]", {
+    skip_on_cran()
+    skip_vdiffr()
+    expect_error(
+      plot_forest(data = sumData, CI_label = "Fraction and 95% CI \nRelative to Reference\n test \n test"),
+      "must be less than 4 lines"
+    )
+  })
+
 })
 
 

@@ -22,7 +22,10 @@ forest_constructor <- function(data,
                                text_size = 3,
                                x_limit = NULL,
                                x_breaks = NULL,
-                               jitter_reps) {
+                               jitter_reps,
+                               shapes,
+                               shape_size,
+                               ggplot_theme) {
   # Handle input object
   if (missing(data)) {
     stop("argument data is missing, with no default.")
@@ -209,7 +212,10 @@ forest_constructor <- function(data,
       y_lab = y_lab,
       x_limit = x_limit,
       x_breaks = x_breaks,
-      jitter_reps = jitter_reps
+      jitter_reps = jitter_reps,
+      shapes = shapes,
+      shape_size = shape_size,
+      ggplot_theme = ggplot_theme
     )
   )
 
@@ -254,8 +260,6 @@ forest_constructor <- function(data,
     # Ensure alignment of CI table with forest plot tick marks
     y_breaks <- ggplot_build(p)$layout$panel_params[[1]]$y$breaks
 
-    spacer <- ifelse(is.null(p$labels$title),TRUE,FALSE)
-
     table_CI <-
       table_plot(
         tbl = CI_label,
@@ -267,8 +271,7 @@ forest_constructor <- function(data,
         plotdata=plotdata,
         text_size=text_size,
         y_limit=y_limit,
-        y_breaks=y_breaks,
-        spacer=spacer
+        y_breaks=y_breaks
       )
 
     layout_matrix <- matrix(c(rep(1,plot_width), rep(2,(12-plot_width))), nrow = 1)

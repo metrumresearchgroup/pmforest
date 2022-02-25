@@ -16,8 +16,7 @@ table_plot <-
            plotdata,
            text_size,
            y_limit,
-           y_breaks,
-           spacer
+           y_breaks
            ) {
     # all columns and column names are stacked to a vector
     df_to_vector <- function(df) {
@@ -61,28 +60,7 @@ table_plot <-
       stringsAsFactors = FALSE
     )
 
-    lab <- lab %>% arrange(desc(y))
-    lab <- lab %>% mutate(
-      diff = c(NA, apply(lab[-c(2:3)] , 2 , diff ))
-    )
-
-    for(i in 1:nrow(lab)){
-      if(spacer){
-        if(i!=1 & lab$diff[i]==min(lab$diff, na.rm = TRUE)){
-          lab$y[i:nrow(lab)] <- lab$y[i:nrow(lab)] + 0.10 - (text_size - 3.5)*0.1
-        }else{
-          lab$y[i:nrow(lab)] <- lab$y[i:nrow(lab)] - 0.015 - (text_size - 3.5)*0.05
-        }
-      }else{
-        if(i!=1 & lab$diff[i]==min(lab$diff, na.rm = TRUE)){
-          lab$y[i:nrow(lab)] <- lab$y[i:nrow(lab)] + 0.25 - (text_size - 3.5)*0.1
-        }else{
-          lab$y[i:nrow(lab)] <- lab$y[i:nrow(lab)] - 0.01 - (text_size - 3.5)*0.05
-        }
-      }
-    }
-
-
+    # Table title
     lab_title <-
       data.frame(
         y = rep(max(plotdata$ID) + text_size - 1, times = length(tbl_titles)),
@@ -90,13 +68,27 @@ table_plot <-
         value = tbl_titles
       )
 
+    # Add extra space to y_limit depending on number of lines in table title
+    num_lines <- stringr::str_count(lab_title$value, "\n") + 1
+    if(num_lines>=4){stop("`CI_label` must be less than 4 lines")}
+    title_fmt_val <- dplyr::case_when(
+      num_lines <= 1 ~ 0,
+      num_lines == 2 ~ 0.5,
+      num_lines > 2 ~ num_lines - 1.5)
+    y_limit[2] <- y_limit[2] + title_fmt_val
+
+    # Fix alignment based on other args
+    lab <- format_table_spacing(lab, text_size, title_fmt_val)
+
     # To avoid "no visible binding for global variable" warning for non-standard evaluation
     y <- NULL
     value <- NULL
 
-    spacer_val <- ifelse(spacer, 1, 0)
+    spacer_val <- dplyr::case_when(
+      num_lines <= 2 ~ title_fmt_val,
+      num_lines > 2 ~ (title_fmt_val - 0.2))
 
-    ggplot(lab, aes(x = x, y = y, label = value)) +
+    table <- ggplot(lab, aes(x = x, y = y, label = value)) +
       geom_text(
         size = text_size * 0.8,
         hjust = 0,
@@ -138,5 +130,7 @@ table_plot <-
         )
       ) +
       labs(x = "", y = "")
+
+    return(table)
   }
 

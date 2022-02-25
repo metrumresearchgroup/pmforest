@@ -21,6 +21,9 @@ plot_forest(
   x_breaks = NULL,
   x_limit = NULL,
   jitter_reps = FALSE,
+  shapes = c("square", "diamond", "circle", "triangle"),
+  shape_size = 3.5,
+  ggplot_theme = ggplot2::theme_bw(),
   ...
 )
 }
@@ -60,6 +63,14 @@ to plot. This must be in the same format as the tibble that is output by
 \item{jitter_reps}{logical. Whether or not to vertically "jitter" the
 additional confidence intervals when using multiple replicates (i.e. when
 input data has 9 numeric columns instead of 3).}
+
+\item{shapes}{string. Denotes the shape of the mean/median value, passed to \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}}.
+Can be one of the following: "square", "diamond", "circle", or "triangle".}
+
+\item{shape_size}{numeric. Value between 1 and 4 that denotes the relative size of the \code{shape} argument. Defaults to 3.5.}
+
+\item{ggplot_theme}{a ggplot theme. Note that some legend options, text size, and grid elements may be overwritten.
+See \code{\link[ggplot2:theme]{ggplot2::theme()}} for details.}
 
 \item{...}{additional args passed to \code{patchwork::wrap_plots()} for metagrouped plots.}
 }
