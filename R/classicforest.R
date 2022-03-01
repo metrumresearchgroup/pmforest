@@ -37,7 +37,7 @@ classicforest <- function(plotdata,
   plotdata$rel_weight <- weight / sum(weight)
 
 
-  y_limit <- c(min(plotdata$ID) - 3, max(plotdata$ID) + 4)
+  y_limit <- c(min(plotdata$ID) - 3, max(plotdata$ID) + text_size)
   y_tick_names <-
     c(as.vector(group_level), as.vector(summary_label))[order(c(plotdata$ID, madata$ID), decreasing = T)]
   suppressWarnings({
