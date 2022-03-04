@@ -10,7 +10,7 @@
 #' @importFrom gridExtra arrangeGrob
 #' @importFrom grid grobTree
 #' @importFrom cowplot ggdraw draw_grob
-#' @importFrom patchwork wrap_plots plot_annotation
+#' @importFrom patchwork wrap_plots plot_annotation plot_layout
 #' @importFrom stringr str_detect
 #' @importFrom utils write.csv
 #' @importFrom assertthat assert_that

@@ -247,17 +247,6 @@ forest_constructor <- function(data,
 
     plotdata2 <- plotdata %>% mutate(label = paste(x_hat, " [", lb, ", ", ub, "]", sep = ""))
 
-    # table_CI <-
-    #   table_plot2(
-    #     plotdata=plotdata2,
-    #     l = 0,
-    #     r = 11,
-    #     text_size=text_size,
-    #     y_limit=y_limit,
-    #     y_breaks=y_breaks,
-    #     y_lines = y_lines
-    #   )
-
     table_CI <-
       table_plot(
         tbl = CI_label,

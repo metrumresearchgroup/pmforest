@@ -48,7 +48,6 @@ table_plot <-
         max(round(max(nchar2(
           x
         )) / 100, 2),  0.03))))
-    #area_per_column <- cumsum(c(1, apply(rbind(tbl_titles, tbl), 2, function(x) max(round(max(nchar(x, keepNA = FALSE))/100, 2),  0.03))))
 
     x_values <- area_per_column[1:ncol(tbl)]
     x_limit <- c(1, 1.5) #range(area_per_column)
@@ -66,7 +65,7 @@ table_plot <-
       diff = c(NA, apply(lab[-c(2:3)] , 2 , diff ))
     )
 
-    # Table title
+    # Table title - only needed if adding via geom_text
     lab_title <-
       data.frame(
         y = rep(max(plotdata$ID) + text_size - 1, times = length(tbl_titles)),
@@ -75,17 +74,22 @@ table_plot <-
       )
 
     # # Add extra space to y_limit depending on number of lines in table title
-    num_lines <- stringr::str_count(lab_title$value, "\n") + 1
+    num_lines <- stringr::str_count(tbl_titles, "\n") + 1
     if(num_lines>=4){stop("`CI_label` must be less than 4 lines")}
+    if(num_lines > 1 & num_lines < 4 ){
+      titles <- strsplit(tbl_titles, "\n", fixed=T)[[1]]
+      title <- NULL
+      for(title.i in titles){
+        title <- bquote(atop(.(title)), atop(.(title.i)))
+      }
+    }else{
+      title <- tbl_titles
+    }
 
 
     # To avoid "no visible binding for global variable" warning for non-standard evaluation
     y <- NULL
     value <- NULL
-
-    # spacer_val <- dplyr::case_when(
-    #   num_lines <= 2 ~ title_fmt_val,
-    #   num_lines > 2 ~ (title_fmt_val - 0.2))
 
     table <- ggplot(lab, aes(x = x, y = y, label = value)) +
       geom_text(
@@ -127,7 +131,7 @@ table_plot <-
         )
       ) +
       labs(x = "", y = "") +
-      ggtitle(lab_title$value)
+      ggtitle(title)
 
     return(table)
   }
