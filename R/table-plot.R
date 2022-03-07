@@ -65,26 +65,9 @@ table_plot <-
       diff = c(NA, apply(lab[-c(2:3)] , 2 , diff ))
     )
 
-    # Table title - only needed if adding via geom_text
-    lab_title <-
-      data.frame(
-        y = rep(max(plotdata$ID) + text_size - 1, times = length(tbl_titles)),
-        x = x_values,
-        value = tbl_titles
-      )
-
     # # Add extra space to y_limit depending on number of lines in table title
     num_lines <- stringr::str_count(tbl_titles, "\n") + 1
     if(num_lines>=4){stop("`CI_label` must be less than 4 lines")}
-    if(num_lines > 1 & num_lines < 4 ){
-      titles <- strsplit(tbl_titles, "\n", fixed=T)[[1]]
-      title <- NULL
-      for(title.i in titles){
-        title <- bquote(atop(.(title)), atop(.(title.i)))
-      }
-    }else{
-      title <- tbl_titles
-    }
 
 
     # To avoid "no visible binding for global variable" warning for non-standard evaluation
@@ -97,13 +80,6 @@ table_plot <-
         hjust = 0,
         vjust = 0
       ) +
-      # geom_text(
-      #   data = lab_title,
-      #   aes(x = x, y = y, label = value),
-      #   size = text_size,
-      #   hjust = 0,
-      #   vjust = 0
-      # ) +
       coord_cartesian(xlim = x_limit,
                       ylim = y_limit,
                       expand = F) +
@@ -122,6 +98,7 @@ table_plot <-
         axis.ticks.y = element_blank(),
         axis.line.x = element_line(colour = "white"),
         axis.line.y = element_blank(),
+        plot.title = element_text(lineheight=.8),
         plot.margin = margin(
           t = 5.5,
           r = r,
@@ -131,7 +108,7 @@ table_plot <-
         )
       ) +
       labs(x = "", y = "") +
-      ggtitle(title)
+      ggtitle(tbl_titles)
 
     return(table)
   }

@@ -205,6 +205,7 @@ classicforest <- function(plotdata,
       panel.grid.minor.y = element_blank(),
       panel.grid.major.x = element_line("grey"),
       panel.grid.minor.x = element_line("grey"),
+      plot.title = element_text(lineheight=.8),
       plot.margin = margin(
         t = 5.5,
         r = r,

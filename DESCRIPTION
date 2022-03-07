@@ -56,6 +56,5 @@ Collate:
     'helpers-for-tests.R'
     'plot-forest.R'
     'summarize-data.R'
-    'table-plot-new-wip.R'
     'utils-null.R'
     'utils-pipe.R'

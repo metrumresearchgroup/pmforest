@@ -188,7 +188,7 @@ describe("Base plots", {
                        CI_label = "Median [95% CI]",
                        caption = "The shaded area corresponds
                    to the interval (0.8, 1.25)",
-                   plot_width = 8, # out of 12
+                   plot_width = 8,
                    x_breaks = c(0.4,0.6, 0.8, 1, 1.2, 1.4,1.6),
                    x_limit = c(0.4,1.45),
                    ggplot_theme = theme_classic(),
@@ -246,6 +246,12 @@ describe("Base plots", {
       plot_forest(data = sumData, CI_label = "Fraction and 95% CI \nRelative to Reference\n test \n test"),
       "must be less than 4 lines"
     )
+
+    plt <- plot_forest(data = sumData,
+                       CI_label = "Line1\nLine2\nLine3"
+    )
+    vdiffr::expect_doppelganger("Multiple lines for CI_label", plt)
+
   })
 
 })

@@ -245,8 +245,6 @@ forest_constructor <- function(data,
     y_breaks <- ggplot_build(p)$layout$panel_params[[1]]$y$breaks
     y_lines <- sort(madata$ID, decreasing = T)
 
-    plotdata2 <- plotdata %>% mutate(label = paste(x_hat, " [", lb, ", ", ub, "]", sep = ""))
-
     table_CI <-
       table_plot(
         tbl = CI_label,
