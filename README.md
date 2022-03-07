@@ -15,9 +15,9 @@ Status](https://github-drone.metrumrg.com/api/badges/metrumresearchgroup/pmfores
 
 ## Installation
 
-`pmforest` is not currently on [MPN
-snapshots](https://mpn.metworx.com/docs/snapshots), but will be added
-soon.
+You can install the latest released version of `pmforest` via [MPN
+snapshots](https://mpn.metworx.com/docs/snapshots/) from any snapshot
+date in March 2022 or later.
 
 You can install the latest development version from
 [GitHub](https://github.com/) with:
