@@ -267,9 +267,6 @@ forest_constructor <- function(data,
     p2 <- p
   }
 
-  # copied this from ggpubr::as_ggplot() so to not need ggpubr (and specifically nloptr)
-  # cowplot::ggdraw() +
-  #   cowplot::draw_grob(grid::grobTree(p2))
   return(p2)
 
 }

@@ -17,7 +17,6 @@ Authors@R:
 License: MIT + file LICENSE
 Imports:
     assertthat,
-    cowplot,
     dplyr,
     glue,
     ggplot2,

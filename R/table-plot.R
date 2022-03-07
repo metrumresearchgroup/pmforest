@@ -50,7 +50,7 @@ table_plot <-
         )) / 100, 2),  0.03))))
 
     x_values <- area_per_column[1:ncol(tbl)]
-    x_limit <- c(1, 1.5) #range(area_per_column)
+    x_limit <- c(1, 1.5)
 
     lab <- data.frame(
       y = rep(ID, ncol(tbl)),
@@ -65,7 +65,7 @@ table_plot <-
       diff = c(NA, apply(lab[-c(2:3)] , 2 , diff ))
     )
 
-    # # Add extra space to y_limit depending on number of lines in table title
+    # More than 3 lines becomes clunky - limit to < 4
     num_lines <- stringr::str_count(tbl_titles, "\n") + 1
     if(num_lines>=4){stop("`CI_label` must be less than 4 lines")}
 
@@ -83,7 +83,7 @@ table_plot <-
       coord_cartesian(xlim = x_limit,
                       ylim = y_limit,
                       expand = F) +
-      geom_hline(yintercept = y_lines - 0.3) + #max(plotdata$ID) + 2.1) +
+      geom_hline(yintercept = y_lines - 0.3) +
       scale_y_continuous(breaks = y_breaks) +
       theme_bw() +
       theme(
