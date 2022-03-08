@@ -166,7 +166,7 @@ classicforest <- function(plotdata,
     }else{
       p1 <- p1 +
         geom_point(aes(x=lo_mid, color=factor(group)), position = position_nudge(y = 0.5), size=0.1) +
-        geom_linerange(data=plotdata, aes(xmin = lo_lo, xmax = lo_mid, color=factor(group)),
+        geom_linerange(data=plotdata, aes(xmin = lo_lo, xmax = lo_hi, color=factor(group)),
                        position = position_nudge(y = 0.5), size=0.7) +
         geom_point(aes(x=hi_mid, color=factor(group)), position = position_nudge(y = 0.5), size=0.1) +
         geom_linerange(data=plotdata, aes(xmin = hi_lo, xmax = hi_hi, color=factor(group)),
