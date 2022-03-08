@@ -17,7 +17,6 @@ Authors@R:
 License: MIT + file LICENSE
 Imports:
     assertthat,
-    cowplot,
     dplyr,
     glue,
     ggplot2,
@@ -53,7 +52,6 @@ Collate:
     'table-plot.R'
     'forest-constructor.R'
     'AAAA.R'
-    'format-table-spacing.R'
     'helpers-for-tests.R'
     'plot-forest.R'
     'summarize-data.R'

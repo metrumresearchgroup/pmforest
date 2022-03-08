@@ -14,7 +14,8 @@ table_plot(
   plotdata,
   text_size,
   y_limit,
-  y_breaks
+  y_breaks,
+  y_lines
 )
 }
 \arguments{

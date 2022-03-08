@@ -16,7 +16,8 @@ table_plot <-
            plotdata,
            text_size,
            y_limit,
-           y_breaks
+           y_breaks,
+           y_lines
            ) {
     # all columns and column names are stacked to a vector
     df_to_vector <- function(df) {
@@ -47,10 +48,9 @@ table_plot <-
         max(round(max(nchar2(
           x
         )) / 100, 2),  0.03))))
-    #area_per_column <- cumsum(c(1, apply(rbind(tbl_titles, tbl), 2, function(x) max(round(max(nchar(x, keepNA = FALSE))/100, 2),  0.03))))
 
     x_values <- area_per_column[1:ncol(tbl)]
-    x_limit <- range(area_per_column)
+    x_limit <- c(1, 1.5)
 
     lab <- data.frame(
       y = rep(ID, ncol(tbl)),
@@ -60,53 +60,30 @@ table_plot <-
       stringsAsFactors = FALSE
     )
 
-    # Table title
-    lab_title <-
-      data.frame(
-        y = rep(max(plotdata$ID) + text_size - 1, times = length(tbl_titles)),
-        x = x_values,
-        value = tbl_titles
-      )
+    lab <- lab %>% arrange(desc(y))
+    lab <- lab %>% mutate(
+      diff = c(NA, apply(lab[-c(2:3)] , 2 , diff ))
+    )
 
-    # Add extra space to y_limit depending on number of lines in table title
-    num_lines <- stringr::str_count(lab_title$value, "\n") + 1
+    # More than 3 lines becomes clunky - limit to < 4
+    num_lines <- stringr::str_count(tbl_titles, "\n") + 1
     if(num_lines>=4){stop("`CI_label` must be less than 4 lines")}
-    title_fmt_val <- dplyr::case_when(
-      num_lines <= 1 ~ 0,
-      num_lines == 2 ~ 0.5,
-      num_lines > 2 ~ num_lines - 1.5)
-    y_limit[2] <- y_limit[2] + title_fmt_val
 
-    # Fix alignment based on other args
-    lab <- format_table_spacing(lab, text_size, title_fmt_val)
 
     # To avoid "no visible binding for global variable" warning for non-standard evaluation
     y <- NULL
     value <- NULL
 
-    spacer_val <- dplyr::case_when(
-      num_lines <= 2 ~ title_fmt_val,
-      num_lines > 2 ~ (title_fmt_val - 0.2))
-
     table <- ggplot(lab, aes(x = x, y = y, label = value)) +
       geom_text(
         size = text_size * 0.8,
-        hjust = 0,
-        vjust = 0,
-        # lineheight = .25,
-        nudge_y = -1.5 + (text_size - 3.5) + spacer_val
-      ) +
-      geom_text(
-        data = lab_title,
-        aes(x = x, y = y, label = value),
-        size = text_size,
         hjust = 0,
         vjust = 0
       ) +
       coord_cartesian(xlim = x_limit,
                       ylim = y_limit,
                       expand = F) +
-      geom_hline(yintercept = lab_title$y - 0.3) + #max(plotdata$ID) + 2.1) +
+      geom_hline(yintercept = y_lines - 0.3) +
       scale_y_continuous(breaks = y_breaks) +
       theme_bw() +
       theme(
@@ -121,6 +98,7 @@ table_plot <-
         axis.ticks.y = element_blank(),
         axis.line.x = element_line(colour = "white"),
         axis.line.y = element_blank(),
+        plot.title = element_text(lineheight=.8),
         plot.margin = margin(
           t = 5.5,
           r = r,
@@ -129,7 +107,8 @@ table_plot <-
           unit = "pt"
         )
       ) +
-      labs(x = "", y = "")
+      labs(x = "", y = "") +
+      ggtitle(tbl_titles)
 
     return(table)
   }

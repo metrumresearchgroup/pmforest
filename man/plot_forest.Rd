@@ -21,7 +21,7 @@ plot_forest(
   x_breaks = NULL,
   x_limit = NULL,
   jitter_reps = FALSE,
-  shapes = c("square", "diamond", "circle", "triangle"),
+  shapes = c("diamond", "square", "circle", "triangle"),
   shape_size = 3.5,
   ggplot_theme = ggplot2::theme_bw(),
   ...

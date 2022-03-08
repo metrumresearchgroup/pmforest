@@ -230,9 +230,7 @@ forest_constructor <- function(data,
       lb <- plotdata$lo_mid
       ub <- plotdata$hi_mid
     }
-    # lb <- format(round(lb, sigfig), nsmall = 2)
-    # ub <- format(round(ub, sigfig), nsmall = 2)
-    # x_hat <- format(round(x_hat, sigfig), nsmall = 2)
+
     lb <- pmtables::sig(lb, digits = digits, maxex = maxex)
     ub <- pmtables::sig(ub, digits = digits, maxex = maxex)
     x_hat <- pmtables::sig(x_hat, digits = digits, maxex = maxex)
@@ -245,6 +243,7 @@ forest_constructor <- function(data,
 
     # Ensure alignment of CI table with forest plot tick marks
     y_breaks <- ggplot_build(p)$layout$panel_params[[1]]$y$breaks
+    y_lines <- sort(madata$ID, decreasing = T)
 
     table_CI <-
       table_plot(
@@ -257,19 +256,18 @@ forest_constructor <- function(data,
         plotdata=plotdata,
         text_size=text_size,
         y_limit=y_limit,
-        y_breaks=y_breaks
+        y_breaks=y_breaks,
+        y_lines = y_lines
       )
 
-    layout_matrix <- matrix(c(rep(1,plot_width), rep(2,(12-plot_width))), nrow = 1)
-    p2 <- gridExtra::arrangeGrob(p, table_CI, layout_matrix = layout_matrix)
+
+    p2 <- p + table_CI + patchwork::plot_layout(widths = c(plot_width, 12-plot_width))
   } else {
     table_CI <- NULL
-    p2 <- gridExtra::arrangeGrob(p)
+    p2 <- p
   }
 
-  # copied this from ggpubr::as_ggplot() so to not need ggpubr (and specifically nloptr)
-  cowplot::ggdraw() +
-    cowplot::draw_grob(grid::grobTree(p2))
+  return(p2)
 
 }
 
