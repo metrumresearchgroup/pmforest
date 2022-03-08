@@ -36,6 +36,7 @@ Suggests:
     knitr,
     mrgvalidate,
     mrgvalprep (>= 0.0.4),
+    svglite,
     testthat (>= 3.0.0),
     vdiffr,
     yaml,

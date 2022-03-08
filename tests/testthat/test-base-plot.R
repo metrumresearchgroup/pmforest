@@ -254,6 +254,37 @@ describe("Base plots", {
 
   })
 
+  it("Plot alignment with different saving to different sizes [PMF-PLOT-024]", {
+    skip_on_cran()
+    skip_vdiffr()
+    plt <- plot_forest(data = sumData,
+                       shaded_interval = c(0.8,1.25),
+                       summary_label = plot_labels,
+                       text_size = 3.5,
+                       digits = 2,
+                       vline_intercept = 1,
+                       x_lab = "Fraction and 95% CI \nRelative to Reference",
+                       CI_label = "Median [95% CI]",
+                       caption = "The shaded area corresponds
+                   to the interval (0.8, 1.25)",
+                   plot_width = 8,
+                   x_breaks = c(0.4,0.6, 0.8, 1, 1.2, 1.4,1.6),
+                   x_limit = c(0.4,1.45),
+                   ggplot_theme = theme_classic(),
+                   shape_size = 2,
+                   annotate_CI=T
+    )
+
+    save_small <- function(plot, file, title = "") {
+      ggplot2::ggsave(file, plot, device = "svg", height = 3, width = 3)
+    }
+    save_big <- function(plot, file, title = "") {
+      ggplot2::ggsave(file, plot, device = "svg", height = 8, width = 10)
+    }
+    vdiffr::expect_doppelganger("Full Test - small", plt, writer = save_small)
+    vdiffr::expect_doppelganger("Full Test - big", plt, writer = save_big)
+  })
+
 })
 
 
