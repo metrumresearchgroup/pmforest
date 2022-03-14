@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pmforest</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
       </span>
     </div>
 
@@ -85,7 +85,10 @@
   text_size <span class="op">=</span> <span class="fl">3</span>,
   x_limit <span class="op">=</span> <span class="cn">NULL</span>,
   x_breaks <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">jitter_reps</span>
+  <span class="va">jitter_reps</span>,
+  <span class="va">shapes</span>,
+  <span class="va">shape_size</span>,
+  <span class="va">ggplot_theme</span>
 <span class="op">)</span></code></pre></div>
     </div>
 
@@ -127,6 +130,14 @@ to plot. This must be in the same format as the tibble that is output by
 <dd><p>logical. Whether or not to vertically "jitter" the
 additional confidence intervals when using multiple replicates (i.e. when
 input data has 9 numeric columns instead of 3).</p></dd>
+<dt>shapes</dt>
+<dd><p>string. Denotes the shape of the mean/median value, passed to <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">ggplot2::geom_point()</a></code>.
+Can be one of the following: "square", "diamond", "circle", or "triangle".</p></dd>
+<dt>shape_size</dt>
+<dd><p>numeric. Value between 1 and 4 that denotes the relative size of the <code>shape</code> argument. Defaults to 3.5.</p></dd>
+<dt>ggplot_theme</dt>
+<dd><p>a ggplot theme. Note that some legend options, text size, and grid elements may be overwritten.
+See <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">ggplot2::theme()</a></code> for details.</p></dd>
 </dl></div>
 
   </div>

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pmforest</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
       </span>
     </div>
 
@@ -60,6 +60,27 @@
       
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.1.0" id="pmforest-010">pmforest 0.1.0<a class="anchor" aria-label="anchor" href="#pmforest-010"></a></h2>
+<div class="section level3">
+<h3 id="new-features-0-1-0">New Features:<a class="anchor" aria-label="anchor" href="#new-features-0-1-0"></a></h3>
+<ul><li>
+<code>shapes</code> argument. Will denote the shape of the mean/median value. Users can specify one of the following: “square”, “diamond”, “circle”, or “triangle”. (#10)</li>
+<li>
+<code>shape_size</code> argument. Numeric value between 1 and 4 that denotes the relative size of the <code>shape</code> argument. (#10)</li>
+<li>
+<code>ggplot_theme</code> argument. Users can now pass a ggplot theme object, such as <code>theme_bw()</code>, <code>theme_classic()</code>, or a theme you create on your own. Some settings may be overwritten to ensure table/plot alignment. (#10)</li>
+<li>
+<code>pmforest 0.1.0</code> is now on MPN (March 2022 snapshot and later).</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-0-1-0">Bug Fixes:<a class="anchor" aria-label="anchor" href="#bug-fixes-0-1-0"></a></h3>
+<ul><li>Previously the lower minor interval was incorrect (for use with replicates). This has been addressed. (#13)</li>
+<li>The plot and table are now perfectly aligned in all cases. (#14)</li>
+<li>Multiple lines can now be entered for <code>CI_label</code> and <code>x_lab</code>. (#14)</li>
+<li>Some formatting adjustments; plots look nicer. (#14)</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.0.1" id="pmforest-001">pmforest 0.0.1<a class="anchor" aria-label="anchor" href="#pmforest-001"></a></h2>
 <p>Initial release of pmforest package. See vignettes below for usage:</p>
