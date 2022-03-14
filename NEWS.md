@@ -10,6 +10,7 @@
 
 ## Bug Fixes:
 
+* Previously the lower minor interval was incorrect (for use with replicates). This has been addressed. (#13)
 * The plot and table are now perfectly aligned in all cases. (#14)
 * Multiple lines can now be entered for `CI_label` and `x_lab`. (#14)
 * Some formatting adjustments; plots look nicer. (#14)
