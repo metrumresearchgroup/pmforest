@@ -36,8 +36,7 @@ highlighted as well.
 
 ### Featured Vignettes
 
--   [Getting Started with
-    bbr](https://metrumresearchgroup.github.io/pmforest/articles/getting-started.html)
+-   [Getting Started](https://metrumresearchgroup.github.io/pmforest/articles/getting-started.html)
     – Data specifications, summarization, and basic plotting methods.
 -   [Multiple
     Simulations](https://metrumresearchgroup.github.io/pmforest/articles/multiple-simulations.html)
