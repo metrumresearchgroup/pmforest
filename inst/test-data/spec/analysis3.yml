@@ -70,9 +70,7 @@ LDOS:
 MDV:
 BLQ:
   short: below limit of quantification
-  values: 
-    - above QL: 1
-    - below Q: 0
+  values: {above QL: 1, below Q: 0}
 PHASE: 
   short: study phase indicator
   values: 1
