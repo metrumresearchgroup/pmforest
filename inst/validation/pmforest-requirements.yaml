@@ -1,0 +1,100 @@
+PMDATA-R001:
+  description: 'Column selection, summary: correct column is summarized'
+  tests:
+  - PMF-DATA-001
+PMDATA-R002:
+  description: 'Column selection, summary: Can switch between mean/median'
+  tests:
+  - PMF-DATA-002
+PMDATA-R003:
+  description: 'Column selection, summary: Summary for multiple CI''s'
+  tests:
+  - PMF-DATA-003
+PMDATA-R004:
+  description: plot_forest() input data check
+  tests:
+  - PMF-DATA-004
+PMPLOT-R004:
+  description: 'Base plots: Test metagroup (Cl and V2)'
+  tests:
+  - PMF-PLOT-004
+PMPLOT-R005:
+  description: 'Base plots: Test metagroup (Cl and V2) with labels'
+  tests:
+  - PMF-PLOT-005
+PMPLOT-R006:
+  description: 'Base plots: CI Table - mean'
+  tests:
+  - PMF-PLOT-006
+PMPLOT-R007:
+  description: 'Base plots: CI Table - median'
+  tests:
+  - PMF-PLOT-007
+PMPLOT-R008:
+  description: 'Base plots: Plot/Table width'
+  tests:
+  - PMF-PLOT-008
+PMPLOT-R009:
+  description: 'Base plots: Vertical Intercept'
+  tests:
+  - PMF-PLOT-009
+PMPLOT-R010:
+  description: 'Base plots: shaded interval displays over correct range'
+  tests:
+  - PMF-PLOT-010
+PMPLOT-R011:
+  description: 'Base plots: update labels via yaml file'
+  tests:
+  - PMF-PLOT-011
+PMPLOT-R012:
+  description: 'Multiple simulations: Multiple simulations base test'
+  tests:
+  - PMF-PLOT-012
+PMPLOT-R013:
+  description: 'Multiple simulations: Multiple CI''s with jitter'
+  tests:
+  - PMF-PLOT-013
+PMPLOT-R014:
+  description: 'Base plots: Axis labels and captions'
+  tests:
+  - PMF-PLOT-014
+PMPLOT-R015:
+  description: 'Base plots: Test breaks and limits of x-axis'
+  tests:
+  - PMF-PLOT-015
+PMPLOT-R016:
+  description: 'Base plots: Modify text size'
+  tests:
+  - PMF-PLOT-016
+PMPLOT-R017:
+  description: 'Base plots: Base plot'
+  tests:
+  - PMF-PLOT-017
+PMPLOT-R018:
+  description: 'Base plots: Full Test'
+  tests:
+  - PMF-PLOT-018
+PMPLOT-R019:
+  description: 'Base plots: plots without group_level'
+  tests:
+  - PMF-PLOT-019
+PMPLOT-R020:
+  description: 'Base plots: modify shape of median value'
+  tests:
+  - PMF-PLOT-020
+PMPLOT-R021:
+  description: 'Base plots: modify shape size of median value'
+  tests:
+  - PMF-PLOT-021
+PMPLOT-R022:
+  description: 'Base plots: modify ggplot theme'
+  tests:
+  - PMF-PLOT-022
+PMPLOT-R023:
+  description: 'Base plots: Multiple lines for CI_label'
+  tests:
+  - PMF-PLOT-023
+PMPLOT-R024:
+  description: 'Base plots: Plot alignment with different saving to different sizes'
+  tests:
+  - PMF-PLOT-024
