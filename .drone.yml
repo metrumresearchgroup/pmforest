@@ -143,6 +143,8 @@ steps:
       --results-dir /ephemeral/${DRONE_BUILD_NUMBER}/val/test-results \
       --docs-dir /ephemeral/${DRONE_BUILD_NUMBER}/val/docs \
       -s inst/validation/pmforest-stories.yaml
+  environment:
+    NOT_CRAN: true
   volumes:
   - name: cache
     path: /ephemeral
