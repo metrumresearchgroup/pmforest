@@ -111,3 +111,69 @@ trigger:
 
 depends_on:
 - cran-latest
+
+---
+kind: pipeline
+type: docker
+name: pmforest-release-mrgval
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: pull
+  image: omerxx/drone-ecr-auth
+  commands:
+  - $(aws ecr get-login --no-include-email --region us-east-1)
+  - docker pull 906087756158.dkr.ecr.us-east-1.amazonaws.com/r-dev-ci-mrgval:next
+  volumes:
+  - name: docker.sock
+    path: /var/run/docker.sock
+
+- name: Generate validation docs
+  pull: never
+  image: 906087756158.dkr.ecr.us-east-1.amazonaws.com/r-dev-ci-mrgval:next
+  commands:
+  - git config --global user.email drone@metrumrg.com
+  - git config --global user.name Drony
+  - git fetch --tags
+  - |
+    /mrgval/create-validation-docs.sh \
+      --results-dir /ephemeral/${DRONE_BUILD_NUMBER}/val/test-results \
+      --docs-dir /ephemeral/${DRONE_BUILD_NUMBER}/val/docs \
+      -s inst/validation/pmforest-stories.yaml
+  volumes:
+  - name: cache
+    path: /ephemeral
+
+# TODO:
+# - name: "Publish validation docs: ${DRONE_TAG}"
+# ... and probably switch target to use TAG.
+- name: "Publish validation docs"
+  pull: if-not-exists
+  image: plugins/s3
+  settings:
+    bucket: mrg-validation
+    region: us-west-2
+    source: /ephemeral/${DRONE_BUILD_NUMBER}/val/**/*
+    strip_prefix: /ephemeral/${DRONE_BUILD_NUMBER}/val
+    target: /mrgval-scratch/${DRONE_REPO_NAME}/${DRONE_BUILD_NUMBER}
+  volumes:
+  - name: cache
+    path: /ephemeral
+
+volumes:
+- name: docker.sock
+  host:
+    path: /var/run/docker.sock
+- name: cache
+  temp: {}
+
+# TODO: switch to tag
+trigger:
+  event:
+  - push
+
+depends_on:
+- cran-latest
