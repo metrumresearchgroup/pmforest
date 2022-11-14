@@ -40,11 +40,7 @@ classicforest <- function(plotdata,
   y_limit <- c(min(plotdata$ID) - 3, max(plotdata$ID) + text_size)
   y_tick_names <-
     c(as.vector(group_level), as.vector(summary_label))[order(c(plotdata$ID, madata$ID), decreasing = T)]
-  suppressWarnings({
-    if(any(is.na(as.numeric(y_tick_names)))){
-      y_tick_names[!is.na(as.numeric(y_tick_names))] <- ""
-    }
-  })
+
   y_breaks <- sort(c(plotdata$ID, madata$ID), decreasing = T)
   y_lines <- sort(madata$ID, decreasing = T)
 
