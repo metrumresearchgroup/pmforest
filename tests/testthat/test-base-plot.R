@@ -305,7 +305,7 @@ describe("Base plots", {
     df <- df %>% mutate(group_level = as.character(group_level))
 
     plt2 <- plot_forest(df)
-    vdiffr::expect_doppelganger("Chacter interpretation of numeric group_level", plt2)
+    vdiffr::expect_doppelganger("Character interpretation of numeric group_level", plt2)
 
   })
 })
