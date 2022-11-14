@@ -134,7 +134,7 @@ summarize_data <- function(
     suppressMessages({
       sum <-
         data %>%
-        group_by(across(c(replicate, all_of(groups)))) %>%
+        group_by(across(c(all_of(replicate), all_of(groups)))) %>%
         summarise(
           mid = stat_func(!!sym(value),statistic),
           lo  = quantile(!!sym(value), lci),
