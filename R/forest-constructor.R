@@ -98,7 +98,7 @@ forest_constructor <- function(data,
     if (!is.null(group_level) && length(group_level) != n) {
       warning("Argument group_level has wrong length and is ignored.")
     }
-    group_level <- 1:n
+    group_level <- rep("", n)
   }
 
   # if not exactly one name for every subgroup is supplied the default is used
