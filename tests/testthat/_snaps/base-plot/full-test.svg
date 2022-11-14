@@ -98,7 +98,7 @@
 <line x1='80.91' y1='180.03' x2='485.77' y2='180.03' style='stroke-width: 1.07; stroke-linecap: butt;' />
 <line x1='80.91' y1='293.05' x2='485.77' y2='293.05' style='stroke-width: 1.07; stroke-linecap: butt;' />
 <line x1='80.91' y1='383.47' x2='485.77' y2='383.47' style='stroke-width: 1.07; stroke-linecap: butt;' />
-<rect x='235.14' y='44.41' width='173.51' height='847.65' style='stroke-width: 1.07; stroke: none; stroke-linecap: square; stroke-linejoin: miter; fill: #595959; fill-opacity: 0.20;' />
+<rect x='235.14' y='44.41' width='173.51' height='847.65' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #595959; fill-opacity: 0.20;' />
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 <polyline points='80.91,507.79 80.91,44.41 ' style='stroke-width: 1.07; stroke-linecap: butt;' />

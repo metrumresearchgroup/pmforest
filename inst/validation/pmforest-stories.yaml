@@ -105,6 +105,7 @@ DATA-S003:
   - PMF-DATA-001
   - PMF-DATA-002
   - PMF-PLOT-019
+  - PMF-PLOT-024
 DATA-S004:
   name: Summarize across replicates
   description: As a user, I want to calculate median, lower, and upper quantile, for

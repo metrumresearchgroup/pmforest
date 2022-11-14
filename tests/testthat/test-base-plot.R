@@ -285,6 +285,29 @@ describe("Base plots", {
     vdiffr::expect_doppelganger("Full Test - big", plt, writer = save_big)
   })
 
+
+  it("group_level works with numeric data [PMF-PLOT-024]", {
+    skip_on_cran()
+    skip_vdiffr()
+    df <- plotData %>%
+      summarize_data(
+        value = stat,
+        group = GROUP,
+        group_level = LVL
+      )
+    df <- df %>% mutate(group_level = 1:dplyr::n())
+
+    plt1 <- plot_forest(df)
+    vdiffr::expect_doppelganger("Numeric group_level", plt1)
+
+    # Character representations of numeric data (e.g. '10.0' also used to not work)
+    # Test for this as well
+    df <- df %>% mutate(group_level = as.character(group_level))
+
+    plt2 <- plot_forest(df)
+    vdiffr::expect_doppelganger("Chacter interpretation of numeric group_level", plt2)
+
+  })
 })
 
 
