@@ -97,10 +97,10 @@ classicforest <- function(plotdata,
   x_max <- NULL
 
   shape_value <- switch(shapes,
-                   "square" = 22,
-                   "diamond" = 23,
-                   "circle" = 21,
-                   "triangle" = 24
+                        "square" = 22,
+                        "diamond" = 23,
+                        "circle" = 21,
+                        "triangle" = 24
   )
 
   # create classic forest plot
@@ -151,25 +151,25 @@ classicforest <- function(plotdata,
     if(jitter_reps){
       p1 <- p1 +
         geom_point(aes(x=lo_mid, color=factor(group)), position = position_nudge(y = 0.3), size=0.1) +
-        geom_linerange(data=plotdata, aes(xmin = lo_lo, xmax = lo_hi, color=factor(group)),
-                       position = position_nudge(y = 0.3), size=0.7) +
+        linerange(data=plotdata, aes(xmin = lo_lo, xmax = lo_hi, color=factor(group)),
+                  position = position_nudge(y = 0.3), linewidth=0.7) +
         geom_point(aes(x=hi_mid, color=factor(group)), position = position_nudge(y = 0.55), size=0.1) +
-        geom_linerange(data=plotdata, aes(xmin = hi_lo, xmax = hi_hi, color=factor(group)),
-                       position = position_nudge(y = 0.55), size=0.7) +
+        linerange(data=plotdata, aes(xmin = hi_lo, xmax = hi_hi, color=factor(group)),
+                  position = position_nudge(y = 0.55), linewidth=0.7) +
         geom_point(aes(x=mid_mid, color=factor(group)), position = position_nudge(y = 0.425), size=0.1) +
-        geom_linerange(data=plotdata, aes(xmin = mid_lo, xmax = mid_hi, color=factor(group)),
-                       position = position_nudge(y = 0.425), size=0.7)
+        linerange(data=plotdata, aes(xmin = mid_lo, xmax = mid_hi, color=factor(group)),
+                  position = position_nudge(y = 0.425), linewidth=0.7)
     }else{
       p1 <- p1 +
         geom_point(aes(x=lo_mid, color=factor(group)), position = position_nudge(y = 0.5), size=0.1) +
-        geom_linerange(data=plotdata, aes(xmin = lo_lo, xmax = lo_hi, color=factor(group)),
-                       position = position_nudge(y = 0.5), size=0.7) +
+        linerange(data=plotdata, aes(xmin = lo_lo, xmax = lo_hi, color=factor(group)),
+                  position = position_nudge(y = 0.5), linewidth=0.7) +
         geom_point(aes(x=hi_mid, color=factor(group)), position = position_nudge(y = 0.5), size=0.1) +
-        geom_linerange(data=plotdata, aes(xmin = hi_lo, xmax = hi_hi, color=factor(group)),
-                       position = position_nudge(y = 0.5), size=0.7) +
+        linerange(data=plotdata, aes(xmin = hi_lo, xmax = hi_hi, color=factor(group)),
+                  position = position_nudge(y = 0.5), linewidth=0.7) +
         geom_point(aes(x=mid_mid, color=factor(group)), position = position_nudge(y = 0.5), size=0.1) +
-        geom_linerange(data=plotdata, aes(xmin = mid_lo, xmax = mid_hi, color=factor(group)),
-                       position = position_nudge(y = 0.5), size=0.7)
+        linerange(data=plotdata, aes(xmin = mid_lo, xmax = mid_hi, color=factor(group)),
+                  position = position_nudge(y = 0.5), linewidth=0.7)
     }
 
   }
@@ -212,4 +212,15 @@ classicforest <- function(plotdata,
     ) #+ scale_fill_manual(values = col)
 
   p2
+}
+
+# the size attribute was changed to linewidth for geom_line related functions in ggplot2 3.4.0
+# size is deprecated, but will still be supported in subsequent versions.
+# Ensure package doesnt break when ggplot stops supporting size for line related geoms
+if (utils::packageVersion("ggplot2") >= "3.4.0") {
+  linerange <- geom_linerange
+} else {
+  linerange <- function(..., linewidth = 0.7) {
+    geom_linerange(..., size = linewidth)
+  }
 }
