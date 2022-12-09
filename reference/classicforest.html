@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pmforest</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
       </span>
     </div>
 
@@ -26,7 +26,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -66,67 +66,96 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">classicforest</span><span class="op">(</span>
-  <span class="va">plotdata</span>,
-  <span class="va">madata</span>,
-  nsim <span class="op">=</span> <span class="cn">NULL</span>,
-  group_level <span class="op">=</span> <span class="cn">NULL</span>,
-  summary_label <span class="op">=</span> <span class="cn">NULL</span>,
-  annotate_CI <span class="op">=</span> <span class="cn">FALSE</span>,
-  shaded_interval <span class="op">=</span> <span class="cn">NULL</span>,
-  facet_titles <span class="op">=</span> <span class="cn">NULL</span>,
-  vline_intercept <span class="op">=</span> <span class="fl">0</span>,
-  col <span class="op">=</span> <span class="st">"Blues"</span>,
-  summary_col <span class="op">=</span> <span class="st">"Blues"</span>,
-  tick_col <span class="op">=</span> <span class="st">"firebrick"</span>,
-  text_size <span class="op">=</span> <span class="fl">3</span>,
-  x_lab <span class="op">=</span> <span class="st">"Effect"</span>,
-  y_lab <span class="op">=</span> <span class="cn">NULL</span>,
-  x_limit <span class="op">=</span> <span class="cn">NULL</span>,
-  x_breaks <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">jitter_reps</span>,
-  <span class="va">shapes</span>,
-  <span class="va">shape_size</span>,
-  <span class="va">ggplot_theme</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">classicforest</span><span class="op">(</span></span>
+<span>  <span class="va">plotdata</span>,</span>
+<span>  <span class="va">madata</span>,</span>
+<span>  nsim <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  group_level <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  summary_label <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  annotate_CI <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  shaded_interval <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  facet_titles <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  vline_intercept <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  col <span class="op">=</span> <span class="st">"Blues"</span>,</span>
+<span>  summary_col <span class="op">=</span> <span class="st">"Blues"</span>,</span>
+<span>  tick_col <span class="op">=</span> <span class="st">"firebrick"</span>,</span>
+<span>  text_size <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  x_lab <span class="op">=</span> <span class="st">"Effect"</span>,</span>
+<span>  y_lab <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  x_limit <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  x_breaks <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">jitter_reps</span>,</span>
+<span>  <span class="va">shapes</span>,</span>
+<span>  <span class="va">shape_size</span>,</span>
+<span>  <span class="va">ggplot_theme</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>plotdata</dt>
 <dd><p>dataframe constructed by forest_constructor</p></dd>
+
+
 <dt>madata</dt>
 <dd><p>dataframe constructed by forest_constructor</p></dd>
+
+
 <dt>summary_label</dt>
 <dd><p>(optional) labeler function created using <code><a href="https://ggplot2.tidyverse.org/reference/as_labeller.html" class="external-link">ggplot2::as_labeller</a></code>. Labels for group and metagroup.</p></dd>
+
+
 <dt>annotate_CI</dt>
 <dd><p>logical. Default <code>TRUE</code>. Show a table next to the graph with the numeric values for the confidence interval.</p></dd>
+
+
 <dt>shaded_interval</dt>
 <dd><p>numeric vector. Specified as c(lo, hi) for the interval you want to shade over. Default is NULL.</p></dd>
+
+
 <dt>vline_intercept</dt>
 <dd><p>(optional) numeric. Default 0.</p></dd>
+
+
 <dt>text_size</dt>
 <dd><p>numeric. Text size for labels. Must be at least 3.5</p></dd>
+
+
 <dt>x_lab</dt>
 <dd><p>string. x-axis label.</p></dd>
+
+
 <dt>y_lab</dt>
 <dd><p>string. Default is not to label y axis.</p></dd>
+
+
 <dt>x_limit</dt>
 <dd><p>numeric vector (c(lo, hi)) specifying the minimum and maximum values to show on the x-axis. See coord_cartesian() for details</p></dd>
+
+
 <dt>x_breaks</dt>
 <dd><p>numeric vector of breaks to be used for the x-axis. See scale_x_continuous() for details.</p></dd>
+
+
 <dt>jitter_reps</dt>
 <dd><p>logical. Whether or not to vertically "jitter" the
 additional confidence intervals when using multiple replicates (i.e. when
 input data has 9 numeric columns instead of 3).</p></dd>
+
+
 <dt>shapes</dt>
 <dd><p>string. Denotes the shape of the mean/median value, passed to <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">ggplot2::geom_point()</a></code>.
 Can be one of the following: "square", "diamond", "circle", or "triangle".</p></dd>
+
+
 <dt>shape_size</dt>
 <dd><p>numeric. Value between 1 and 4 that denotes the relative size of the <code>shape</code> argument. Defaults to 3.5.</p></dd>
+
+
 <dt>ggplot_theme</dt>
 <dd><p>a ggplot theme. Note that some legend options, text size, and grid elements may be overwritten.
 See <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">ggplot2::theme()</a></code> for details.</p></dd>
+
 </dl></div>
 
   </div>
@@ -141,7 +170,7 @@ See <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="ex
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pmforest</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
       </span>
     </div>
 
@@ -43,7 +43,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -93,45 +93,45 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">pmforest</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">pmforest</span><span class="op">)</span></span></code></pre></div>
 <style> body {text-align: justify} </style>
 <div class="section level4">
 <h4 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h4>
 <p>In some instances, it may be useful to present the variability of each summary statistic (i.e. median, 5th and 95th percentile). In order to accomplish this you must have a column denoting the replicate/simulation number. This column is then passed to the <code>replicate</code> argument. An example dataset comes with the package:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rawData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="st">"test-data"</span>, <span class="st">"plotDataEXP.RDS"</span><span class="op">)</span>, package <span class="op">=</span> <span class="st">"pmforest"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">rawData</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">nsim</span>, <span class="va">stat</span>, <span class="va">GROUP</span>, <span class="va">LVL</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 4</span></span>
-<span class="co">#&gt;    nsim  stat GROUP LVL     </span>
-<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     1 0.990 AGE   20 years</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     1 1.07  AGE   20 years</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     1 1.07  AGE   20 years</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">4</span>     1 1.01  AGE   20 years</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">5</span>     1 1.08  AGE   20 years</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">6</span>     1 1.06  AGE   20 years</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">rawData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="st">"test-data"</span>, <span class="st">"plotDataEXP.RDS"</span><span class="op">)</span>, package <span class="op">=</span> <span class="st">"pmforest"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">rawData</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">nsim</span>, <span class="va">stat</span>, <span class="va">GROUP</span>, <span class="va">LVL</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
+<span><span class="co">#&gt;    nsim  stat GROUP LVL     </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     1 0.990 AGE   20 years</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     1 1.07  AGE   20 years</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     1 1.07  AGE   20 years</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>     1 1.01  AGE   20 years</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>     1 1.08  AGE   20 years</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>     1 1.06  AGE   20 years</span></span></code></pre></div>
 <p>In this example, <code>nsim</code> is the “replicate” identifier, while <code>stat</code> is the “value”, <code>GROUP</code> is the “group” column, and <code>LVL</code> will be “group_level”. Notice in our example we have 50 replicates and 1,800 rows for each replicate.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">rawData</span>, <span class="va">nsim</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 50 × 2</span></span>
-<span class="co">#&gt;     nsim     n</span>
-<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>     1  <span style="text-decoration: underline;">1</span>800</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>     2  <span style="text-decoration: underline;">1</span>800</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>     3  <span style="text-decoration: underline;">1</span>800</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>     4  <span style="text-decoration: underline;">1</span>800</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>     5  <span style="text-decoration: underline;">1</span>800</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>     6  <span style="text-decoration: underline;">1</span>800</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>     7  <span style="text-decoration: underline;">1</span>800</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>     8  <span style="text-decoration: underline;">1</span>800</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>     9  <span style="text-decoration: underline;">1</span>800</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">10</span>    10  <span style="text-decoration: underline;">1</span>800</span>
-<span class="co">#&gt; <span style="color: #949494;"># … with 40 more rows</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">rawData</span>, <span class="va">nsim</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 50 × 2</span></span></span>
+<span><span class="co">#&gt;     nsim     n</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>     1  <span style="text-decoration: underline;">1</span>800</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>     2  <span style="text-decoration: underline;">1</span>800</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>     3  <span style="text-decoration: underline;">1</span>800</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>     4  <span style="text-decoration: underline;">1</span>800</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>     5  <span style="text-decoration: underline;">1</span>800</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>     6  <span style="text-decoration: underline;">1</span>800</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>     7  <span style="text-decoration: underline;">1</span>800</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>     8  <span style="text-decoration: underline;">1</span>800</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>     9  <span style="text-decoration: underline;">1</span>800</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>    10  <span style="text-decoration: underline;">1</span>800</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 40 more rows</span></span></span></code></pre></div>
 <p><br></p>
 </div>
 <div class="section level2">
@@ -139,24 +139,24 @@
 </h2>
 <p>When summarizing the data, users will have to specify the <code>replicate</code> column. This will output the same data structure described in the “Summarize data” section of <a href="https://metrumresearchgroup.github.io/pmforest/articles/getting-started.html#summarize-data">the “Getting Started” vignette</a>, however it will now have <em>nine</em> numeric columns instead of three.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sumData</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="../reference/summarize_data.html">summarize_data</a></span><span class="op">(</span>
-    <span class="va">rawData</span>, 
-    value <span class="op">=</span> <span class="va">stat</span>,
-    group <span class="op">=</span> <span class="va">GROUP</span>,
-    group_level <span class="op">=</span> <span class="va">LVL</span>,
-    replicate <span class="op">=</span> <span class="va">nsim</span>
-  <span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sumData</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 11</span></span>
-<span class="co">#&gt;   group group_level mid_mid mid_lo mid_hi lo_mid lo_lo lo_hi hi_mid hi_lo hi_hi</span>
-<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> AGE   20 years      1.02   1.01   1.03   0.937 0.930 0.949  1.11  1.10  1.12 </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> AGE   45 years      0.991  0.984  0.999  0.930 0.924 0.934  1.05  1.04  1.06 </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> ALB   3.25 g/dL     0.871  0.863  0.877  0.807 0.800 0.812  0.934 0.927 0.941</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> ALB   5 g/dL        1.05   1.04   1.05   0.991 0.986 0.998  1.10  1.10  1.11 </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> EGFR  Mild          0.915  0.907  0.921  0.861 0.856 0.865  0.968 0.962 0.973</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> EGFR  Moderate      0.695  0.690  0.705  0.633 0.625 0.641  0.760 0.750 0.770</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">sumData</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="../reference/summarize_data.html">summarize_data</a></span><span class="op">(</span></span>
+<span>    <span class="va">rawData</span>, </span>
+<span>    value <span class="op">=</span> <span class="va">stat</span>,</span>
+<span>    group <span class="op">=</span> <span class="va">GROUP</span>,</span>
+<span>    group_level <span class="op">=</span> <span class="va">LVL</span>,</span>
+<span>    replicate <span class="op">=</span> <span class="va">nsim</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sumData</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 11</span></span></span>
+<span><span class="co">#&gt;   group group_level mid_mid mid_lo mid_hi lo_mid lo_lo lo_hi hi_mid hi_lo hi_hi</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> AGE   20 years      1.02   1.01   1.03   0.937 0.930 0.949  1.11  1.10  1.12 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> AGE   45 years      0.991  0.984  0.999  0.930 0.924 0.934  1.05  1.04  1.06 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> ALB   3.25 g/dL     0.871  0.863  0.877  0.807 0.800 0.812  0.934 0.927 0.941</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> ALB   5 g/dL        1.05   1.04   1.05   0.991 0.986 0.998  1.10  1.10  1.11 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> EGFR  Mild          0.915  0.907  0.921  0.861 0.856 0.865  0.968 0.962 0.973</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> EGFR  Moderate      0.695  0.690  0.705  0.633 0.625 0.641  0.760 0.750 0.770</span></span></code></pre></div>
 <p>These nine columns (<code>mid_mid</code>, <code>mid_lo</code>, <code>mid_hi</code>, plus three more each for <code>lo_*</code> and <code>hi_*</code>) contain the summarized values. In this case, the <code>mid_mid</code>, <code>lo_mid</code>, and <code>hi_mid</code> columns correspond to the values of the major interval (i.e. the big lines and central data point on the plots we are about to create) and the <code>*_lo</code> and <code>*_hi</code> columns correspond to the values for each of the three minor intervals (i.e. the small lines on the plots).</p>
 <p>Users can also use the arguments <code>rep_statistic</code> (options are “median”, “mean”, or “geo_mean”, defaulting to “median”), and the <code>rep_probs</code> (defaulting to <code>c(0.025, 0.975)</code>) to control how the minor intervals are calculated.</p>
 <p>As before, <a href="https://metrumresearchgroup.github.io/pmforest/reference/plot_forest.html"><code>plot_forest()</code></a> will assume the grouping column names shown above, and will throw an error if they are renamed to anything else.</p>
@@ -167,26 +167,26 @@
 <p>You can now pass this data directly to <a href="https://metrumresearchgroup.github.io/pmforest/reference/plot_forest.html"><code>pmforest::plot_forest()</code></a>. The function will recognize the additional columns and automatically draw the minor intervals.</p>
 <p>Note: these plots can be customized and labelled as shown in <a href="https://metrumresearchgroup.github.io/pmforest/articles/getting-started.html#formatting-arguments">the “Getting Started” vignette</a>, but for clarity and simplicity, we just show the basic forest plots below.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/plot_forest.html">plot_forest</a></span><span class="op">(</span><span class="va">sumData</span>, vline_intercept <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_forest.html">plot_forest</a></span><span class="op">(</span><span class="va">sumData</span>, vline_intercept <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p><img src="multiple-simulations_files/figure-html/unnamed-chunk-5-1.png" width="768"></p>
 <div class="section level4">
 <h4 id="jitter-minor-interval">Jitter minor interval<a class="anchor" aria-label="anchor" href="#jitter-minor-interval"></a>
 </h4>
 <p>In cases where the additional confidence intervals overlap, you can vertically jitter them via the <code>jitter_reps</code> argument (logical). An example can be seen below (note that the data is different than above):</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="st">"test-data"</span>, <span class="st">"plotDataEXP.RDS"</span><span class="op">)</span>, package <span class="op">=</span> <span class="st">"pmforest"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="va">stat</span> <span class="op">+</span> <span class="op">(</span><span class="va">nsim</span><span class="op">/</span><span class="fl">600</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># making variability larger to demonstrate jitter</span>
-  <span class="fu"><a href="../reference/summarize_data.html">summarize_data</a></span><span class="op">(</span>
-    value <span class="op">=</span> <span class="va">stat</span>,
-    group <span class="op">=</span> <span class="va">GROUP</span>,
-    group_level <span class="op">=</span> <span class="va">LVL</span>,
-    replicate <span class="op">=</span> <span class="va">nsim</span>
-  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/plot_forest.html">plot_forest</a></span><span class="op">(</span>
-    jitter_reps <span class="op">=</span> <span class="cn">TRUE</span>,
-    vline_intercept <span class="op">=</span> <span class="fl">1</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="st">"test-data"</span>, <span class="st">"plotDataEXP.RDS"</span><span class="op">)</span>, package <span class="op">=</span> <span class="st">"pmforest"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="va">stat</span> <span class="op">+</span> <span class="op">(</span><span class="va">nsim</span><span class="op">/</span><span class="fl">600</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># making variability larger to demonstrate jitter</span></span>
+<span>  <span class="fu"><a href="../reference/summarize_data.html">summarize_data</a></span><span class="op">(</span></span>
+<span>    value <span class="op">=</span> <span class="va">stat</span>,</span>
+<span>    group <span class="op">=</span> <span class="va">GROUP</span>,</span>
+<span>    group_level <span class="op">=</span> <span class="va">LVL</span>,</span>
+<span>    replicate <span class="op">=</span> <span class="va">nsim</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/plot_forest.html">plot_forest</a></span><span class="op">(</span></span>
+<span>    jitter_reps <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    vline_intercept <span class="op">=</span> <span class="fl">1</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <p><img src="multiple-simulations_files/figure-html/unnamed-chunk-6-1.png" width="768"></p>
 </div>
 </div>
@@ -209,7 +209,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

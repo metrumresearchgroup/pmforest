@@ -20,7 +20,7 @@ section for data specification and format."><!-- mathjax --><script src="https:/
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pmforest</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
       </span>
     </div>
 
@@ -29,7 +29,7 @@ section for data specification and format."><!-- mathjax --><script src="https:/
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -72,56 +72,75 @@ section for data specification and format.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">summarize_data</span><span class="op">(</span>
-  <span class="va">data</span>,
-  <span class="va">value</span>,
-  <span class="va">group</span>,
-  group_level <span class="op">=</span> <span class="cn">NULL</span>,
-  metagroup <span class="op">=</span> <span class="cn">NULL</span>,
-  replicate <span class="op">=</span> <span class="cn">NULL</span>,
-  probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.95</span><span class="op">)</span>,
-  statistic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"median"</span>, <span class="st">"mean"</span>, <span class="st">"geo_mean"</span><span class="op">)</span>,
-  rep_probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.025</span>, <span class="fl">0.975</span><span class="op">)</span>,
-  rep_statistic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"median"</span>, <span class="st">"mean"</span>, <span class="st">"geo_mean"</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">summarize_data</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">value</span>,</span>
+<span>  <span class="va">group</span>,</span>
+<span>  group_level <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  metagroup <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  replicate <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.95</span><span class="op">)</span>,</span>
+<span>  statistic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"median"</span>, <span class="st">"mean"</span>, <span class="st">"geo_mean"</span><span class="op">)</span>,</span>
+<span>  rep_probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.025</span>, <span class="fl">0.975</span><span class="op">)</span>,</span>
+<span>  rep_statistic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"median"</span>, <span class="st">"mean"</span>, <span class="st">"geo_mean"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>data</dt>
 <dd><p>A dataframe or tibble to summarize. See Details section for required format.</p></dd>
+
+
 <dt>value</dt>
 <dd><p>name of the column in <code>data</code> to perform calculations on (i.e.
 median/mean, lower, and upper CI)</p></dd>
+
+
 <dt>group</dt>
 <dd><p>name of the column in <code>data</code> that defines groups within the
 data. Often, this will contain the names of the covariates you are grouping
 by.</p></dd>
+
+
 <dt>group_level</dt>
 <dd><p>(optional) name of the column in <code>data</code> that contains
 subgroups to group by. For example, if your <code>group</code> column contains
 covariates like <code>WEIGHT</code> and <code>AGE</code>, this column could contain categories
 like <code>underweight</code>, <code>average</code>, <code>overweight</code>, <code>young</code>, <code>mid</code>, <code>elderly</code>, etc.</p></dd>
+
+
 <dt>metagroup</dt>
 <dd><p>(optional) name of the column in <code>data</code> that contains
 <code>metagroups</code>. Similar to facet wrap, if passed, this will cause
 <code><a href="plot_forest.html">plot_forest()</a></code> to produce independent plots per metagroup.</p></dd>
+
+
 <dt>replicate</dt>
 <dd><p>(optional) name of the column in <code>data</code> that contains to an
 index of replicates, for example with multiple simulations or
 bootstrapping. If specified, <code><a href="plot_forest.html">plot_forest()</a></code> will draw additional CI's of
 the individual statistics, as small lines above each primary line.</p></dd>
+
+
 <dt>probs</dt>
 <dd><p>numeric vector of length two, both between 0 and 1, corresponding to
 your lower and upper tail probabilities. Defaults to <code>c(0.05, 0.95)</code></p></dd>
+
+
 <dt>statistic</dt>
 <dd><p>is the actual statistic to output (i.e. median/mean)</p></dd>
+
+
 <dt>rep_probs</dt>
 <dd><p>same as <code>probs</code> but used <strong>only when <code>replicate</code> is passed</strong>
 for the minor intervals (i.e. the small lines) above the major interval (i.e. the big lines).</p></dd>
+
+
 <dt>rep_statistic</dt>
 <dd><p>same as <code>statistic</code> but used <strong>only when <code>replicate</code> is
 passed</strong> for the minor intervals (i.e. the small lines) above the major interval (i.e. the big lines).</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -159,7 +178,7 @@ lines).</p></li>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

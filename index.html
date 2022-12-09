@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">pmforest</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
       </span>
     </div>
 
@@ -43,7 +43,7 @@
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -85,17 +85,15 @@
 <div class="section level1">
 <div class="page-header"><h1 id="pmforest">pmforest<a class="anchor" aria-label="anchor" href="#pmforest"></a>
 </h1></div>
-<!-- # pmforest <a href='https:/metrumresearchgroup.github.io/pmforest'><img src='man/figures/logo.png' align="right" height="120" /></a> -->
-<!-- badges: start -->
-
+<!-- # pmforest <a href='https:/metrumresearchgroup.github.io/pmforest'><img src='man/figures/logo.png' align="right" height="120" /></a> --><!-- badges: start -->
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>You can install the latest released version of <code>pmforest</code> via <a href="https://mpn.metworx.com/docs/snapshots/" class="external-link">MPN snapshots</a> from any snapshot date in March 2022 or later.</p>
 <p>You can install the latest development version from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/remote-reexports.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"metrumresearchgroup/pmforest"</span>, ref <span class="op">=</span> <span class="st">"main"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"metrumresearchgroup/pmforest"</span>, ref <span class="op">=</span> <span class="st">"main"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
@@ -106,7 +104,7 @@
 </h3>
 <ul>
 <li>
-<a href="https://metrumresearchgroup.github.io/pmforest/articles/getting-started.html">Getting Started with bbr</a> – Data specifications, summarization, and basic plotting methods.</li>
+<a href="https://metrumresearchgroup.github.io/pmforest/articles/getting-started.html">Getting Started</a> – Data specifications, summarization, and basic plotting methods.</li>
 <li>
 <a href="https://metrumresearchgroup.github.io/pmforest/articles/multiple-simulations.html">Multiple Simulations</a> – Plotting additional confidence intervals over the ‘replicate’ or simulation run.</li>
 </ul>
@@ -121,9 +119,7 @@
 <li><p>install pkgr</p></li>
 <li>
 <p>open package in an R session and run <code><a href="https://rstudio.github.io/renv/reference/init.html" class="external-link">renv::init()</a></code></p>
-<ul>
-<li>install <code>renv</code> &gt; 0.8.3-4 into default <code><a href="https://rdrr.io/r/base/libPaths.html" class="external-link">.libPaths()</a></code> if not already installed</li>
-</ul>
+<ul><li>install <code>renv</code> &gt; 0.8.3-4 into default <code><a href="https://rdrr.io/r/base/libPaths.html" class="external-link">.libPaths()</a></code> if not already installed</li></ul>
 </li>
 <li><p>run <code>pkgr install</code> in terminal within package directory</p></li>
 <li><p>restart session</p></li>
@@ -179,7 +175,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
