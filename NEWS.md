@@ -1,3 +1,13 @@
+# pmforest 0.1.1
+
+## Bug Fixes:
+
+* Fixed tests relating to plot labels that began failing with `yspec 0.5.2` (#17)
+* Updated test references when using a custom writer function (#18)
+* Numeric `group_levels` column can now be used properly. They were previously treated as missing (#25)
+* Dealt with deprecation warnings from `tidyselect` functions (#27)
+* Added support for `ggplot 3.4.0`, which changed the `size` attribute to `linewidth` in the case of `geom_line()` and similar functions (#28)
+
 
 # pmforest 0.1.0
 

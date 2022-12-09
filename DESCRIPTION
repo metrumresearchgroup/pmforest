@@ -1,6 +1,6 @@
 Package: pmforest
 Title: Create forest plots
-Version: 0.1.0
+Version: 0.1.1
 Description: Create forest plots.
 Authors@R:
     c(person(given = "Kyle", family = "Barrett",
