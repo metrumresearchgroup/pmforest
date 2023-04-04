@@ -3,9 +3,8 @@
 
 <br>
 
-# pmforest
+# pmforest <a href='https:/metrumresearchgroup.github.io/pmforest'><img src='man/figures/logo.png' align="right" height="120" /></a>
 
-<!-- # pmforest <a href='https:/metrumresearchgroup.github.io/pmforest'><img src='man/figures/logo.png' align="right" height="120" /></a> -->
 <!-- badges: start -->
 
 [![Build
@@ -57,7 +56,7 @@ replicate this environment,
 
 3.  open package in an R session and run `renv::init()`
 
-    -   install `renv` &gt; 0.8.3-4 into default `.libPaths()` if not
+    -   install `renv` \> 0.8.3-4 into default `.libPaths()` if not
         already installed
 
 4.  run `pkgr install` in terminal within package directory
