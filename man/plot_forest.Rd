@@ -15,6 +15,8 @@ plot_forest(
   x_lab = "Effect",
   y_lab = NULL,
   CI_label = NULL,
+  CI_bracket_open = c("[", "("),
+  CI_bracket_close = c("]", ")"),
   caption = NULL,
   text_size = 3.5,
   plot_width = 8,
@@ -48,7 +50,11 @@ to plot. This must be in the same format as the tibble that is output by
 
 \item{y_lab}{string. Default is not to label y axis.}
 
-\item{CI_label}{string. Ignored if \code{annotate_CI} is \code{FALSE}.}
+\item{CI_label}{string. Label above the CI table. Ignored if \code{annotate_CI} is \code{FALSE}.}
+
+\item{CI_bracket_open}{string. Denotes whether to use brackets (\code{[}) or parentheses (\code{(}) for the \strong{opening} interval. Ignored if \code{annotate_CI} is \code{FALSE}.}
+
+\item{CI_bracket_close}{string. Denotes whether to use brackets (\verb{]}) or parentheses (\verb{)}) for the \strong{closing} interval. Ignored if \code{annotate_CI} is \code{FALSE}.}
 
 \item{caption}{string. A patchwork styled caption for the overall plot.}
 
