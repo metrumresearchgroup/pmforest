@@ -315,14 +315,12 @@ describe("Base plots", {
     plt <- plot_forest(data = sumData,
                        CI_bracket_open = "[",
                        CI_bracket_close = ")"
-
     )
     vdiffr::expect_doppelganger("Change CI interval format - mixed", plt)
 
     plt <- plot_forest(data = sumData,
                        CI_bracket_open = "(",
                        CI_bracket_close = ")"
-
     )
     vdiffr::expect_doppelganger("Change CI interval format - change both", plt)
 
