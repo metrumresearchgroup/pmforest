@@ -325,12 +325,10 @@ describe("Base plots", {
     vdiffr::expect_doppelganger("Change CI interval format - change both", plt)
 
     # error
-    error_msg <- capture_error(
-      plot_forest(data = sumData, CI_bracket_open = "]", CI_bracket_close = "]")
-    )
-    expect_true(
-      grepl("'arg' should be one of", error_msg$message)
-    )
+    expect_error(
+      plot_forest(data = sumData, CI_bracket_open = "]", CI_bracket_close = "]"),
+      "'arg' should be one of"
+      )
 
   })
 })
