@@ -13,7 +13,9 @@
 #' @param maxex numeric. Maximum number of significant digits before moving to scientific notation. Passed through to [pmtables::sig()].
 #' @param x_lab string. x-axis label.
 #' @param y_lab string. Default is not to label y axis.
-#' @param CI_label string. Ignored if `annotate_CI` is `FALSE`.
+#' @param CI_label string. Label above the CI table. Ignored if `annotate_CI` is `FALSE`.
+#' @param CI_bracket_open string. Denotes whether to use brackets (`[`) or parentheses (`(`) for the **opening** interval. Ignored if `annotate_CI` is `FALSE`.
+#' @param CI_bracket_close string. Denotes whether to use brackets (`]`) or parentheses (`)`) for the **closing** interval. Ignored if `annotate_CI` is `FALSE`.
 #' @param caption string. A patchwork styled caption for the overall plot.
 #' @param text_size numeric. Text size for labels. Must be at least 3.5
 #' @param plot_width numeric. Value between 1 and 12 to denote the ratio of plot : CI table
@@ -40,6 +42,8 @@ plot_forest <- function(data,
                         x_lab = "Effect",
                         y_lab = NULL,
                         CI_label = NULL,
+                        CI_bracket_open = c("[", "("),
+                        CI_bracket_close = c("]", ")"),
                         caption = NULL,
                         text_size = 3.5,
                         plot_width = 8,
@@ -60,6 +64,8 @@ plot_forest <- function(data,
   assert_that(all(class(ggplot_theme) == c("theme", "gg")), msg = "`ggplot_theme` must be a ggplot theme. See `?ggplot2::theme` for details.")
   shapes <- match.arg(shapes)
   assert_that(is.numeric(shape_size) & shape_size >= 1 & shape_size <= 4, msg = "`shape_size` must be a numeric value between 1 and 4")
+  CI_bracket_open <- match.arg(CI_bracket_open)
+  CI_bracket_close <- match.arg(CI_bracket_close)
 
   # TODO: this will be refactored once we refactor some of the downstream code
   if (all(VALUE_COLS %in% names(data))) {
@@ -90,7 +96,7 @@ plot_forest <- function(data,
 
   ignored_cols <- names(data)[!(names(data) %in% c("group", "group_level", "metagroup", args))]
   if(length(ignored_cols) > 0){
-    warning(paste(
+    message(paste(
       glue("`data` has extra columns that will be ignored:  {paste(ignored_cols, collapse = ', ')}"),
       "If these were intended to be grouping columns, they must be named either `group`, `group_level`, or `metagroup`.",
       "See `?summarize_data` for more detail.",
@@ -116,6 +122,8 @@ plot_forest <- function(data,
       plot_width = plot_width,
       facet_titles = "",
       CI_label = CI_label,
+      CI_bracket_open = CI_bracket_open,
+      CI_bracket_close = CI_bracket_close,
       text_size = text_size,
       x_limit = x_limit,
       x_breaks = x_breaks,
@@ -161,6 +169,8 @@ plot_forest <- function(data,
           plot_width = plot_width,
           facet_titles = .y,
           CI_label = CI_label,
+          CI_bracket_open = CI_bracket_open,
+          CI_bracket_close = CI_bracket_close,
           text_size = text_size,
           x_limit = x_limit,
           x_breaks = x_breaks,

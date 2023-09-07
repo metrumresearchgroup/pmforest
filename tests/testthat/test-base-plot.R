@@ -308,6 +308,29 @@ describe("Base plots", {
     vdiffr::expect_doppelganger("Character interpretation of numeric group_level", plt2)
 
   })
+
+  it("Change CI interval format [PMF-PLOT-025]", {
+    skip_on_cran()
+    skip_vdiffr()
+    plt <- plot_forest(data = sumData,
+                       CI_bracket_open = "[",
+                       CI_bracket_close = ")"
+    )
+    vdiffr::expect_doppelganger("Change CI interval format - mixed", plt)
+
+    plt <- plot_forest(data = sumData,
+                       CI_bracket_open = "(",
+                       CI_bracket_close = ")"
+    )
+    vdiffr::expect_doppelganger("Change CI interval format - change both", plt)
+
+    # error
+    expect_error(
+      plot_forest(data = sumData, CI_bracket_open = "]", CI_bracket_close = "]"),
+      "'arg' should be one of"
+      )
+
+  })
 })
 
 

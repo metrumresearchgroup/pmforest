@@ -19,6 +19,8 @@ forest_constructor(
   plot_width,
   facet_titles = NULL,
   CI_label = NULL,
+  CI_bracket_open,
+  CI_bracket_close,
   table_layout = NULL,
   text_size = 3,
   x_limit = NULL,
@@ -54,7 +56,11 @@ to plot. This must be in the same format as the tibble that is output by
 
 \item{plot_width}{numeric. Value between 1 and 12 to denote the ratio of plot : CI table}
 
-\item{CI_label}{string. Ignored if \code{annotate_CI} is \code{FALSE}.}
+\item{CI_label}{string. Label above the CI table. Ignored if \code{annotate_CI} is \code{FALSE}.}
+
+\item{CI_bracket_open}{string. Denotes whether to use brackets (\code{[}) or parentheses (\code{(}) for the \strong{opening} interval. Ignored if \code{annotate_CI} is \code{FALSE}.}
+
+\item{CI_bracket_close}{string. Denotes whether to use brackets (\verb{]}) or parentheses (\verb{)}) for the \strong{closing} interval. Ignored if \code{annotate_CI} is \code{FALSE}.}
 
 \item{text_size}{numeric. Text size for labels. Must be at least 3.5}
 

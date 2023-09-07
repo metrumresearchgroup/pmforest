@@ -18,6 +18,8 @@ forest_constructor <- function(data,
                                plot_width,
                                facet_titles = NULL,
                                CI_label = NULL,
+                               CI_bracket_open,
+                               CI_bracket_close,
                                table_layout = NULL,
                                text_size = 3,
                                x_limit = NULL,
@@ -236,7 +238,7 @@ forest_constructor <- function(data,
     x_hat <- pmtables::sig(x_hat, digits = digits, maxex = maxex)
 
     CI <- c(
-      paste(x_hat, " [", lb, ", ", ub, "]", sep = ""),
+      paste(x_hat, " ", CI_bracket_open, lb, ", ", ub, CI_bracket_close, sep = ""),
       summary_label
     )
     CI_label <- data.frame(CI = CI, stringsAsFactors = FALSE)
