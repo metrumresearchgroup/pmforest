@@ -18,9 +18,6 @@
 #' @importFrom stats median quantile
 #' @importFrom RColorBrewer brewer.pal
 #'
-#' @include forest-constructor.R
-#' @include table-plot.R
-#' @include classicforest.R
 #'
 NULL
 

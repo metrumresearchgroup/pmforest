@@ -15,6 +15,8 @@ Authors@R:
              role = "aut",
              email = "annanev@umich.edu"))
 License: MIT + file LICENSE
+URL: https://metrumresearchgroup.github.io/pmforest, https://github.com/metrumresearchgroup/pmforest
+BugReports: https://github.com/metrumresearchgroup/pmforest/issues
 Imports:
     assertthat,
     dplyr,
@@ -34,8 +36,6 @@ Imports:
 Suggests:
     devtools,
     knitr,
-    mrgvalidate,
-    mrgvalprep (>= 0.0.4),
     svglite,
     testthat (>= 3.0.0),
     vdiffr,
@@ -48,13 +48,4 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 VignetteBuilder: knitr
-Collate: 
-    'classicforest.R'
-    'table-plot.R'
-    'forest-constructor.R'
-    'AAAA.R'
-    'helpers-for-tests.R'
-    'plot-forest.R'
-    'summarize-data.R'
-    'utils-null.R'
-    'utils-pipe.R'
+

@@ -11,7 +11,7 @@ Packages:
 
 Repos:
   - CRAN: https://cran.rstudio.com # used for most things
-  - MPN: https://mpn.metworx.com/snapshots/stable/2022-02-11 # used for pmtables and mrgval
+  - MPN: https://mpn.metworx.com/snapshots/stable/2023-08-24 # used for specific Metrum packages (such as pmtables & yspec)
 
 Lockfile:
     Type: renv
