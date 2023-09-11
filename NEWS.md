@@ -1,3 +1,14 @@
+# pmforest 0.2.0
+
+## New Features:
+
+* Adds two new arguments, `CI_bracket_open`, and `CI_bracket_close` for denoting the opening and closing intervals respectively (#32)
+
+## Bug Fixes:
+
+* Fixes to DESCRIPTION file (no need to collate files anymore) (#33)
+* Validation cleanup: fixes and cleanup associated with migrating away from validation via `mrgvalidate` and `mrgvalprep` (#33)
+
 # pmforest 0.1.1
 
 ## Bug Fixes:
