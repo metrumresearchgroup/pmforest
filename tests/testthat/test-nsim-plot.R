@@ -17,7 +17,7 @@ describe("Multiple simulations", {
   plotData2 <- readRDS(file.path(dataDir, "plotDataEXP.RDS")) %>%
     mutate(stat = stat + (nsim/300)) # make larger to test jitter
 
-  it("Multiple simulations base test [PMF-PLOT-012]", {
+  it("Multiple simulations base test", {
     skip_on_cran()
     skip_vdiffr()
     plt <- plotData %>%
@@ -39,7 +39,7 @@ describe("Multiple simulations", {
     vdiffr::expect_doppelganger("Multiple simulations", plt)
   })
 
-  it("Multiple CI's with jitter [PMF-PLOT-013]", {
+  it("Multiple CI's with jitter", {
     skip_on_cran()
     skip_vdiffr()
     plt <- plotData2 %>%

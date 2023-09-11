@@ -31,7 +31,7 @@ describe("Base plots", {
       group_level = LVL
     )
 
-  it("Test metagroup (Cl and V2) [PMF-PLOT-004]", {
+  it("Test metagroup (Cl and V2)", {
     skip_on_cran()
     skip_vdiffr()
     plt1 <- sumData2 %>%
@@ -45,7 +45,7 @@ describe("Base plots", {
 
   })
 
-  it("Test metagroup (Cl and V2) with labels [PMF-PLOT-005]", {
+  it("Test metagroup (Cl and V2) with labels", {
     skip_on_cran()
     skip_vdiffr()
     plt <- plot_forest(data = sumData2,
@@ -56,7 +56,7 @@ describe("Base plots", {
     vdiffr::expect_doppelganger("Test metagroup with labels", plt)
   })
 
-  it("CI Table - mean [PMF-PLOT-006]", {
+  it("CI Table - mean", {
     skip_on_cran()
     skip_vdiffr()
     plt <- plotData %>%
@@ -72,7 +72,7 @@ describe("Base plots", {
     vdiffr::expect_doppelganger("CI Table - mean", plt)
   })
 
-  it("CI Table - median [PMF-PLOT-007]", {
+  it("CI Table - median", {
     skip_on_cran()
     skip_vdiffr()
     plt <- plotData %>%
@@ -88,7 +88,7 @@ describe("Base plots", {
     vdiffr::expect_doppelganger("CI Table - median", plt)
   })
 
-  it("Plot/Table width [PMF-PLOT-008]", {
+  it("Plot/Table width", {
     skip_on_cran()
     skip_vdiffr()
     plt <- plot_forest(data = sumData,
@@ -97,7 +97,7 @@ describe("Base plots", {
     vdiffr::expect_doppelganger("Plot/Table width", plt)
   })
 
-  it("Vertical Intercept [PMF-PLOT-009]", {
+  it("Vertical Intercept", {
     skip_on_cran()
     skip_vdiffr()
     plt <- plot_forest(data = sumData,
@@ -106,7 +106,7 @@ describe("Base plots", {
     vdiffr::expect_doppelganger("Vertical Intercept", plt)
   })
 
-  it("shaded interval displays over correct range [PMF-PLOT-010]", {
+  it("shaded interval displays over correct range", {
     skip_on_cran()
     skip_vdiffr()
     plt <- plot_forest(data = sumData,
@@ -115,7 +115,7 @@ describe("Base plots", {
     vdiffr::expect_doppelganger("shaded interval", plt)
   })
 
-  it("update labels via yaml file [PMF-PLOT-011]", {
+  it("update labels via yaml file", {
     skip_on_cran()
     skip_vdiffr()
     plt <- plot_forest(data = sumData,
@@ -124,7 +124,7 @@ describe("Base plots", {
     vdiffr::expect_doppelganger("update labels via yaml file", plt)
   })
 
-  it("Axis labels and captions [PMF-PLOT-014]", {
+  it("Axis labels and captions", {
     skip_on_cran()
     skip_vdiffr()
     plt <- plotData %>%
@@ -142,7 +142,7 @@ describe("Base plots", {
     vdiffr::expect_doppelganger("Axis labels and captions", plt)
   })
 
-  it("Test breaks and limits of x-axis [PMF-PLOT-015]", {
+  it("Test breaks and limits of x-axis", {
     skip_on_cran()
     skip_vdiffr()
     plt <- plot_forest(data = sumData,
@@ -153,7 +153,7 @@ describe("Base plots", {
   })
 
 
-  it("Modify text size [PMF-PLOT-016]", {
+  it("Modify text size", {
     skip_on_cran()
     skip_vdiffr()
     plt <- plot_forest(data = sumData,
@@ -162,7 +162,7 @@ describe("Base plots", {
     vdiffr::expect_doppelganger("Modify text size", plt)
   })
 
-  it("Base plot [PMF-PLOT-017]", {
+  it("Base plot", {
     skip_on_cran()
     skip_vdiffr()
     plt <- plotData %>%
@@ -175,7 +175,7 @@ describe("Base plots", {
     vdiffr::expect_doppelganger("Base plot", plt)
   })
 
-  it("Full Test [PMF-PLOT-018]", {
+  it("Full Test", {
     skip_on_cran()
     skip_vdiffr()
     plt <- plot_forest(data = sumData,
@@ -198,7 +198,7 @@ describe("Base plots", {
     vdiffr::expect_doppelganger("Full Test", plt)
   })
 
-  it("plots without group_level [PMF-PLOT-019]", {
+  it("plots without group_level", {
     skip_on_cran()
     skip_vdiffr()
     df <-
@@ -212,7 +212,7 @@ describe("Base plots", {
     vdiffr::expect_doppelganger("No group_level", plt)
   })
 
-  it("modify shape of median value [PMF-PLOT-020]", {
+  it("modify shape of median value", {
     skip_on_cran()
     skip_vdiffr()
     plt <- plot_forest(data = sumData,
@@ -221,7 +221,7 @@ describe("Base plots", {
     vdiffr::expect_doppelganger("Modify shape", plt)
   })
 
-  it("modify shape size of median value [PMF-PLOT-021]", {
+  it("modify shape size of median value", {
     skip_on_cran()
     skip_vdiffr()
     plt <- plot_forest(data = sumData,
@@ -230,7 +230,7 @@ describe("Base plots", {
     vdiffr::expect_doppelganger("Modify shape size", plt)
   })
 
-  it("modify ggplot theme [PMF-PLOT-022]", {
+  it("modify ggplot theme", {
     skip_on_cran()
     skip_vdiffr()
     plt <- plot_forest(data = sumData,
@@ -239,7 +239,7 @@ describe("Base plots", {
     vdiffr::expect_doppelganger("Modify ggplot theme", plt)
   })
 
-  it("Multiple lines for CI_label [PMF-PLOT-023]", {
+  it("Multiple lines for CI_label", {
     skip_on_cran()
     skip_vdiffr()
     expect_error(
@@ -254,7 +254,7 @@ describe("Base plots", {
 
   })
 
-  it("Plot alignment with different saving to different sizes [PMF-PLOT-024]", {
+  it("Plot alignment with different saving to different sizes", {
     skip_on_cran()
     skip_vdiffr()
     plt <- plot_forest(data = sumData,
@@ -286,7 +286,7 @@ describe("Base plots", {
   })
 
 
-  it("group_level works with numeric data [PMF-PLOT-024]", {
+  it("group_level works with numeric data", {
     skip_on_cran()
     skip_vdiffr()
     df <- plotData %>%
@@ -309,7 +309,7 @@ describe("Base plots", {
 
   })
 
-  it("Change CI interval format [PMF-PLOT-025]", {
+  it("Change CI interval format", {
     skip_on_cran()
     skip_vdiffr()
     plt <- plot_forest(data = sumData,
