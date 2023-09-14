@@ -6,6 +6,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Multiple Simulations • pmforest</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -13,6 +19,7 @@
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Multiple Simulations">
 <meta property="og:description" content="pmforest">
+<meta property="og:image" content="https://metrumresearchgroup.github.io/pmforest/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -33,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pmforest</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
@@ -82,10 +89,11 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Multiple Simulations</h1>
-                        <h4 data-toc-skip class="author">Kyle Barrett</h4>
+                        <h4 data-toc-skip class="author">Kyle
+Barrett</h4>
             
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/metrumresearchgroup/pmforest/blob/HEAD/vignettes/multiple-simulations.Rmd" class="external-link"><code>vignettes/multiple-simulations.Rmd</code></a></small>
       <div class="hidden name"><code>multiple-simulations.Rmd</code></div>
 
     </div>
@@ -95,12 +103,17 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">pmforest</span><span class="op">)</span></span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://metrumresearchgroup.github.io/pmforest">pmforest</a></span><span class="op">)</span></span></code></pre></div>
 <style> body {text-align: justify} </style>
 <div class="section level4">
 <h4 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h4>
-<p>In some instances, it may be useful to present the variability of each summary statistic (i.e. median, 5th and 95th percentile). In order to accomplish this you must have a column denoting the replicate/simulation number. This column is then passed to the <code>replicate</code> argument. An example dataset comes with the package:</p>
+<p>In some instances, it may be useful to present the variability of
+each summary statistic (i.e. median, 5th and 95th percentile). In order
+to accomplish this you must have a column denoting the
+replicate/simulation number. This column is then passed to the
+<code>replicate</code> argument. An example dataset comes with the
+package:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rawData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="st">"test-data"</span>, <span class="st">"plotDataEXP.RDS"</span><span class="op">)</span>, package <span class="op">=</span> <span class="st">"pmforest"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">rawData</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
@@ -115,7 +128,10 @@
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>     1 1.01  AGE   20 years</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>     1 1.08  AGE   20 years</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>     1 1.06  AGE   20 years</span></span></code></pre></div>
-<p>In this example, <code>nsim</code> is the “replicate” identifier, while <code>stat</code> is the “value”, <code>GROUP</code> is the “group” column, and <code>LVL</code> will be “group_level”. Notice in our example we have 50 replicates and 1,800 rows for each replicate.</p>
+<p>In this example, <code>nsim</code> is the “replicate” identifier,
+while <code>stat</code> is the “value”, <code>GROUP</code> is the
+“group” column, and <code>LVL</code> will be “group_level”. Notice in
+our example we have 50 replicates and 1,800 rows for each replicate.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">rawData</span>, <span class="va">nsim</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 50 × 2</span></span></span>
@@ -131,13 +147,17 @@
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>     8  <span style="text-decoration: underline;">1</span>800</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>     9  <span style="text-decoration: underline;">1</span>800</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>    10  <span style="text-decoration: underline;">1</span>800</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 40 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 40 more rows</span></span></span></code></pre></div>
 <p><br></p>
 </div>
 <div class="section level2">
 <h2 id="summarize-data">Summarize data<a class="anchor" aria-label="anchor" href="#summarize-data"></a>
 </h2>
-<p>When summarizing the data, users will have to specify the <code>replicate</code> column. This will output the same data structure described in the “Summarize data” section of <a href="https://metrumresearchgroup.github.io/pmforest/articles/getting-started.html#summarize-data">the “Getting Started” vignette</a>, however it will now have <em>nine</em> numeric columns instead of three.</p>
+<p>When summarizing the data, users will have to specify the
+<code>replicate</code> column. This will output the same data structure
+described in the “Summarize data” section of <a href="https://metrumresearchgroup.github.io/pmforest/articles/getting-started.html#summarize-data">the
+“Getting Started” vignette</a>, however it will now have <em>nine</em>
+numeric columns instead of three.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sumData</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="fu"><a href="../reference/summarize_data.html">summarize_data</a></span><span class="op">(</span></span>
@@ -157,22 +177,42 @@
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> ALB   5 g/dL        1.05   1.04   1.05   0.991 0.986 0.998  1.10  1.10  1.11 </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> EGFR  Mild          0.915  0.907  0.921  0.861 0.856 0.865  0.968 0.962 0.973</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> EGFR  Moderate      0.695  0.690  0.705  0.633 0.625 0.641  0.760 0.750 0.770</span></span></code></pre></div>
-<p>These nine columns (<code>mid_mid</code>, <code>mid_lo</code>, <code>mid_hi</code>, plus three more each for <code>lo_*</code> and <code>hi_*</code>) contain the summarized values. In this case, the <code>mid_mid</code>, <code>lo_mid</code>, and <code>hi_mid</code> columns correspond to the values of the major interval (i.e. the big lines and central data point on the plots we are about to create) and the <code>*_lo</code> and <code>*_hi</code> columns correspond to the values for each of the three minor intervals (i.e. the small lines on the plots).</p>
-<p>Users can also use the arguments <code>rep_statistic</code> (options are “median”, “mean”, or “geo_mean”, defaulting to “median”), and the <code>rep_probs</code> (defaulting to <code>c(0.025, 0.975)</code>) to control how the minor intervals are calculated.</p>
-<p>As before, <a href="https://metrumresearchgroup.github.io/pmforest/reference/plot_forest.html"><code>plot_forest()</code></a> will assume the grouping column names shown above, and will throw an error if they are renamed to anything else.</p>
+<p>These nine columns (<code>mid_mid</code>, <code>mid_lo</code>,
+<code>mid_hi</code>, plus three more each for <code>lo_*</code> and
+<code>hi_*</code>) contain the summarized values. In this case, the
+<code>mid_mid</code>, <code>lo_mid</code>, and <code>hi_mid</code>
+columns correspond to the values of the major interval (i.e. the big
+lines and central data point on the plots we are about to create) and
+the <code>*_lo</code> and <code>*_hi</code> columns correspond to the
+values for each of the three minor intervals (i.e. the small lines on
+the plots).</p>
+<p>Users can also use the arguments <code>rep_statistic</code> (options
+are “median”, “mean”, or “geo_mean”, defaulting to “median”), and the
+<code>rep_probs</code> (defaulting to <code>c(0.025, 0.975)</code>) to
+control how the minor intervals are calculated.</p>
+<p>As before, <a href="https://metrumresearchgroup.github.io/pmforest/reference/plot_forest.html"><code>plot_forest()</code></a>
+will assume the grouping column names shown above, and will throw an
+error if they are renamed to anything else.</p>
 </div>
 <div class="section level2">
 <h2 id="create-plots">Create plots<a class="anchor" aria-label="anchor" href="#create-plots"></a>
 </h2>
-<p>You can now pass this data directly to <a href="https://metrumresearchgroup.github.io/pmforest/reference/plot_forest.html"><code>pmforest::plot_forest()</code></a>. The function will recognize the additional columns and automatically draw the minor intervals.</p>
-<p>Note: these plots can be customized and labelled as shown in <a href="https://metrumresearchgroup.github.io/pmforest/articles/getting-started.html#formatting-arguments">the “Getting Started” vignette</a>, but for clarity and simplicity, we just show the basic forest plots below.</p>
+<p>You can now pass this data directly to <a href="https://metrumresearchgroup.github.io/pmforest/reference/plot_forest.html"><code>pmforest::plot_forest()</code></a>.
+The function will recognize the additional columns and automatically
+draw the minor intervals.</p>
+<p>Note: these plots can be customized and labelled as shown in <a href="https://metrumresearchgroup.github.io/pmforest/articles/getting-started.html#formatting-arguments">the
+“Getting Started” vignette</a>, but for clarity and simplicity, we just
+show the basic forest plots below.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_forest.html">plot_forest</a></span><span class="op">(</span><span class="va">sumData</span>, vline_intercept <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p><img src="multiple-simulations_files/figure-html/unnamed-chunk-5-1.png" width="768"></p>
 <div class="section level4">
 <h4 id="jitter-minor-interval">Jitter minor interval<a class="anchor" aria-label="anchor" href="#jitter-minor-interval"></a>
 </h4>
-<p>In cases where the additional confidence intervals overlap, you can vertically jitter them via the <code>jitter_reps</code> argument (logical). An example can be seen below (note that the data is different than above):</p>
+<p>In cases where the additional confidence intervals overlap, you can
+vertically jitter them via the <code>jitter_reps</code> argument
+(logical). An example can be seen below (note that the data is different
+than above):</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="st">"test-data"</span>, <span class="st">"plotDataEXP.RDS"</span><span class="op">)</span>, package <span class="op">=</span> <span class="st">"pmforest"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
@@ -209,7 +249,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
