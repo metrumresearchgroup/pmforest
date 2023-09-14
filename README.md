@@ -3,7 +3,7 @@
 
 <br>
 
-# pmforest <a href='https:/metrumresearchgroup.github.io/pmforest'><img src='man/figures/logo.png' align="right" height="120" /></a>
+# pmforest <a href='https:/metrumresearchgroup.github.io/pmforest'><img src='man/figures/logo.png' align="right" width="135px"/></a>
 
 <!-- badges: start -->
 
