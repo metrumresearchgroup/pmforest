@@ -3,8 +3,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
-^.drone.yml$
-^.drone.jsonnet$
 ^README\.Rmd$
 ^_pkgdown\.yml$
 ^docs$

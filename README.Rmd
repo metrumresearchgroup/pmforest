@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 # pmforest <a href='https:/metrumresearchgroup.github.io/pmforest'><img src='man/figures/logo.png' align="right" width="135px"/></a>
 
 <!-- badges: start -->
-[![Build Status](https://github-drone.metrumrg.com/api/badges/metrumresearchgroup/pmforest/status.svg)](https://github-drone.metrumrg.com/metrumresearchgroup/pmforest)
+[![Build Status](https://github.com/metrumresearchgroup/pmforest/actions/workflows/main.yaml/badge.svg)](https://github.com/metrumresearchgroup/pmforest/actions/workflows/main.yaml)
 [![codecov](https://codecov.io/gh/metrumresearchgroup/pmforest/branch/main/graph/badge.svg)](https://codecov.io/gh/metrumresearchgroup/pmforest)
 <!-- badges: end -->
 

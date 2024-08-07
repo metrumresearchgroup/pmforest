@@ -8,7 +8,7 @@
 <!-- badges: start -->
 
 [![Build
-Status](https://github-drone.metrumrg.com/api/badges/metrumresearchgroup/pmforest/status.svg)](https://github-drone.metrumrg.com/metrumresearchgroup/pmforest)
+Status](https://github.com/metrumresearchgroup/pmforest/actions/workflows/main.yaml/badge.svg)](https://github.com/metrumresearchgroup/pmforest/actions/workflows/main.yaml)
 [![codecov](https://codecov.io/gh/metrumresearchgroup/pmforest/branch/main/graph/badge.svg)](https://codecov.io/gh/metrumresearchgroup/pmforest)
 <!-- badges: end -->
 
@@ -35,13 +35,13 @@ highlighted as well.
 
 ### Featured Vignettes
 
--   [Getting
-    Started](https://metrumresearchgroup.github.io/pmforest/articles/getting-started.html)
-    – Data specifications, summarization, and basic plotting methods.
--   [Multiple
-    Simulations](https://metrumresearchgroup.github.io/pmforest/articles/multiple-simulations.html)
-    – Plotting additional confidence intervals over the ‘replicate’ or
-    simulation run.
+- [Getting
+  Started](https://metrumresearchgroup.github.io/pmforest/articles/getting-started.html)
+  – Data specifications, summarization, and basic plotting methods.
+- [Multiple
+  Simulations](https://metrumresearchgroup.github.io/pmforest/articles/multiple-simulations.html)
+  – Plotting additional confidence intervals over the ‘replicate’ or
+  simulation run.
 
 ## Development
 
@@ -56,8 +56,8 @@ replicate this environment,
 
 3.  open package in an R session and run `renv::init()`
 
-    -   install `renv` \> 0.8.3-4 into default `.libPaths()` if not
-        already installed
+    - install `renv` \> 0.8.3-4 into default `.libPaths()` if not
+      already installed
 
 4.  run `pkgr install` in terminal within package directory
 
