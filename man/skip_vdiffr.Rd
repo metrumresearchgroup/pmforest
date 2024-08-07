@@ -2,7 +2,7 @@
 % Please edit documentation in R/helpers-for-tests.R
 \name{skip_vdiffr}
 \alias{skip_vdiffr}
-\title{Skip test if not on Metworx or Drone}
+\title{Skip test if not on Metworx or CI}
 \usage{
 skip_vdiffr()
 }
