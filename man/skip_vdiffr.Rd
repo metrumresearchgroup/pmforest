@@ -2,7 +2,7 @@
 % Please edit documentation in R/helpers-for-tests.R
 \name{skip_vdiffr}
 \alias{skip_vdiffr}
-\title{Skip test if not on Metworx or CI}
+\title{Skip test if \code{PMF_SKIP_VDIFFR} environment variable set to \code{TRUE}}
 \usage{
 skip_vdiffr()
 }
