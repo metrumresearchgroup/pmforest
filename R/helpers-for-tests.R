@@ -1,4 +1,4 @@
-#' Skip test if not on Metworx or Drone
+#' Skip test if `PMF_SKIP_VDIFFR` environment variable set to `TRUE`
 #'
 #' Checks for custom `PMF_SKIP_VDIFFR` environment variable and skips any tests
 #' that use `vdiffr` if set to `"true"`. This is useful because
