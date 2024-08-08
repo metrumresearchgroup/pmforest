@@ -9,7 +9,6 @@
 
 [![Build
 Status](https://github.com/metrumresearchgroup/pmforest/actions/workflows/main.yaml/badge.svg)](https://github.com/metrumresearchgroup/pmforest/actions/workflows/main.yaml)
-[![codecov](https://codecov.io/gh/metrumresearchgroup/pmforest/branch/main/graph/badge.svg)](https://codecov.io/gh/metrumresearchgroup/pmforest)
 <!-- badges: end -->
 
 ## Installation
