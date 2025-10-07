@@ -40,6 +40,16 @@
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 </g>
 <defs>
+  <clipPath id='cpNS40OHw3MTQuNTJ8Mjk2LjY1fDU3MC41Mg=='>
+    <rect x='5.48' y='296.65' width='709.04' height='273.87' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpNS40OHw3MTQuNTJ8Mjk2LjY1fDU3MC41Mg==)'>
+<rect x='5.48' y='296.65' width='709.04' height='273.87' style='stroke-width: 1.07; stroke: #FFFFFF; fill: #FFFFFF;' />
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+</g>
+<defs>
   <clipPath id='cpODAuOTF8NzAzLjU2fDQ0LjQxfDI2Ny41MA=='>
     <rect x='80.91' y='44.41' width='622.65' height='223.10' />
   </clipPath>
@@ -131,16 +141,6 @@
 <text x='546.74' y='277.90' text-anchor='middle' style='font-size: 7.94px; fill: #4D4D4D; font-family: sans;' textLength='11.03px' lengthAdjust='spacingAndGlyphs'>1.0</text>
 <text x='392.23' y='289.11' text-anchor='middle' style='font-size: 9.92px; font-family: sans;' textLength='25.37px' lengthAdjust='spacingAndGlyphs'>Effect</text>
 <text x='80.91' y='36.46' style='font-size: 11.91px; font-family: sans;' textLength='46.97px' lengthAdjust='spacingAndGlyphs'>CL (L/hr)</text>
-</g>
-<defs>
-  <clipPath id='cpNS40OHw3MTQuNTJ8Mjk2LjY1fDU3MC41Mg=='>
-    <rect x='5.48' y='296.65' width='709.04' height='273.87' />
-  </clipPath>
-</defs>
-<g clip-path='url(#cpNS40OHw3MTQuNTJ8Mjk2LjY1fDU3MC41Mg==)'>
-<rect x='5.48' y='296.65' width='709.04' height='273.87' style='stroke-width: 1.07; stroke: #FFFFFF; fill: #FFFFFF;' />
-</g>
-<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 </g>
 <defs>
   <clipPath id='cpODAuOTF8NzAzLjU2fDMxOC4yOHw1NDEuMzc='>
