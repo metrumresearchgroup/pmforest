@@ -19,6 +19,7 @@ jobs:
         config:
           - os: ubuntu-22.04
             r: 4.0.5
+            mpn: 2023-01-25
             rspm: 'https://packagemanager.posit.co/cran/__linux__/jammy/2023-01-25'
             cran_override: 'https://mpn.metworx.com/snapshots/stable/2023-01-25'
           - os: ubuntu-22.04
@@ -36,16 +37,16 @@ jobs:
         with:
           r-version: ${{ matrix.config.r }}
           use-public-rspm: true
-          extra-repositories: 'https://mpn.metworx.com/snapshots/stable/${{ env.MPN_LATEST }}'
+          extra-repositories: 'https://mpn.metworx.com/snapshots/stable/${{ matrix.config.mpn || env.MPN_LATEST }}'
+        env:
+          RSPM: ${{ matrix.config.rspm }}
+          CRAN: ${{ matrix.config.cran_override }}
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: |
             any::pkgdown
             any::rcmdcheck
-          upgrade: ${{ matrix.config.r == '4.0.5' && 'FALSE' || 'TRUE' }}
-        env:
-          RSPM: ${{ matrix.config.rspm }}
-          CRAN: ${{ matrix.config.cran_override }}
+          upgrade: 'TRUE'
       - uses: r-lib/actions/check-r-package@v2
       - name: Check pkgdown
         shell: Rscript {0}
