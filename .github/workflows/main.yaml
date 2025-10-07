@@ -44,7 +44,7 @@ jobs:
             any::rcmdcheck
             ${{ matrix.config.purrr_pkg }}
             ${{ matrix.config.svglite_pkg }}
-          upgrade: 'TRUE'
+          upgrade: ${{ matrix.config.r == '4.0.5' && 'FALSE' || 'TRUE' }}
       - uses: r-lib/actions/check-r-package@v2
       - name: Check pkgdown
         shell: Rscript {0}
