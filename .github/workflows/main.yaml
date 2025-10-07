@@ -20,7 +20,7 @@ jobs:
           - os: ubuntu-22.04
             r: 4.0.5
             purrr_pkg: 'url::https://mpn.metworx.com/snapshots/stable/2025-06-16/src/contrib/purrr_1.0.4.tar.gz'
-            svglite_pkg: 'url::https://mpn.metworx.com/snapshots/stable/2025-02-26/src/contrib/svglite_2.0.0.tar.gz'
+            svglite_pkg: 'url::https://mpn.metworx.com/snapshots/stable/2025-02-26/src/contrib/svglite_2.1.3.tar.gz'
           - os: ubuntu-22.04
             r: 4.2.3
           - os: ubuntu-22.04
