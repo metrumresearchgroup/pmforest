@@ -108,28 +108,18 @@ classicforest <- function(plotdata,
     p <-
       ggplot(data = plotdata, aes(y = ID, x = x, group=factor(group))) +
       geom_vline(xintercept = vline_intercept, linetype = 4) +
-      geom_errorbarh(data = plotdata,
-                     # col = "black",
-                     aes(
-                       col = factor(group),
-                       xmin = x_min,
-                       xmax = x_max,
-                       y = ID,
-                       height = 0
-                     ))
+      geom_hbar(
+        data = plotdata,
+        aes(col = factor(group), xmin = x_min, xmax = x_max, y = ID)
+      )
   }else{
     p <-
       ggplot(data = plotdata, aes(y = ID, x = mid_mid, group=factor(group))) +
       geom_vline(xintercept = vline_intercept, linetype = 4) +
-      geom_errorbarh(data = plotdata,
-                     # col = "black",
-                     aes(
-                       col = factor(group),
-                       xmin = lo_mid,
-                       xmax = hi_mid,
-                       y = ID,
-                       height = 0
-                     ))
+      geom_hbar(
+        data = plotdata,
+        aes(col = factor(group), xmin = lo_mid, xmax = hi_mid, y = ID)
+      )
   }
   if(is.null(y_lab)){
     y_lab <- ""
@@ -223,4 +213,12 @@ if (utils::packageVersion("ggplot2") >= "3.4.0") {
   linerange <- function(..., linewidth = 0.7) {
     geom_linerange(..., size = linewidth)
   }
+}
+
+# ggplot2 >= 4.0.0 deprecates geom_errorbarh();
+# use geom_errorbar() with orientation = "y" and width = 0
+if (utils::packageVersion("ggplot2") >= "4.0.0") {
+  geom_hbar <- function(...) ggplot2::geom_errorbar(..., orientation = "y", width = 0)
+} else {
+  geom_hbar <- function(...) ggplot2::geom_errorbarh(..., height = 0)
 }
