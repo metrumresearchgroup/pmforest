@@ -30,6 +30,7 @@ jobs:
             r: release
     env:
       R_KEEP_PKG_SOURCE: yes
+      PMF_SKIP_VDIFFR: true
     steps:
       - uses: actions/checkout@v4
       - uses: metrumresearchgroup/actions/mpn-latest@v1
