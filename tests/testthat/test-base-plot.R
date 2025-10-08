@@ -274,11 +274,23 @@ describe("Base plots", {
                    annotate_CI=T
     )
 
+    # Note: ggplot2 saves SVGs differently and is more likely to fail in CI
+    # - use svglite::svglite rather than ggsave for testing.
+    # - no differences locally
     save_small <- function(plot, file, title = "") {
-      ggplot2::ggsave(file, plot, device = "svg", height = 3, width = 3)
+      # mimics this call:
+      # ggplot2::ggsave(file, plot, device = "svg", height = 3, width = 3)
+      svglite::svglite(file, width = 3, height = 3)
+      print(plot)
+      grDevices::dev.off()
     }
+
     save_big <- function(plot, file, title = "") {
-      ggplot2::ggsave(file, plot, device = "svg", height = 8, width = 10)
+      # mimics this call:
+      # ggplot2::ggsave(file, plot, device = "svg", height = 8, width = 10)
+      svglite::svglite(file, width = 10, height = 8)
+      print(plot)
+      grDevices::dev.off()
     }
     vdiffr::expect_doppelganger("Full Test - small", plt, writer = save_small)
     vdiffr::expect_doppelganger("Full Test - big", plt, writer = save_big)
