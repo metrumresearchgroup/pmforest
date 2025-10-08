@@ -17,16 +17,20 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             r: 4.0.5
-          - os: ubuntu-20.04
+            mpn: 2023-01-25
+            rspm: 'https://packagemanager.posit.co/cran/__linux__/jammy/2023-01-25'
+            cran_override: 'https://mpn.metworx.com/snapshots/stable/2023-01-25'
+          - os: ubuntu-22.04
             r: 4.2.3
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             r: 4.3.1
           - os: ubuntu-latest
             r: release
     env:
       R_KEEP_PKG_SOURCE: yes
+      PMF_SKIP_VDIFFR: true
     steps:
       - uses: actions/checkout@v4
       - uses: metrumresearchgroup/actions/mpn-latest@v1
@@ -34,7 +38,10 @@ jobs:
         with:
           r-version: ${{ matrix.config.r }}
           use-public-rspm: true
-          extra-repositories: 'https://mpn.metworx.com/snapshots/stable/${{ env.MPN_LATEST }}'
+          extra-repositories: 'https://mpn.metworx.com/snapshots/stable/${{ matrix.config.mpn || env.MPN_LATEST }}'
+        env:
+          RSPM: ${{ matrix.config.rspm }}
+          CRAN: ${{ matrix.config.cran_override }}
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: |
