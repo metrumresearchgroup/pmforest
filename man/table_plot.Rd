@@ -2,7 +2,7 @@
 % Please edit documentation in R/table-plot.R
 \name{table_plot}
 \alias{table_plot}
-\title{table plot}
+\title{Table panel for the forest plot}
 \usage{
 table_plot(
   tbl,
@@ -11,7 +11,6 @@ table_plot(
   r = 5.5,
   l = 5.5,
   tbl_titles = NULL,
-  plotdata,
   text_size,
   y_limit,
   y_breaks,
@@ -19,17 +18,33 @@ table_plot(
 )
 }
 \arguments{
+\item{tbl}{Data frame or matrix of strings to display. One row per item
+(matching \code{ID}), one column per table column.}
+
 \item{summary_label}{(optional) labeler function created using \code{ggplot2::as_labeller}. Labels for group and metagroup.}
 
-\item{r, l}{parameters corresponding to the plot margin for the confidence intervals}
+\item{ID}{Numeric vector of y positions corresponding to table rows. Used to
+align the table with the forest plot.}
 
-\item{plotdata}{dataframe constructed by forest_constructor}
+\item{r, l}{parameters corresponding to the plot margin for the confidence
+intervals.}
+
+\item{tbl_titles}{Character vector of column headers. If \code{NULL}, defaults to
+\code{names(tbl)}. Headers may include \code{"\\n"} for multi-line labels (max 3
+lines).}
 
 \item{text_size}{numeric. Text size for labels. Must be at least 3.5}
 
-\item{madata}{dataframe constructed by forest_constructor}
+\item{y_limit}{Numeric vector giving the y-axis limits (min, max) for the
+table panel.}
+
+\item{y_breaks}{Numeric vector of y-axis breaks.}
+
+\item{y_lines}{Numeric vector of y positions (where to draw horizontal
+separator lines).}
 }
 \description{
-Private helper to record and tabulate confidence intervals. Called internally by forest_constructor
+Table panel helper that lays out the tabular labels/CI strings for a forest
+plot. Each column of \code{tbl} becomes a column in the rendered table.
 }
 \keyword{internal}
