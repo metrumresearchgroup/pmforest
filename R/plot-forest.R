@@ -61,7 +61,7 @@ plot_forest <- function(data,
   assert_that((is.character(caption) | is.null(caption)), msg = "`caption` must be a character scalar.")
   assert_that(is_logical(annotate_CI), msg = "`annotate_CI` must be a logical value (T/F)")
   assert_that(is_logical(jitter_reps), msg = "`jitter_reps` must be a logical value (T/F)")
-  assert_that(all(class(ggplot_theme) == c("theme", "gg")), msg = "`ggplot_theme` must be a ggplot theme. See `?ggplot2::theme` for details.")
+  assert_that(inherits(ggplot_theme, c("theme", "gg")), msg = "`ggplot_theme` must be a ggplot theme. See `?ggplot2::theme` for details.")
   shapes <- match.arg(shapes)
   assert_that(is.numeric(shape_size) & shape_size >= 1 & shape_size <= 4, msg = "`shape_size` must be a numeric value between 1 and 4")
   CI_bracket_open <- match.arg(CI_bracket_open)

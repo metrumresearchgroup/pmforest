@@ -1,10 +1,23 @@
-#' table plot
+#' Table panel for the forest plot
 #'
-#' Private helper to record and tabulate confidence intervals. Called internally by forest_constructor
+#' Table panel helper that lays out the tabular labels/CI strings for a forest
+#' plot. Each column of `tbl` becomes a column in the rendered table.
+#'
+#' @param tbl Data frame or matrix of strings to display. One row per item
+#'   (matching `ID`), one column per table column.
 #' @inheritParams plot_forest
-#' @param plotdata dataframe constructed by forest_constructor
-#' @param madata dataframe constructed by forest_constructor
-#' @param r,l parameters corresponding to the plot margin for the confidence intervals
+#' @param ID Numeric vector of y positions corresponding to table rows. Used to
+#'   align the table with the forest plot.
+#' @param r,l parameters corresponding to the plot margin for the confidence
+#'   intervals.
+#' @param tbl_titles Character vector of column headers. If `NULL`, defaults to
+#'   `names(tbl)`. Headers may include `"\n"` for multi-line labels (max 3
+#'   lines).
+#' @param y_limit Numeric vector giving the y-axis limits (min, max) for the
+#'   table panel.
+#' @param y_breaks Numeric vector of y-axis breaks.
+#' @param y_lines Numeric vector of y positions (where to draw horizontal
+#'   separator lines).
 #' @keywords internal
 table_plot <-
   function(tbl,
@@ -13,7 +26,6 @@ table_plot <-
            r = 5.5,
            l = 5.5,
            tbl_titles = NULL,
-           plotdata,
            text_size,
            y_limit,
            y_breaks,

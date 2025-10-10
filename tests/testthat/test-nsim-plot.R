@@ -36,7 +36,7 @@ describe("Multiple simulations", {
          x_lab = "Fraction and 95% CI \nRelative to Reference",
          CI_label = "Mean [95% CI]"
     )
-    vdiffr::expect_doppelganger("Multiple simulations", plt)
+    pmf_expect_plot("Multiple simulations", plt)
   })
 
   it("Multiple CI's with jitter", {
@@ -58,7 +58,7 @@ describe("Multiple simulations", {
         CI_label = "Median [95% CI]",
         jitter_reps = TRUE
       )
-    vdiffr::expect_doppelganger("Multiple CI's with jitter", plt)
+    pmf_expect_plot("Multiple CI's with jitter", plt)
   })
 
 })

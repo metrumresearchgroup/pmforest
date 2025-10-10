@@ -36,12 +36,12 @@ describe("Base plots", {
     skip_vdiffr()
     plt1 <- sumData2 %>%
       plot_forest(annotate_CI = F)
-    vdiffr::expect_doppelganger("Test metagroup", plt1)
+    pmf_expect_plot("Test metagroup", plt1)
 
     plt2 <- sumData2 %>%
       plot_forest(annotate_CI = F,
                   nrow = 2)
-    vdiffr::expect_doppelganger("Test metagroup with nrow", plt2)
+    pmf_expect_plot("Test metagroup with nrow", plt2)
 
   })
 
@@ -53,7 +53,7 @@ describe("Base plots", {
                        nrow = 2,
                        summary_label = plot_labels
     )
-    vdiffr::expect_doppelganger("Test metagroup with labels", plt)
+    pmf_expect_plot("Test metagroup with labels", plt)
   })
 
   it("CI Table - mean", {
@@ -69,7 +69,7 @@ describe("Base plots", {
         probs = c(0.005, 0.995)
       ) %>%
       plot_forest(annotate_CI = TRUE)
-    vdiffr::expect_doppelganger("CI Table - mean", plt)
+    pmf_expect_plot("CI Table - mean", plt)
   })
 
   it("CI Table - median", {
@@ -85,7 +85,7 @@ describe("Base plots", {
         probs = c(0.005, 0.995)
       ) %>%
       plot_forest(annotate_CI = TRUE)
-    vdiffr::expect_doppelganger("CI Table - median", plt)
+    pmf_expect_plot("CI Table - median", plt)
   })
 
   it("Plot/Table width", {
@@ -94,7 +94,7 @@ describe("Base plots", {
     plt <- plot_forest(data = sumData,
                        plot_width = 6 # not the default value
     )
-    vdiffr::expect_doppelganger("Plot/Table width", plt)
+    pmf_expect_plot("Plot/Table width", plt)
   })
 
   it("Vertical Intercept", {
@@ -103,7 +103,7 @@ describe("Base plots", {
     plt <- plot_forest(data = sumData,
                        vline_intercept = 1
     )
-    vdiffr::expect_doppelganger("Vertical Intercept", plt)
+    pmf_expect_plot("Vertical Intercept", plt)
   })
 
   it("shaded interval displays over correct range", {
@@ -112,7 +112,7 @@ describe("Base plots", {
     plt <- plot_forest(data = sumData,
                        shaded_interval = c(0.8,1.25),
     )
-    vdiffr::expect_doppelganger("shaded interval", plt)
+    pmf_expect_plot("shaded interval", plt)
   })
 
   it("update labels via yaml file", {
@@ -121,7 +121,7 @@ describe("Base plots", {
     plt <- plot_forest(data = sumData,
                        summary_label = plot_labels
     )
-    vdiffr::expect_doppelganger("update labels via yaml file", plt)
+    pmf_expect_plot("update labels via yaml file", plt)
   })
 
   it("Axis labels and captions", {
@@ -139,7 +139,7 @@ describe("Base plots", {
         caption = "The shaded area corresponds
                                   to the interval (0.8, 1.25)"
       )
-    vdiffr::expect_doppelganger("Axis labels and captions", plt)
+    pmf_expect_plot("Axis labels and captions", plt)
   })
 
   it("Test breaks and limits of x-axis", {
@@ -149,7 +149,7 @@ describe("Base plots", {
                        x_breaks = c(0.4,0.6, 0.8, 1, 1.2, 1.4,1.6),
                        x_limit = c(0.4,1.45)
     )
-    vdiffr::expect_doppelganger("Test breaks and limits of x-axis", plt)
+    pmf_expect_plot("Test breaks and limits of x-axis", plt)
   })
 
 
@@ -159,7 +159,7 @@ describe("Base plots", {
     plt <- plot_forest(data = sumData,
                        text_size = 4
     )
-    vdiffr::expect_doppelganger("Modify text size", plt)
+    pmf_expect_plot("Modify text size", plt)
   })
 
   it("Base plot", {
@@ -172,7 +172,7 @@ describe("Base plots", {
         group_level = LVL
       ) %>%
       plot_forest()
-    vdiffr::expect_doppelganger("Base plot", plt)
+    pmf_expect_plot("Base plot", plt)
   })
 
   it("Full Test", {
@@ -195,7 +195,7 @@ describe("Base plots", {
                    shape_size = 2,
                    annotate_CI=T
     )
-    vdiffr::expect_doppelganger("Full Test", plt)
+    pmf_expect_plot("Full Test", plt)
   })
 
   it("plots without group_level", {
@@ -209,7 +209,7 @@ describe("Base plots", {
         hi = c(5, 6, 7)
       )
     plt <- plot_forest(df)
-    vdiffr::expect_doppelganger("No group_level", plt)
+    pmf_expect_plot("No group_level", plt)
   })
 
   it("modify shape of median value", {
@@ -218,7 +218,7 @@ describe("Base plots", {
     plt <- plot_forest(data = sumData,
                        shapes = "square"
     )
-    vdiffr::expect_doppelganger("Modify shape", plt)
+    pmf_expect_plot("Modify shape", plt)
   })
 
   it("modify shape size of median value", {
@@ -227,7 +227,7 @@ describe("Base plots", {
     plt <- plot_forest(data = sumData,
                        shape_size = 2
     )
-    vdiffr::expect_doppelganger("Modify shape size", plt)
+    pmf_expect_plot("Modify shape size", plt)
   })
 
   it("modify ggplot theme", {
@@ -236,7 +236,7 @@ describe("Base plots", {
     plt <- plot_forest(data = sumData,
                        ggplot_theme = theme_classic()
     )
-    vdiffr::expect_doppelganger("Modify ggplot theme", plt)
+    pmf_expect_plot("Modify ggplot theme", plt)
   })
 
   it("Multiple lines for CI_label", {
@@ -250,7 +250,7 @@ describe("Base plots", {
     plt <- plot_forest(data = sumData,
                        CI_label = "Line1\nLine2\nLine3"
     )
-    vdiffr::expect_doppelganger("Multiple lines for CI_label", plt)
+    pmf_expect_plot("Multiple lines for CI_label", plt)
 
   })
 
@@ -281,8 +281,8 @@ describe("Base plots", {
     save_big <- function(plot, file, title = "") {
       ggplot2::ggsave(file, plot, device = "svg", height = 8, width = 10)
     }
-    vdiffr::expect_doppelganger("Full Test - small", plt, writer = save_small)
-    vdiffr::expect_doppelganger("Full Test - big", plt, writer = save_big)
+    pmf_expect_plot("Full Test - small", plt, writer = save_small)
+    pmf_expect_plot("Full Test - big", plt, writer = save_big)
   })
 
 
@@ -298,14 +298,14 @@ describe("Base plots", {
     df <- df %>% mutate(group_level = 1:dplyr::n())
 
     plt1 <- plot_forest(df)
-    vdiffr::expect_doppelganger("Numeric group_level", plt1)
+    pmf_expect_plot("Numeric group_level", plt1)
 
     # Character representations of numeric data (e.g. '10.0' also used to not work)
     # Test for this as well
     df <- df %>% mutate(group_level = as.character(group_level))
 
     plt2 <- plot_forest(df)
-    vdiffr::expect_doppelganger("Character interpretation of numeric group_level", plt2)
+    pmf_expect_plot("group_level with numeric data", plt2)
 
   })
 
@@ -316,13 +316,13 @@ describe("Base plots", {
                        CI_bracket_open = "[",
                        CI_bracket_close = ")"
     )
-    vdiffr::expect_doppelganger("Change CI interval format - mixed", plt)
+    pmf_expect_plot("Change CI interval format - mixed", plt)
 
     plt <- plot_forest(data = sumData,
                        CI_bracket_open = "(",
                        CI_bracket_close = ")"
     )
-    vdiffr::expect_doppelganger("Change CI interval format - change both", plt)
+    pmf_expect_plot("Change CI interval format - change both", plt)
 
     # error
     expect_error(
