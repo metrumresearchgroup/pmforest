@@ -305,7 +305,7 @@ describe("Base plots", {
     df <- df %>% mutate(group_level = as.character(group_level))
 
     plt2 <- plot_forest(df)
-    pmf_expect_plot("Character interpretation of numeric group_level", plt2)
+    pmf_expect_plot("group_level with numeric data", plt2)
 
   })
 
