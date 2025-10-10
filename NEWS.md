@@ -1,3 +1,9 @@
+# pmforest 0.2.1
+
+## Bug Fixes:
+
+* Compatibility fixes relating to error bars and themes with `ggplot2 4.0.0` (#42)
+
 # pmforest 0.2.0
 
 ## New Features and changes:
